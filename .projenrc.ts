@@ -185,6 +185,8 @@ for (const project of projects) {
     sampleCode: false,
     typescriptVersion: '~5.8.0',
     jsiiVersion: '~5.8.0',
+    eslint: false,
+    biome: true,
     yarnBerryOptions: {
       version: '4.9.2',
       yarnRcOptions: {
