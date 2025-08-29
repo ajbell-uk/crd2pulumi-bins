@@ -3,7 +3,7 @@ import { type github, javascript, typescript } from 'projen'
 import { Nx } from './projenrc/nx'
 
 const defaultReleaseBranch = 'main'
-const repository = 'https://github.com/ajbell-uk/crd2pulumi.git'
+const repository = 'https://github.com/ajbell-uk/crd2pulumi-bins.git'
 
 const crd2pulumiVersion = '1.5.4'
 
@@ -93,7 +93,7 @@ const root = new typescript.TypeScriptProject({
   buildWorkflow: false,
   readme: { filename: 'README.md', contents: '# title' },
   release: false,
-  repository: 'https://github.com/ajbell-uk/crd2pulumi.git',
+  repository,
   packageManager: javascript.NodePackageManager.YARN_BERRY,
   biome: true,
   sampleCode: false,

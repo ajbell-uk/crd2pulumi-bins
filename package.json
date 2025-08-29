@@ -2,7 +2,7 @@
   "name": "crd2pulumi-workspace",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ajbell-uk/crd2pulumi.git"
+    "url": "https://github.com/ajbell-uk/crd2pulumi-bins.git"
   },
   "scripts": {
     "biome": "npx projen biome",
