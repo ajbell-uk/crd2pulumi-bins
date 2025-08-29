@@ -27,6 +27,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          lfs: true
       - name: Set git identity
         run: |-
           git config user.name "github-actions"
@@ -106,6 +107,22 @@ jobs:
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
+      - name: Corepack enable
+        run: corepack enable
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --immutable
+      - name: Extract build artifact
+        run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
+      - name: Move build artifact out of the way
+        run: mv dist dist.old
+      - name: Create js artifact
+        run: cd .repo && npx projen package:js
+      - name: Collect js artifact
+        run: mv .repo/dist dist
       - name: Release
         env:
           NPM_DIST_TAG: latest

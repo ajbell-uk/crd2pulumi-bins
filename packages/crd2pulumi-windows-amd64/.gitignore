@@ -41,3 +41,12 @@ junit.xml
 /coverage/
 /dist/changelog.md
 /dist/version.txt
+!/test/
+!/tsconfig.dev.json
+!/src/
+/lib
+/dist/
+!/.eslintrc.json
+.jsii
+tsconfig.json
+!/API.md
