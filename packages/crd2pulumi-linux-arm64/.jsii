@@ -7,11 +7,11 @@
     ]
   },
   "bin": "bin/crd2pulumi-linux-arm64",
-  "description": "@ajb-iac/crd2pulumi-linux-arm64",
+  "description": "@ajbell/crd2pulumi-linux-arm64",
   "docs": {
     "stability": "stable"
   },
-  "homepage": "https://github.com/ajbell-uk/crd2pulumi.git",
+  "homepage": "https://github.com/ajbell-uk/crd2pulumi-bins.git",
   "jsiiVersion": "5.8.18 (build f5c30fc)",
   "license": "UNLICENSED",
   "metadata": {
@@ -22,21 +22,21 @@
     },
     "tscRootDir": "src"
   },
-  "name": "@ajb-iac/crd2pulumi-linux-arm64",
+  "name": "@ajbell/crd2pulumi-linux-arm64",
   "readme": {
     "markdown": "# replace this"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ajbell-uk/crd2pulumi.git"
+    "url": "https://github.com/ajbell-uk/crd2pulumi-bins.git"
   },
   "schema": "jsii/0.10.0",
   "targets": {
     "js": {
-      "npm": "@ajb-iac/crd2pulumi-linux-arm64"
+      "npm": "@ajbell/crd2pulumi-linux-arm64"
     }
   },
   "types": {},
   "version": "0.0.0",
-  "fingerprint": "9/ogRDGQa09GvA8icmuRKGJ/3pw8gH+zvde4X3WlxyQ="
+  "fingerprint": "sUQPrKjJFTfmUekwvskJdPUrhB4oTq76FEipFln0Qo8="
 }
