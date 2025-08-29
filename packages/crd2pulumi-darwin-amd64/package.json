@@ -2,7 +2,7 @@
   "name": "@ajbell/crd2pulumi-darwin-amd64",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ajbell-uk/crd2pulumi.git"
+    "url": "https://github.com/ajbell-uk/crd2pulumi-bins.git"
   },
   "bin": "bin/crd2pulumi-darwin-amd64",
   "scripts": {

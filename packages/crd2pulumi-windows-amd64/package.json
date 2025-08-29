@@ -2,7 +2,7 @@
   "name": "@ajbell/crd2pulumi-windows-amd64",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ajbell-uk/crd2pulumi.git"
+    "url": "https://github.com/ajbell-uk/crd2pulumi-bins.git"
   },
   "bin": {
     "crd2pulumi-windows-amd64.exe": "bin/crd2pulumi-windows-amd64.exe"
