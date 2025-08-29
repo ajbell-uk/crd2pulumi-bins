@@ -1,0 +1,202 @@
+import { type github, javascript, typescript } from 'projen'
+
+import { Nx } from './projenrc/nx'
+
+const defaultReleaseBranch = 'main'
+const repository = 'https://github.com/ajbell-uk/crd2pulumi.git'
+
+const crd2pulumiVersion = '1.5.4'
+
+const buildWorkflowOptions: javascript.BuildWorkflowOptions = {
+  workflowTriggers: {
+    pullRequest: {},
+    push: {
+      branches: ['main'],
+    },
+  },
+}
+
+const biomeOptions: javascript.BiomeOptions = {
+  biomeConfig: {
+    files: {
+      includes: ['.projenrc.ts', '**/src/**/*.ts'],
+      ignoreUnknown: true,
+    },
+    vcs: {
+      enabled: true,
+      clientKind: javascript.biome_config.VcsClientKind.GIT,
+      useIgnoreFile: true,
+      defaultBranch: 'main',
+    },
+    // assist: { actions: { source: { organizeImports: 'on' } } },
+    formatter: {
+      enabled: true,
+      lineWidth: 120,
+      indentStyle: javascript.biome_config.IndentStyle.SPACE,
+      indentWidth: 2,
+    },
+    javascript: {
+      formatter: {
+        quoteStyle: javascript.biome_config.QuoteStyle.SINGLE,
+        semicolons: javascript.biome_config.Semicolons.AS_NEEDED,
+      },
+    },
+    linter: {
+      enabled: true,
+      rules: {
+        recommended: true,
+        correctness: {
+          noUnusedImports: 'error',
+          noUnusedVariables: 'error',
+          useExhaustiveDependencies: 'warn',
+        },
+        complexity: {
+          noForEach: 'off',
+          noStaticOnlyClass: 'off',
+        },
+        suspicious: {
+          noExplicitAny: 'off',
+        },
+        style: {
+          noParameterAssign: 'error',
+          useAsConstAssertion: 'error',
+          useDefaultParameterLast: 'error',
+          useEnumInitializers: 'error',
+          useSelfClosingElements: 'error',
+          useSingleVarDeclarator: 'error',
+          noUnusedTemplateLiteral: 'error',
+          useNumberNamespace: 'error',
+          noInferrableTypes: 'error',
+          noUselessElse: 'error',
+        },
+      },
+    },
+  },
+}
+
+const workflowBootstrapSteps: github.workflows.Step[] = [
+  {
+    name: 'Corepack enable',
+    run: 'corepack enable',
+  },
+]
+
+const root = new typescript.TypeScriptProject({
+  defaultReleaseBranch,
+  name: 'crd2pulumi-workspace',
+  projenrcTs: true,
+  eslint: false,
+  jest: false,
+  authorOrganization: true,
+  authorName: 'AJ Bell',
+  depsUpgradeOptions: { workflow: false },
+  buildWorkflow: false,
+  readme: { filename: 'README.md', contents: '# title' },
+  release: false,
+  repository: 'https://github.com/ajbell-uk/crd2pulumi.git',
+  packageManager: javascript.NodePackageManager.YARN_BERRY,
+  biome: true,
+  sampleCode: false,
+  github: true,
+  githubOptions: {
+    downloadLfs: true,
+  },
+  yarnBerryOptions: {
+    version: '4.9.2',
+    zeroInstalls: true,
+    yarnRcOptions: {
+      nodeLinker: javascript.YarnNodeLinker.NODE_MODULES,
+    }
+  },
+  buildWorkflowOptions,
+  workflowBootstrapSteps,
+  biomeOptions,
+  devDeps: ['nx', '@nx/js'],
+})
+root.package.addField('workspaces', ['packages/*'])
+root.addTask('update-bin', {
+  exec: 'yarn exec nx run-many --target=update-bin',
+})
+root.addTask('nx:build', {
+  exec: 'yarn exec nx run-many --target=build',
+})
+new Nx(root)
+
+const projects = [
+  {
+    name: 'crd2pulumi-darwin-amd64',
+    outdir: './packages/crd2pulumi-darwin-amd64',
+    binUrl: `https://github.com/pulumi/crd2pulumi/releases/download/v${crd2pulumiVersion}/crd2pulumi-v${crd2pulumiVersion}-darwin-amd64.tar.gz`,
+  },
+  {
+    name: 'crd2pulumi-linux-amd64',
+    outdir: './packages/crd2pulumi-linux-amd64',
+    binUrl: `https://github.com/pulumi/crd2pulumi/releases/download/v${crd2pulumiVersion}/crd2pulumi-v${crd2pulumiVersion}-linux-amd64.tar.gz`,
+  },
+  {
+    name: 'crd2pulumi-windows-amd64',
+    outdir: './packages/crd2pulumi-windows-amd64',
+    binUrl: `https://github.com/pulumi/crd2pulumi/releases/download/v${crd2pulumiVersion}/crd2pulumi-v${crd2pulumiVersion}-windows-amd64.zip`,
+    cmd: `wget -c "https://github.com/pulumi/crd2pulumi/releases/download/v${crd2pulumiVersion}/crd2pulumi-v${crd2pulumiVersion}-windows-amd64.zip" -O bin/crd2pulumi.zip && unzip -o bin/crd2pulumi.zip -d bin && rm bin/crd2pulumi.zip && mv bin/crd2pulumi.exe bin/crd2pulumi-windows-amd64.exe`,
+  },
+  {
+    name: 'crd2pulumi-darwin-arm64',
+    outdir: './packages/crd2pulumi-darwin-arm64',
+    binUrl: `https://github.com/pulumi/crd2pulumi/releases/download/v${crd2pulumiVersion}/crd2pulumi-v${crd2pulumiVersion}-darwin-arm64.tar.gz`,
+  },
+  {
+    name: 'crd2pulumi-linux-arm64',
+    outdir: './packages/crd2pulumi-linux-arm64',
+    binUrl: `https://github.com/pulumi/crd2pulumi/releases/download/v${crd2pulumiVersion}/crd2pulumi-v${crd2pulumiVersion}-linux-arm64.tar.gz`,
+  },
+]
+
+for (const project of projects) {
+  const childProject = new javascript.NodeProject({
+    parent: root,
+    name: project.name,
+    packageName: `@ajbell/${project.name}`,
+    outdir: project.outdir,
+    defaultReleaseBranch,
+    licensed: false,
+    package: true,
+    release: true,
+    repository,
+    authorOrganization: true,
+    authorName: 'AJ Bell',
+    packageManager: root.package.packageManager,
+    minNodeVersion: root.minNodeVersion,
+    npmAccess: javascript.NpmAccess.PUBLIC,
+    gitOptions: {
+      lfsPatterns: ['bin/*'],
+    },
+    releaseTagPrefix: `${project.name}-`,
+    releaseToNpm: true,
+    githubOptions: {
+      downloadLfs: true,
+    },
+    buildWorkflowOptions,
+    workflowBootstrapSteps,
+  })
+  childProject.release?.publisher.publishToGit
+  childProject.addTask('update-bin', {
+    description: 'Download external binaries',
+    steps: [
+      {
+        exec: 'mkdir -p bin',
+      },
+      {
+        exec:
+          project.cmd || `wget -c "${project.binUrl}" -O -  | tar -xz -C bin && mv bin/crd2pulumi bin/${project.name}`,
+      },
+    ],
+  })
+  childProject.package.addField('targets', {
+    'update-bin': {
+      command: 'npx project update-bin',
+    },
+  })
+  childProject.synth()
+}
+
+root.synth()

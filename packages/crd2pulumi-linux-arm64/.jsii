@@ -1,0 +1,42 @@
+{
+  "author": {
+    "name": "AJ Bell",
+    "organization": true,
+    "roles": [
+      "author"
+    ]
+  },
+  "bin": "bin/crd2pulumi-linux-arm64",
+  "description": "@ajb-iac/crd2pulumi-linux-arm64",
+  "docs": {
+    "stability": "stable"
+  },
+  "homepage": "https://github.com/ajbell-uk/crd2pulumi.git",
+  "jsiiVersion": "5.8.18 (build f5c30fc)",
+  "license": "UNLICENSED",
+  "metadata": {
+    "jsii": {
+      "pacmak": {
+        "hasDefaultInterfaces": true
+      }
+    },
+    "tscRootDir": "src"
+  },
+  "name": "@ajb-iac/crd2pulumi-linux-arm64",
+  "readme": {
+    "markdown": "# replace this"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ajbell-uk/crd2pulumi.git"
+  },
+  "schema": "jsii/0.10.0",
+  "targets": {
+    "js": {
+      "npm": "@ajb-iac/crd2pulumi-linux-arm64"
+    }
+  },
+  "types": {},
+  "version": "0.0.0",
+  "fingerprint": "9/ogRDGQa09GvA8icmuRKGJ/3pw8gH+zvde4X3WlxyQ="
+}
