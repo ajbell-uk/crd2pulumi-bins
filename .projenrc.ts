@@ -1,4 +1,4 @@
-import { type github, javascript, cdk, typescript } from 'projen'
+import { cdk, type github, javascript, typescript } from 'projen'
 
 import { Nx } from './projenrc/nx'
 
@@ -193,6 +193,7 @@ for (const project of projects) {
         nodeLinker: javascript.YarnNodeLinker.NODE_MODULES,
       },
     },
+    devDeps: ['projen'],
   })
 
   childProject.addTask('update-bin', {
@@ -218,8 +219,7 @@ for (const project of projects) {
 
 root.synth()
 
-
-function updateGitHubJobsSteps (name: string, workflow?: github.GithubWorkflow) {
+function updateGitHubJobsSteps(name: string, workflow?: github.GithubWorkflow) {
   const releaseJob = workflow?.getJob(name) as github.workflows.Job | undefined
   if (!releaseJob) {
     return
@@ -232,7 +232,7 @@ function updateGitHubJobsSteps (name: string, workflow?: github.GithubWorkflow) 
           with: {
             ...(step as github.workflows.Step).with,
             lfs: true,
-          }
+          },
         }
       default:
         return step
