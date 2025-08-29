@@ -1,0 +1,45 @@
+{
+  "name": "jsii",
+  "image": "jsii/superchain:1-bookworm-slim-node22",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2.5.3": {
+      "installZsh": "false",
+      "upgradePackages": "false",
+      "uid": "1000",
+      "gid": "1000",
+      "installOhMyZsh": "true",
+      "nonFreePackages": "true"
+    },
+    "ghcr.io/devcontainers/features/git-lfs:1": {
+      "autoPull": true
+    },
+    "ghcr.io/devcontainers/features/docker-from-docker:1": {
+      "version": "latest",
+      "enableNonRootDocker": "true",
+      "moby": "true"
+    },
+    "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+      "packages": "curl,dnsutils,busybox"
+    }
+  },
+  "mounts": [
+    "type=bind,source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,readonly",
+    "type=bind,source=${localEnv:HOME}/.npm,target=/home/vscode/.npm",
+    "type=bind,source=${localEnv:HOME}/.npmrc,target=/home/vscode/.npmrc",
+    "type=bind,source=${localEnv:HOME}/.yarn,target=/home/vscode/.yarn",
+    "type=bind,source=${localEnv:HOME}/.yarnrc,target=/home/vscode/.yarnrc"
+  ],
+  "remoteUser": "vscode",
+  "privileged": true,
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "firsttris.vscode-jest-runner",
+        "Orta.vscode-jest",
+        "eamodio.gitlens",
+        "biomejs.biome",
+        "ms-vscode.live-server"
+      ]
+    }
+  }
+}
