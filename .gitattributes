@@ -28,3 +28,4 @@
 /tsconfig.dev.json linguist-generated
 /tsconfig.json linguist-generated
 /yarn.lock linguist-generated
+package/*/bin/* filter=lfs diff=lfs merge=lfs -text

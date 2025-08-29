@@ -13,7 +13,23 @@
       "**/src/**/*.ts",
       "src/**",
       "test/**",
-      "projenrc/**"
+      "projenrc/**",
+      "!.gitattributes",
+      "!.github/workflows/pull-request-lint.yml",
+      "!.github/workflows/release_crd2pulumi-darwin-amd64.yml",
+      "!.github/workflows/release_crd2pulumi-darwin-arm64.yml",
+      "!.github/workflows/release_crd2pulumi-linux-amd64.yml",
+      "!.github/workflows/release_crd2pulumi-linux-arm64.yml",
+      "!.github/workflows/release_crd2pulumi-windows-amd64.yml",
+      "!.gitignore",
+      "!.npmignore",
+      "!.projen/deps.json",
+      "!.projen/files.json",
+      "!.projen/tasks.json",
+      "!.yarnrc.yml",
+      "!nx.json",
+      "!tsconfig.dev.json",
+      "!tsconfig.json"
     ]
   },
   "formatter": {

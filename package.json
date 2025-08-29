@@ -14,11 +14,9 @@
     "nx:build": "npx projen nx:build",
     "package": "npx projen package",
     "post-compile": "npx projen post-compile",
-    "post-upgrade": "npx projen post-upgrade",
     "pre-compile": "npx projen pre-compile",
     "test": "npx projen test",
     "update-bin": "npx projen update-bin",
-    "upgrade": "npx projen upgrade",
     "watch": "npx projen watch",
     "projen": "npx projen"
   },
@@ -31,12 +29,12 @@
     "@nrwl/devkit": "^15",
     "@nrwl/workspace": "^15",
     "@nx/js": "^21.3.9",
-    "@types/node": "^22",
+    "@types/node": "ts5.8",
     "constructs": "^10.0.0",
     "nx": "^15",
-    "projen": "^0.95.0",
+    "projen": "~0.95.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "~5.8.0"
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",

@@ -1,4 +1,4 @@
-import { type github, javascript, typescript } from 'projen'
+import { type github, javascript, cdk, typescript } from 'projen'
 
 import { Nx } from './projenrc/nx'
 
@@ -87,9 +87,12 @@ const root = new typescript.TypeScriptProject({
   projenrcTs: true,
   eslint: false,
   jest: false,
+  depsUpgrade: false,
+  depsUpgradeOptions: { workflow: false },
+  projenVersion: '~0.95.0',
+  typescriptVersion: '~5.8.0',
   authorOrganization: true,
   authorName: 'AJ Bell',
-  depsUpgradeOptions: { workflow: false },
   buildWorkflow: false,
   readme: { filename: 'README.md', contents: '# title' },
   release: false,
@@ -97,16 +100,17 @@ const root = new typescript.TypeScriptProject({
   packageManager: javascript.NodePackageManager.YARN_BERRY,
   biome: true,
   sampleCode: false,
-  github: true,
   githubOptions: {
     downloadLfs: true,
   },
+  gitOptions: {
+    lfsPatterns: ['package/*/bin/*'],
+  },
   yarnBerryOptions: {
     version: '4.9.2',
-    zeroInstalls: true,
     yarnRcOptions: {
       nodeLinker: javascript.YarnNodeLinker.NODE_MODULES,
-    }
+    },
   },
   buildWorkflowOptions,
   workflowBootstrapSteps,
@@ -152,7 +156,7 @@ const projects = [
 ]
 
 for (const project of projects) {
-  const childProject = new javascript.NodeProject({
+  const childProject = new cdk.JsiiProject({
     parent: root,
     name: project.name,
     packageName: `@ajbell/${project.name}`,
@@ -161,11 +165,12 @@ for (const project of projects) {
     licensed: false,
     package: true,
     release: true,
-    repository,
+    repositoryUrl: repository,
     authorOrganization: true,
-    authorName: 'AJ Bell',
+    author: 'AJ Bell',
+    authorAddress: '',
+    depsUpgrade: false,
     packageManager: root.package.packageManager,
-    minNodeVersion: root.minNodeVersion,
     npmAccess: javascript.NpmAccess.PUBLIC,
     gitOptions: {
       lfsPatterns: ['bin/*'],
@@ -177,8 +182,17 @@ for (const project of projects) {
     },
     buildWorkflowOptions,
     workflowBootstrapSteps,
+    sampleCode: false,
+    typescriptVersion: '~5.8.0',
+    jsiiVersion: '~5.8.0',
+    yarnBerryOptions: {
+      version: '4.9.2',
+      yarnRcOptions: {
+        nodeLinker: javascript.YarnNodeLinker.NODE_MODULES,
+      },
+    },
   })
-  childProject.release?.publisher.publishToGit
+
   childProject.addTask('update-bin', {
     description: 'Download external binaries',
     steps: [
@@ -196,7 +210,39 @@ for (const project of projects) {
       command: 'npx project update-bin',
     },
   })
+  updateGitHubJobsSteps('release', root.github?.tryFindWorkflow(`release_${project.name}`))
   childProject.synth()
 }
 
 root.synth()
+
+
+function updateGitHubJobsSteps (name: string, workflow?: github.GithubWorkflow) {
+  const releaseJob = workflow?.getJob(name) as github.workflows.Job | undefined
+  if (!releaseJob) {
+    return
+  }
+  const newSteps = releaseJob.steps.map((step) => {
+    switch (step.name) {
+      case 'Checkout':
+        return {
+          ...(step as github.workflows.Step),
+          with: {
+            ...(step as github.workflows.Step).with,
+            lfs: true,
+          }
+        }
+      default:
+        return step
+    }
+  })
+
+  const newJob: github.workflows.Job = {
+    ...releaseJob,
+    steps: newSteps,
+  }
+
+  if (releaseJob) {
+    workflow?.updateJob(name, newJob)
+  }
+}
