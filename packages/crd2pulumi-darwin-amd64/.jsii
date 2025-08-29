@@ -7,11 +7,11 @@
     ]
   },
   "bin": "bin/crd2pulumi-darwin-amd64",
-  "description": "@ajb-iac/crd2pulumi-darwin-amd64",
+  "description": "@ajbell/crd2pulumi-darwin-amd64",
   "docs": {
     "stability": "stable"
   },
-  "homepage": "https://github.com/ajbell-uk/crd2pulumi.git",
+  "homepage": "https://github.com/ajbell-uk/crd2pulumi-bins.git",
   "jsiiVersion": "5.8.18 (build f5c30fc)",
   "license": "UNLICENSED",
   "metadata": {
@@ -22,21 +22,21 @@
     },
     "tscRootDir": "src"
   },
-  "name": "@ajb-iac/crd2pulumi-darwin-amd64",
+  "name": "@ajbell/crd2pulumi-darwin-amd64",
   "readme": {
     "markdown": "# replace this"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ajbell-uk/crd2pulumi.git"
+    "url": "https://github.com/ajbell-uk/crd2pulumi-bins.git"
   },
   "schema": "jsii/0.10.0",
   "targets": {
     "js": {
-      "npm": "@ajb-iac/crd2pulumi-darwin-amd64"
+      "npm": "@ajbell/crd2pulumi-darwin-amd64"
     }
   },
   "types": {},
   "version": "0.0.0",
-  "fingerprint": "g4S2yDrU9d0O/oALxeM641gSUT1hQyXJspZ/YeJUtHY="
+  "fingerprint": "hO1mUfAG28KXD/suWv2g6ljJbqxPGgt331QeCzg35+c="
 }

@@ -7,11 +7,11 @@
     ]
   },
   "bin": "bin/crd2pulumi-darwin-arm64",
-  "description": "@ajb-iac/crd2pulumi-darwin-arm64",
+  "description": "@ajbell/crd2pulumi-darwin-arm64",
   "docs": {
     "stability": "stable"
   },
-  "homepage": "https://github.com/ajbell-uk/crd2pulumi.git",
+  "homepage": "https://github.com/ajbell-uk/crd2pulumi-bins.git",
   "jsiiVersion": "5.8.18 (build f5c30fc)",
   "license": "UNLICENSED",
   "metadata": {
@@ -22,21 +22,58 @@
     },
     "tscRootDir": "src"
   },
-  "name": "@ajb-iac/crd2pulumi-darwin-arm64",
+  "name": "@ajbell/crd2pulumi-darwin-arm64",
   "readme": {
     "markdown": "# replace this"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ajbell-uk/crd2pulumi.git"
+    "url": "https://github.com/ajbell-uk/crd2pulumi-bins.git"
   },
   "schema": "jsii/0.10.0",
   "targets": {
     "js": {
-      "npm": "@ajb-iac/crd2pulumi-darwin-arm64"
+      "npm": "@ajbell/crd2pulumi-darwin-arm64"
     }
   },
-  "types": {},
+  "types": {
+    "@ajbell/crd2pulumi-darwin-arm64.Hello": {
+      "assembly": "@ajbell/crd2pulumi-darwin-arm64",
+      "docs": {
+        "stability": "stable"
+      },
+      "fqn": "@ajbell/crd2pulumi-darwin-arm64.Hello",
+      "initializer": {
+        "docs": {
+          "stability": "stable"
+        }
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/index.ts",
+        "line": 1
+      },
+      "methods": [
+        {
+          "docs": {
+            "stability": "stable"
+          },
+          "locationInModule": {
+            "filename": "src/index.ts",
+            "line": 2
+          },
+          "name": "sayHello",
+          "returns": {
+            "type": {
+              "primitive": "string"
+            }
+          }
+        }
+      ],
+      "name": "Hello",
+      "symbolId": "src/index:Hello"
+    }
+  },
   "version": "0.0.0",
-  "fingerprint": "trn7A/rd65PioLry+5qFSzWMJcOKfP1czxxFV00pZo8="
+  "fingerprint": "xBnYiL7U0zqZSNoIispLrpbliwe3zBgcW/1bMDwJzoI="
 }
