@@ -20,6 +20,7 @@ __metadata:
     jsii-docgen: "npm:^10.5.0"
     jsii-pacmak: "npm:^1.113.0"
     jsii-rosetta: "npm:~5.8.0"
+    projen: "npm:^0.95.2"
     ts-jest: "npm:^29.4.1"
     typescript: "npm:~5.8.0"
   bin:
@@ -42,6 +43,7 @@ __metadata:
     jsii-docgen: "npm:^10.5.0"
     jsii-pacmak: "npm:^1.113.0"
     jsii-rosetta: "npm:~5.8.0"
+    projen: "npm:^0.95.2"
     ts-jest: "npm:^29.4.1"
     typescript: "npm:~5.8.0"
   bin:
@@ -64,6 +66,7 @@ __metadata:
     jsii-docgen: "npm:^10.5.0"
     jsii-pacmak: "npm:^1.113.0"
     jsii-rosetta: "npm:~5.8.0"
+    projen: "npm:^0.95.2"
     ts-jest: "npm:^29.4.1"
     typescript: "npm:~5.8.0"
   bin:
@@ -86,6 +89,7 @@ __metadata:
     jsii-docgen: "npm:^10.5.0"
     jsii-pacmak: "npm:^1.113.0"
     jsii-rosetta: "npm:~5.8.0"
+    projen: "npm:^0.95.2"
     ts-jest: "npm:^29.4.1"
     typescript: "npm:~5.8.0"
   bin:
@@ -108,6 +112,7 @@ __metadata:
     jsii-docgen: "npm:^10.5.0"
     jsii-pacmak: "npm:^1.113.0"
     jsii-rosetta: "npm:~5.8.0"
+    projen: "npm:^0.95.2"
     ts-jest: "npm:^29.4.1"
     typescript: "npm:~5.8.0"
   bin:
@@ -7448,7 +7453,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"projen@npm:~0.95.0":
+"projen@npm:^0.95.2, projen@npm:~0.95.0":
   version: 0.95.2
   resolution: "projen@npm:0.95.2"
   dependencies:
