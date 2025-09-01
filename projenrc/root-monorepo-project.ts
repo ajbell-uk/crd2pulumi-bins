@@ -55,8 +55,16 @@ export class RootMonorepoTsProject extends MonorepoTsProject {
             with: {
               ...(step as github.workflows.Step).with,
               lfs: true,
-              ...sparseCheckout ? { 'sparse-checkout': sparseCheckout } : {},
+              ...sparseCheckout ? { 'sparse-checkout': sparseCheckout, 'sparse-checkout-cone-mode': false } : {},
             },
+          }
+        }
+        case 'Create js artifact': {
+          return {
+            ...(step as github.workflows.Step),
+            ...{
+              run: `cd .repo && mv -f packages/${workflow?.name.replace('release_', '')}/* . && npx projen package:js`
+            }
           }
         }
         default:

@@ -119,6 +119,7 @@ jobs:
           path: .repo
           lfs: true
           sparse-checkout: packages/crd2pulumi-linux-amd64
+          sparse-checkout-cone-mode: false
       - name: Install Dependencies
         run: cd .repo && pnpm i --frozen-lockfile
       - name: Extract build artifact
@@ -126,7 +127,7 @@ jobs:
       - name: Move build artifact out of the way
         run: mv dist dist.old
       - name: Create js artifact
-        run: cd .repo && npx projen package:js
+        run: cd .repo && mv -f packages/crd2pulumi-linux-amd64/* . && npx projen package:js
       - name: Collect js artifact
         run: mv .repo/dist dist
       - name: Release
