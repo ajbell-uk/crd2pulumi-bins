@@ -102,6 +102,9 @@ const root = new typescript.TypeScriptProject({
   biomeOptions,
 })
 
+root.package.addField('workspaces', ['packages/*'])
+root.package.addField('private', true)
+
 const projects = [
   {
     name: 'crd2pulumi-darwin-amd64',
@@ -167,7 +170,6 @@ for (const project of projects) {
         nodeLinker: javascript.YarnNodeLinker.NODE_MODULES,
       },
     },
-    devDeps: ['projen'],
   })
 
   childProject.addTask('update-bin', {
