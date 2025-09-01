@@ -1,7 +1,5 @@
 import { cdk, type github, javascript, typescript } from 'projen'
 
-import { Nx } from './projenrc/nx'
-
 const defaultReleaseBranch = 'main'
 const repository = 'https://github.com/ajbell-uk/crd2pulumi-bins.git'
 
@@ -74,13 +72,6 @@ const biomeOptions: javascript.BiomeOptions = {
   },
 }
 
-const workflowBootstrapSteps: github.workflows.Step[] = [
-  {
-    name: 'Corepack enable',
-    run: 'corepack enable',
-  },
-]
-
 const root = new typescript.TypeScriptProject({
   defaultReleaseBranch,
   name: 'crd2pulumi-workspace',
@@ -96,8 +87,9 @@ const root = new typescript.TypeScriptProject({
   buildWorkflow: false,
   readme: { filename: 'README.md', contents: '# title' },
   release: false,
+  package: false,
   repository,
-  packageManager: javascript.NodePackageManager.YARN_BERRY,
+  packageManager: javascript.NodePackageManager.YARN,
   biome: true,
   sampleCode: false,
   githubOptions: {
@@ -106,25 +98,9 @@ const root = new typescript.TypeScriptProject({
   gitOptions: {
     lfsPatterns: ['package/*/bin/*'],
   },
-  yarnBerryOptions: {
-    version: '4.9.2',
-    yarnRcOptions: {
-      nodeLinker: javascript.YarnNodeLinker.NODE_MODULES,
-    },
-  },
   buildWorkflowOptions,
-  workflowBootstrapSteps,
   biomeOptions,
-  devDeps: ['nx', '@nx/js'],
 })
-root.package.addField('workspaces', ['packages/*'])
-root.addTask('update-bin', {
-  exec: 'yarn exec nx run-many --target=update-bin',
-})
-root.addTask('nx:build', {
-  exec: 'yarn exec nx run-many --target=build',
-})
-new Nx(root)
 
 const projects = [
   {
@@ -181,12 +157,10 @@ for (const project of projects) {
       downloadLfs: true,
     },
     buildWorkflowOptions,
-    workflowBootstrapSteps,
     sampleCode: false,
     typescriptVersion: '~5.8.0',
     jsiiVersion: '~5.8.0',
     eslint: false,
-    biome: true,
     yarnBerryOptions: {
       version: '4.9.2',
       yarnRcOptions: {

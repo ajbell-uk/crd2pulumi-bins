@@ -13,9 +13,7 @@
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",
-    ".yarnrc.yml",
     "LICENSE",
-    "nx.json",
     "tsconfig.dev.json",
     "tsconfig.json"
   ],

@@ -6,20 +6,6 @@
       "type": "build"
     },
     {
-      "name": "@nrwl/devkit",
-      "version": "^15",
-      "type": "build"
-    },
-    {
-      "name": "@nrwl/workspace",
-      "version": "^15",
-      "type": "build"
-    },
-    {
-      "name": "@nx/js",
-      "type": "build"
-    },
-    {
       "name": "@types/node",
       "version": "ts5.8",
       "type": "build"
@@ -27,11 +13,6 @@
     {
       "name": "constructs",
       "version": "^10.0.0",
-      "type": "build"
-    },
-    {
-      "name": "nx",
-      "version": "^15",
       "type": "build"
     },
     {

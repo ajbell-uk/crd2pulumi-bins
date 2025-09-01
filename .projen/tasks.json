@@ -101,7 +101,7 @@
       "description": "Install project dependencies and update lockfile (non-frozen)",
       "steps": [
         {
-          "exec": "yarn install"
+          "exec": "yarn install --check-files"
         }
       ]
     },
@@ -110,29 +110,13 @@
       "description": "Install project dependencies using frozen lockfile",
       "steps": [
         {
-          "exec": "yarn install --immutable"
-        }
-      ]
-    },
-    "nx:build": {
-      "name": "nx:build",
-      "steps": [
-        {
-          "exec": "yarn exec nx run-many --target=build"
+          "exec": "yarn install --check-files --frozen-lockfile"
         }
       ]
     },
     "package": {
       "name": "package",
-      "description": "Creates the distribution package",
-      "steps": [
-        {
-          "exec": "mkdir -p dist/js"
-        },
-        {
-          "exec": "npm pack --pack-destination dist/js"
-        }
-      ]
+      "description": "Creates the distribution package"
     },
     "post-compile": {
       "name": "post-compile",
@@ -148,14 +132,6 @@
       "steps": [
         {
           "spawn": "biome"
-        }
-      ]
-    },
-    "update-bin": {
-      "name": "update-bin",
-      "steps": [
-        {
-          "exec": "yarn exec nx run-many --target=update-bin"
         }
       ]
     },

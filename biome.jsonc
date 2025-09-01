@@ -26,8 +26,6 @@
       "!.projen/deps.json",
       "!.projen/files.json",
       "!.projen/tasks.json",
-      "!.yarnrc.yml",
-      "!nx.json",
       "!tsconfig.dev.json",
       "!tsconfig.json"
     ]

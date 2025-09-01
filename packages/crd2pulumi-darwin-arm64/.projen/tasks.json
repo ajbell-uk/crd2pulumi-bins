@@ -1,15 +1,5 @@
 {
   "tasks": {
-    "biome": {
-      "name": "biome",
-      "description": "Runs Biome against the codebase",
-      "steps": [
-        {
-          "exec": "biome check --no-errors-on-unmatched --write",
-          "receiveArgs": true
-        }
-      ]
-    },
     "build": {
       "name": "build",
       "description": "Full release build",
@@ -91,7 +81,7 @@
       "description": "Install project dependencies and update lockfile (non-frozen)",
       "steps": [
         {
-          "exec": "yarn install"
+          "exec": "yarn install --check-files"
         }
       ]
     },
@@ -100,7 +90,7 @@
       "description": "Install project dependencies using frozen lockfile",
       "steps": [
         {
-          "exec": "yarn install --immutable"
+          "exec": "yarn install --check-files --frozen-lockfile"
         }
       ]
     },
@@ -181,9 +171,6 @@
         {
           "exec": "jest --passWithNoTests --updateSnapshot",
           "receiveArgs": true
-        },
-        {
-          "spawn": "biome"
         }
       ]
     },

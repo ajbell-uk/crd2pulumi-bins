@@ -16,7 +16,6 @@
       "!.projen/deps.json",
       "!.projen/files.json",
       "!.projen/tasks.json",
-      "!.yarnrc.yml",
       "!tsconfig.dev.json"
     ]
   },
@@ -40,5 +39,6 @@
     "enabled": true,
     "useIgnoreFile": true
   },
-  "$schema": "https://biomejs.dev/schemas/latest/schema.json"
+  "root": false,
+  "$schema": "node_modules/.pnpm/@biomejs+biome@2.2.2/node_modules/@biomejs/biome/configuration_schema.json"
 }

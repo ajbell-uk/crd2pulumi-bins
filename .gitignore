@@ -4,14 +4,6 @@
 !/.projen/deps.json
 !/.projen/files.json
 !/.github/workflows/pull-request-lint.yml
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
-!/.yarnrc.yml
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -46,7 +38,6 @@ jspm_packages/
 !/src/
 /lib
 /dist/
-!/nx.json
 !/.github/workflows/release_crd2pulumi-darwin-amd64.yml
 !/.github/workflows/release_crd2pulumi-linux-amd64.yml
 !/.github/workflows/release_crd2pulumi-windows-amd64.yml

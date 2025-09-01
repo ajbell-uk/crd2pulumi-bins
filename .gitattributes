@@ -12,18 +12,12 @@
 /.github/workflows/release_crd2pulumi-windows-amd64.yml linguist-generated
 /.gitignore linguist-generated
 /.npmignore linguist-generated
-/.pnp.* binary linguist-vendored
 /.projen/** linguist-generated
 /.projen/deps.json linguist-generated
 /.projen/files.json linguist-generated
 /.projen/tasks.json linguist-generated
-/.yarn/** linguist-vendored
-/.yarn/plugins/**/* binary
-/.yarn/releases/* binary
-/.yarnrc.yml linguist-generated
 /biome.jsonc linguist-generated
 /LICENSE linguist-generated
-/nx.json linguist-generated
 /package.json linguist-generated
 /tsconfig.dev.json linguist-generated
 /tsconfig.json linguist-generated
