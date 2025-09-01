@@ -24,8 +24,7 @@
     "test:watch": "npx projen test:watch",
     "unbump": "npx projen unbump",
     "update-bin": "npx projen update-bin",
-    "watch": "npx projen watch",
-    "projen": "npx projen"
+    "watch": "npx projen watch"
   },
   "author": {
     "name": "AJ Bell",

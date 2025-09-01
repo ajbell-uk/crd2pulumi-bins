@@ -1,4 +1,6 @@
-import { cdk, type github, javascript, typescript } from 'projen'
+import { cdk, type github, javascript } from 'projen'
+
+import { MonorepoTsProject } from './projenrc/monorepo/monorepo-ts'
 
 const defaultReleaseBranch = 'main'
 const repository = 'https://github.com/ajbell-uk/crd2pulumi-bins.git'
@@ -72,7 +74,7 @@ const biomeOptions: javascript.BiomeOptions = {
   },
 }
 
-const root = new typescript.TypeScriptProject({
+const root = new MonorepoTsProject({
   defaultReleaseBranch,
   name: 'crd2pulumi-workspace',
   projenrcTs: true,
@@ -89,9 +91,11 @@ const root = new typescript.TypeScriptProject({
   release: false,
   package: false,
   repository,
-  packageManager: javascript.NodePackageManager.YARN,
+  packageManager: javascript.NodePackageManager.PNPM,
   biome: true,
+  prettier: false,
   sampleCode: false,
+  github: true,
   githubOptions: {
     downloadLfs: true,
   },
@@ -100,10 +104,14 @@ const root = new typescript.TypeScriptProject({
   },
   buildWorkflowOptions,
   biomeOptions,
+  devDeps: ['@aws/pdk']
 })
 
-root.package.addField('workspaces', ['packages/*'])
-root.package.addField('private', true)
+// root.package.addField('workspaces', ['packages/*'])
+// root.package.addField('private', true)
+// root.addTask('update-bin', {
+//   exec: 'yarn exec nx run-many --target=update-bin',
+// })
 
 const projects = [
   {
