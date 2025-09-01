@@ -55,7 +55,7 @@ export class RootMonorepoTsProject extends MonorepoTsProject {
             with: {
               ...(step as github.workflows.Step).with,
               lfs: true,
-              ...sparseCheckout ? { 'sparse-checkout': sparseCheckout, 'sparse-checkout-cone-mode': false } : {},
+              ...sparseCheckout ? { 'sparse-checkout': sparseCheckout } : {},
             },
           }
         }
