@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Interfaces = void 0;
+const interface_1 = require("./interface");
+class Interfaces {
+    constructor(transpile, interfaces) {
+        this.interfaces = interfaces
+            .filter((i) => !interface_1.Interface.isStruct(i))
+            .map((i) => new interface_1.Interface(transpile, i));
+    }
+    toJson() {
+        return this.interfaces.map((iface) => iface.toJson());
+    }
+}
+exports.Interfaces = Interfaces;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW50ZXJmYWNlcy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9kb2NnZW4vdmlldy9pbnRlcmZhY2VzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUNBLDJDQUF3QztBQUl4QyxNQUFhLFVBQVU7SUFHckIsWUFBWSxTQUFvQixFQUFFLFVBQW1DO1FBQ25FLElBQUksQ0FBQyxVQUFVLEdBQUcsVUFBVTthQUN6QixNQUFNLENBQUMsQ0FBQyxDQUFDLEVBQUUsRUFBRSxDQUFDLENBQUMscUJBQVMsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUM7YUFDckMsR0FBRyxDQUFDLENBQUMsQ0FBQyxFQUFFLEVBQUUsQ0FBQyxJQUFJLHFCQUFTLENBQUMsU0FBUyxFQUFFLENBQUMsQ0FBQyxDQUFDLENBQUM7SUFDN0MsQ0FBQztJQUVNLE1BQU07UUFDWCxPQUFPLElBQUksQ0FBQyxVQUFVLENBQUMsR0FBRyxDQUFDLENBQUMsS0FBSyxFQUFFLEVBQUUsQ0FBQyxLQUFLLENBQUMsTUFBTSxFQUFFLENBQUMsQ0FBQztJQUN4RCxDQUFDO0NBQ0Y7QUFaRCxnQ0FZQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIHJlZmxlY3QgZnJvbSAnanNpaS1yZWZsZWN0JztcbmltcG9ydCB7IEludGVyZmFjZSB9IGZyb20gJy4vaW50ZXJmYWNlJztcbmltcG9ydCB7IEludGVyZmFjZVNjaGVtYSB9IGZyb20gJy4uL3NjaGVtYSc7XG5pbXBvcnQgeyBUcmFuc3BpbGUgfSBmcm9tICcuLi90cmFuc3BpbGUvdHJhbnNwaWxlJztcblxuZXhwb3J0IGNsYXNzIEludGVyZmFjZXMge1xuICBwcml2YXRlIHJlYWRvbmx5IGludGVyZmFjZXM6IEludGVyZmFjZVtdO1xuXG4gIGNvbnN0cnVjdG9yKHRyYW5zcGlsZTogVHJhbnNwaWxlLCBpbnRlcmZhY2VzOiByZWZsZWN0LkludGVyZmFjZVR5cGVbXSkge1xuICAgIHRoaXMuaW50ZXJmYWNlcyA9IGludGVyZmFjZXNcbiAgICAgIC5maWx0ZXIoKGkpID0+ICFJbnRlcmZhY2UuaXNTdHJ1Y3QoaSkpXG4gICAgICAubWFwKChpKSA9PiBuZXcgSW50ZXJmYWNlKHRyYW5zcGlsZSwgaSkpO1xuICB9XG5cbiAgcHVibGljIHRvSnNvbigpOiBJbnRlcmZhY2VTY2hlbWFbXSB7XG4gICAgcmV0dXJuIHRoaXMuaW50ZXJmYWNlcy5tYXAoKGlmYWNlKSA9PiBpZmFjZS50b0pzb24oKSk7XG4gIH1cbn1cbiJdfQ==

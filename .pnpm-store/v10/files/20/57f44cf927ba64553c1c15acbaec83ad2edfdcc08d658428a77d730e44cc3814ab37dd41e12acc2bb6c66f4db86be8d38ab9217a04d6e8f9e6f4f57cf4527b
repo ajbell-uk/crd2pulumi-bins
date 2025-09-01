@@ -1,0 +1,21 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { AwsAsset } from "../../generated/assets";
+import { CfnSpec } from "../../generated/cfnspec";
+/** Parsed CloudFormation resource type string parts */
+export interface CfnResourceTypeParts {
+    provider: string;
+    serviceName: CfnSpec.ServiceName;
+    resourceName: string;
+}
+/** Parse CloudFormation resource type string into parts */
+export declare function parseCfnType(cfnType: CfnSpec.ResourceType): CfnResourceTypeParts;
+/** Definitaion of asset mappings to CloudFormation type */
+interface CfnTypeAssets {
+    readonly serviceName?: AwsAsset.Service;
+    readonly resourceName?: AwsAsset.Resource;
+    readonly generalIcon?: AwsAsset.GeneralIcon;
+}
+/** Find asset type details for given CloudFormation type */
+export declare function findCfnTypeAssets(cfnType: CfnSpec.ResourceType): CfnTypeAssets;
+export {};

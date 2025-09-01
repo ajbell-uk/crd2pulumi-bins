@@ -1,0 +1,269 @@
+import { Project } from "projen";
+import { NodePackageManager } from "projen/lib/javascript";
+import { DocumentationFormat, Language, Library, WebSocketDocumentationFormat, WebSocketLibrary } from "../languages";
+import { GeneratedJavaHandlersBaseProject } from "./handlers/generated-java-handlers-base-project";
+import { GeneratedPythonHandlersBaseProject } from "./handlers/generated-python-handlers-base-project";
+import { GeneratedTypescriptHandlersBaseProject } from "./handlers/generated-typescript-handlers-base-project";
+import { GeneratedTypescriptReactQueryHooksProjectOptions } from "./library/typescript-react-query-hooks-library";
+import { TypescriptWebsocketClientLibraryOptions } from "./library/typescript-websocket-client-library";
+import { TypescriptWebsocketHooksLibraryOptions } from "./library/typescript-websocket-hooks-library";
+import { GeneratedJavaAsyncRuntimeProject } from "./runtime/generated-java-async-runtime-project";
+import { GeneratedJavaRuntimeBaseProject } from "./runtime/generated-java-runtime-base-project";
+import { GeneratedJavaRuntimeProject, GeneratedJavaTypesProjectOptions } from "./runtime/generated-java-runtime-project";
+import { GeneratedPythonAsyncRuntimeProject } from "./runtime/generated-python-async-runtime-project";
+import { GeneratedPythonRuntimeBaseProject } from "./runtime/generated-python-runtime-base-project";
+import { GeneratedPythonRuntimeProject, GeneratedPythonTypesProjectOptions } from "./runtime/generated-python-runtime-project";
+import { GeneratedTypescriptAsyncRuntimeProject } from "./runtime/generated-typescript-async-runtime-project";
+import { GeneratedTypescriptRuntimeBaseProject } from "./runtime/generated-typescript-runtime-base-project";
+import { GeneratedTypescriptRuntimeProject, GeneratedTypescriptTypesProjectOptions } from "./runtime/generated-typescript-runtime-project";
+import { TypeSafeApiAsyncModelBuildOutputOptions } from "../model/type-safe-api-async-model-build";
+import { TypeSafeApiModelBuildOutputOptions } from "../model/type-safe-api-model-build";
+import { TypeSafeApiModelProjectOptions } from "../model/type-safe-api-model-project";
+import { TypeSafeWebSocketApiModelProjectOptions } from "../model/type-safe-websocket-api-model-project";
+import { GeneratedDocumentationOptions, GeneratedWebSocketDocumentationOptions, ModelProject, WebSocketModelProject } from "../types";
+type CommonProjectOptions = "artifactId" | "generateClient" | "groupId" | "moduleName" | "name" | "outdir" | "specPath";
+export interface GenerateProjectsOptions {
+    /**
+     * The parent project for the generated types
+     */
+    readonly parent: Project;
+    /**
+     * Whether the infrastructure and types projects are parented by an monorepo or not
+     */
+    readonly isWithinMonorepo?: boolean;
+    /**
+     * The name of the api package, used to infer package names unless overrides are specified
+     */
+    readonly parentPackageName: string;
+    /**
+     * The directory in which to generate code for all packages
+     */
+    readonly generatedCodeDir: string;
+    /**
+     * Path to the parsed spec file
+     * We use the parsed spec such that refs are resolved to support multi-file specs
+     */
+    readonly parsedSpecPath: string;
+}
+/**
+ * Options for generating types
+ */
+export interface GenerateRuntimeProjectsOptions extends GenerateProjectsOptions {
+    /**
+     * Options for the typescript project.
+     * These will override any inferred properties (such as the package name).
+     */
+    readonly typescriptOptions: Omit<GeneratedTypescriptTypesProjectOptions, CommonProjectOptions>;
+    /**
+     * Options for the python project
+     * These will override any inferred properties (such as the package name).
+     */
+    readonly pythonOptions: Omit<GeneratedPythonTypesProjectOptions, CommonProjectOptions>;
+    /**
+     * Options for the java project
+     * These will override any inferred properties (such as the package name).
+     */
+    readonly javaOptions: Omit<GeneratedJavaTypesProjectOptions, CommonProjectOptions>;
+}
+export interface GenerateLanguageProjectOptions extends GenerateProjectsOptions {
+    /**
+     * Options for the typescript project.
+     * These will override any inferred properties (such as the package name).
+     */
+    readonly typescriptOptions: Omit<GeneratedTypescriptTypesProjectOptions, CommonProjectOptions> & Record<string, any>;
+    /**
+     * Options for the python project
+     * These will override any inferred properties (such as the package name).
+     */
+    readonly pythonOptions: Omit<GeneratedPythonTypesProjectOptions, CommonProjectOptions> & Record<string, any>;
+    /**
+     * Options for the java project
+     * These will override any inferred properties (such as the package name).
+     */
+    readonly javaOptions: Omit<GeneratedJavaTypesProjectOptions, CommonProjectOptions> & Record<string, any>;
+}
+/**
+ * Options for generating libraries
+ */
+export interface GenerateLibraryProjectsOptions extends GenerateProjectsOptions {
+    /**
+     * Options for the react query hooks project
+     * These will override any inferred properties (such as the package name)
+     */
+    readonly typescriptReactQueryHooksOptions: Omit<GeneratedTypescriptReactQueryHooksProjectOptions, CommonProjectOptions>;
+}
+/**
+ * Options for generating websocket libraries
+ */
+export interface GenerateAsyncLibraryProjectsOptions extends GenerateProjectsOptions {
+    /**
+     * Options for the typescript websocket client project
+     * These will override any inferred properties (such as the package name)
+     */
+    readonly typescriptWebSocketClientOptions: Omit<TypescriptWebsocketClientLibraryOptions, CommonProjectOptions>;
+    /**
+     * Options for the typescript websocket hooks project
+     * These will override any inferred properties (such as the package name)
+     */
+    readonly typescriptWebSocketHooksOptions: Omit<TypescriptWebsocketHooksLibraryOptions, CommonProjectOptions | "clientPackageName"> & Partial<Pick<TypescriptWebsocketHooksLibraryOptions, "clientPackageName">>;
+}
+type LanguageProjectConstructors = Record<Language, new (...args: any[]) => Project>;
+/**
+ * Generated handlers projects
+ */
+export interface GeneratedHandlersProjects {
+    /**
+     * Java handlers project
+     */
+    readonly java?: GeneratedJavaHandlersBaseProject;
+    /**
+     * Python handlers project
+     */
+    readonly python?: GeneratedPythonHandlersBaseProject;
+    /**
+     * TypeScript handlers project
+     */
+    readonly typescript?: GeneratedTypescriptHandlersBaseProject;
+}
+export interface GenerateInfraProjectOptions extends GenerateRuntimeProjectsOptions {
+    /**
+     * Generated runtime projects
+     */
+    readonly generatedRuntimes: {
+        readonly java?: GeneratedJavaRuntimeBaseProject;
+        readonly python?: GeneratedPythonRuntimeBaseProject;
+        readonly typescript?: GeneratedTypescriptRuntimeBaseProject;
+    };
+    readonly generatedHandlers: GeneratedHandlersProjects;
+}
+/**
+ * Returns a generated infrastructure project for the given language
+ */
+export declare const generateInfraProject: (language: Language, options: GenerateInfraProjectOptions) => Project;
+/**
+ * Returns a generated async infrastructure project for the given language
+ */
+export declare const generateAsyncInfraProject: (language: Language, options: GenerateInfraProjectOptions) => Project;
+export declare const _generateInfraProject: (language: Language, projectConstructors: LanguageProjectConstructors, options: GenerateInfraProjectOptions) => Project;
+export interface GenerateHandlersBaseProjectOptions extends GenerateRuntimeProjectsOptions {
+    /**
+     * Generated runtime projects
+     */
+    readonly generatedRuntimes: {
+        readonly java?: GeneratedJavaRuntimeBaseProject;
+        readonly python?: GeneratedPythonRuntimeBaseProject;
+        readonly typescript?: GeneratedTypescriptRuntimeBaseProject;
+    };
+}
+export interface GenerateHandlersProjectOptions extends GenerateHandlersBaseProjectOptions {
+    /**
+     * Generated runtime projects
+     */
+    readonly generatedRuntimes: {
+        readonly java?: GeneratedJavaRuntimeProject;
+        readonly python?: GeneratedPythonRuntimeProject;
+        readonly typescript?: GeneratedTypescriptRuntimeProject;
+    };
+}
+export interface GenerateAsyncHandlersProjectOptions extends GenerateHandlersBaseProjectOptions {
+    /**
+     * Generated runtime projects
+     */
+    readonly generatedRuntimes: {
+        readonly java?: GeneratedJavaAsyncRuntimeProject;
+        readonly python?: GeneratedPythonAsyncRuntimeProject;
+        readonly typescript?: GeneratedTypescriptAsyncRuntimeProject;
+    };
+}
+/**
+ * Create handlers projects in the given languages
+ * @param languages the languages to generate for
+ * @param options options for the projects to be created
+ */
+export declare const generateHandlersProjects: (languages: Language[], options: GenerateHandlersProjectOptions) => {
+    [language: string]: Project;
+};
+/**
+ * Create async handlers projects in the given languages
+ * @param languages the languages to generate for
+ * @param options options for the projects to be created
+ */
+export declare const generateAsyncHandlersProjects: (languages: Language[], options: GenerateAsyncHandlersProjectOptions) => {
+    [language: string]: Project;
+};
+/**
+ * Create runtime projects in the given languages
+ * @param languages the languages to generate for
+ * @param options options for the projects to be created
+ */
+export declare const generateRuntimeProjects: (languages: Language[], options: GenerateRuntimeProjectsOptions) => {
+    [language: string]: Project;
+};
+/**
+ * Create async runtime projects in the given languages
+ * @param languages the languages to generate for
+ * @param options options for the projects to be created
+ */
+export declare const generateAsyncRuntimeProjects: (languages: Language[], options: GenerateRuntimeProjectsOptions) => {
+    [language: string]: Project;
+};
+/**
+ * Create library projects
+ * @param libraries the libraries to generate for
+ * @param options options for the projects to be created
+ */
+export declare const generateLibraryProjects: (libraries: Library[], options: GenerateLibraryProjectsOptions) => {
+    [library: string]: Project;
+};
+export interface CommonModelProjectOptions {
+    readonly name: string;
+    readonly parent?: Project;
+    readonly outdir: string;
+    readonly defaultReleaseBranch: string;
+    readonly packageManager: NodePackageManager;
+}
+export interface GenerateModelProjectOptions extends CommonModelProjectOptions, TypeSafeApiModelProjectOptions, TypeSafeApiModelBuildOutputOptions {
+}
+export declare const generateModelProject: ({ modelLanguage, modelOptions, ...options }: GenerateModelProjectOptions) => ModelProject;
+export interface GenerateAsyncModelProjectOptions extends CommonModelProjectOptions, TypeSafeWebSocketApiModelProjectOptions, TypeSafeApiAsyncModelBuildOutputOptions, TypeSafeApiModelBuildOutputOptions {
+}
+export declare const generateAsyncModelProject: ({ modelLanguage, modelOptions, ...options }: GenerateAsyncModelProjectOptions) => WebSocketModelProject;
+/**
+ * Create library projects
+ * @param libraries the libraries to generate for
+ * @param options options for the projects to be created
+ */
+export declare const generateAsyncLibraryProjects: (libraries: WebSocketLibrary[], options: GenerateAsyncLibraryProjectsOptions) => {
+    [library: string]: Project;
+};
+export interface GenerateDocsProjectsOptions {
+    /**
+     * The parent project for the generated clients
+     */
+    readonly parent: Project;
+    /**
+     * The name of the api package, used to infer doc package names
+     */
+    readonly parentPackageName: string;
+    /**
+     * The directory in which to generate docs for all formats
+     */
+    readonly generatedDocsDir: string;
+    /**
+     * Path to the parsed spec file
+     * We use the parsed spec such that refs are resolved to support multi-file specs
+     */
+    readonly parsedSpecPath: string;
+    /**
+     * User-specified options for generated documentation
+     */
+    readonly documentationOptions?: GeneratedDocumentationOptions;
+    /**
+     * User-specified options for generated websocket documentation
+     */
+    readonly asyncDocumentationOptions?: GeneratedWebSocketDocumentationOptions;
+}
+export declare const generateDocsProjects: (formats: (DocumentationFormat | WebSocketDocumentationFormat)[], options: GenerateDocsProjectsOptions) => {
+    [language: string]: Project;
+};
+export {};

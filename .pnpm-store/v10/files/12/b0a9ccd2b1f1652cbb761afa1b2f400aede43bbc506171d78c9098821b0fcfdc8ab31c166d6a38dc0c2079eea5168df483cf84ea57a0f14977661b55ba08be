@@ -1,0 +1,35 @@
+import { Project } from "projen";
+import { SmithyProjectDefinition } from "./smithy-project-definition";
+import { Language } from "../../languages";
+import { SmithyModelOptions } from "../../types";
+/**
+ * Options for a smithy service project definition
+ */
+export interface SmithyServiceProjectDefinitionOptions {
+    /**
+     * Smithy engine options
+     */
+    readonly smithyOptions: SmithyModelOptions;
+    /**
+     * The languages users have specified for handler projects (if any)
+     */
+    readonly handlerLanguages?: Language[];
+}
+/**
+ * Creates a project which defines a Smithy service, and transforms the Smithy model to OpenAPI
+ */
+export declare class SmithyServiceProjectDefinition extends SmithyProjectDefinition {
+    /**
+     * Path to the generated OpenAPI specification, relative to the project outdir
+     */
+    readonly openApiSpecificationPath: string;
+    /**
+     * Path to the json Smithy model, relative to the project outdir
+     */
+    readonly smithyJsonModelPath: string;
+    /**
+     * Directory of generated model source code
+     */
+    readonly generatedModelDir: string;
+    constructor(project: Project, options: SmithyServiceProjectDefinitionOptions);
+}

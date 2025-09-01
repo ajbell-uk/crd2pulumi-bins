@@ -1,0 +1,149 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RuntimeVersionUtils = void 0;
+const languages_1 = require("../languages");
+/**
+ * Utilities for java runtime versions
+ */
+class JavaRuntimeVersionUtils {
+}
+/**
+ * Get the maven compile options for the given java runtime
+ */
+JavaRuntimeVersionUtils.getMavenCompileOptions = (runtimeVersion) => {
+    switch (runtimeVersion) {
+        case languages_1.JavaVersion.JAVA_21:
+            return { source: "21", target: "21" };
+        case languages_1.JavaVersion.JAVA_17:
+            return { source: "17", target: "17" };
+        case languages_1.JavaVersion.JAVA_11:
+            return { source: "11", target: "11" };
+        case languages_1.JavaVersion.JAVA_8:
+        case undefined: // For backwards compatibility the default source and compile target version is Java 8, running on the Java 17 runtime
+            return { source: "1.8", target: "1.8" };
+        default:
+            throw new Error(`Unsupported runtime version ${runtimeVersion}`);
+    }
+};
+/**
+ * Return the CDK lambda runtime constant for the given java version
+ * @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda.Runtime.html
+ */
+JavaRuntimeVersionUtils.getLambdaRuntime = (runtimeVersion) => {
+    switch (runtimeVersion) {
+        case languages_1.JavaVersion.JAVA_8:
+            return "JAVA_8_CORRETTO";
+        case languages_1.JavaVersion.JAVA_11:
+            return "JAVA_11";
+        case languages_1.JavaVersion.JAVA_17:
+            return "JAVA_17";
+        case languages_1.JavaVersion.JAVA_21:
+            return "JAVA_21";
+        default:
+            throw new Error(`Unsupported java runtime ${runtimeVersion}`);
+    }
+};
+/**
+ * Utilities for node runtime versions
+ */
+class NodeRuntimeVersionUtils {
+}
+/**
+ * Return the CDK lambda runtime constant for the given node version
+ * @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda.Runtime.html
+ */
+NodeRuntimeVersionUtils.getLambdaRuntime = (runtimeVersion) => {
+    switch (runtimeVersion) {
+        case languages_1.NodeVersion.NODE_18:
+            return "NODEJS_18_X";
+        case languages_1.NodeVersion.NODE_20:
+            return "NODEJS_20_X";
+        case languages_1.NodeVersion.NODE_22:
+            return "NODEJS_22_X";
+        default:
+            throw new Error(`Unsupported node runtime ${runtimeVersion}`);
+    }
+};
+/**
+ * Return the target node version for esbuild
+ * @see https://esbuild.github.io/api/#target
+ */
+NodeRuntimeVersionUtils.getEsbuildNodeTarget = (runtimeVersion) => {
+    switch (runtimeVersion) {
+        case languages_1.NodeVersion.NODE_22:
+            return "node22";
+        case languages_1.NodeVersion.NODE_20:
+            return "node20";
+        case languages_1.NodeVersion.NODE_18:
+            return "node18";
+        default:
+            throw new Error(`Unsupported node runtime ${runtimeVersion}`);
+    }
+};
+/**
+ * Utilities for python runtime versions
+ */
+class PythonRuntimeVersionUtils {
+}
+/**
+ * Return the CDK lambda runtime constant for the given python version
+ * @see https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda.Runtime.html
+ */
+PythonRuntimeVersionUtils.getLambdaRuntime = (runtimeVersion) => {
+    switch (runtimeVersion) {
+        case languages_1.PythonVersion.PYTHON_3_11:
+            return "PYTHON_3_11";
+        case languages_1.PythonVersion.PYTHON_3_12:
+            return "PYTHON_3_12";
+        case languages_1.PythonVersion.PYTHON_3_13:
+            return "PYTHON_3_13";
+        default:
+            throw new Error(`Unsupported python runtime ${runtimeVersion}`);
+    }
+};
+/**
+ * Return the version string used for a dependency on python
+ */
+PythonRuntimeVersionUtils.getPythonDependencyVersion = (runtimeVersion) => {
+    return `python@^${PythonRuntimeVersionUtils.getPythonVersionString(runtimeVersion)}`;
+};
+/**
+ * Return the version string used for packaging python lambdas with pip
+ */
+PythonRuntimeVersionUtils.getPipPackagingPythonVersion = (runtimeVersion) => {
+    return PythonRuntimeVersionUtils.getPythonVersionString(runtimeVersion);
+};
+/**
+ * Return the version string for python
+ */
+PythonRuntimeVersionUtils.getPythonVersionString = (runtimeVersion) => {
+    switch (runtimeVersion) {
+        case languages_1.PythonVersion.PYTHON_3_13:
+            return "3.13";
+        case languages_1.PythonVersion.PYTHON_3_12:
+            return "3.12";
+        case languages_1.PythonVersion.PYTHON_3_11:
+            return "3.11";
+        default:
+            throw new Error(`Unsupported python runtime ${runtimeVersion}`);
+    }
+};
+/**
+ * A collection of utilities for runtime versions.
+ */
+class RuntimeVersionUtils {
+}
+exports.RuntimeVersionUtils = RuntimeVersionUtils;
+/**
+ * Java utilities
+ */
+RuntimeVersionUtils.JAVA = JavaRuntimeVersionUtils;
+/**
+ * Node utilities
+ */
+RuntimeVersionUtils.NODE = NodeRuntimeVersionUtils;
+/**
+ * Python utilities
+ */
+RuntimeVersionUtils.PYTHON = PythonRuntimeVersionUtils;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicnVudGltZS12ZXJzaW9uLXV0aWxzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsicnVudGltZS12ZXJzaW9uLXV0aWxzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUdBLDRDQUF1RTtBQUV2RTs7R0FFRztBQUNILE1BQU0sdUJBQXVCOztBQUMzQjs7R0FFRztBQUNXLDhDQUFzQixHQUFHLENBQ3JDLGNBQTRCLEVBQ1AsRUFBRTtJQUN2QixRQUFRLGNBQWMsRUFBRSxDQUFDO1FBQ3ZCLEtBQUssdUJBQVcsQ0FBQyxPQUFPO1lBQ3RCLE9BQU8sRUFBRSxNQUFNLEVBQUUsSUFBSSxFQUFFLE1BQU0sRUFBRSxJQUFJLEVBQUUsQ0FBQztRQUN4QyxLQUFLLHVCQUFXLENBQUMsT0FBTztZQUN0QixPQUFPLEVBQUUsTUFBTSxFQUFFLElBQUksRUFBRSxNQUFNLEVBQUUsSUFBSSxFQUFFLENBQUM7UUFDeEMsS0FBSyx1QkFBVyxDQUFDLE9BQU87WUFDdEIsT0FBTyxFQUFFLE1BQU0sRUFBRSxJQUFJLEVBQUUsTUFBTSxFQUFFLElBQUksRUFBRSxDQUFDO1FBQ3hDLEtBQUssdUJBQVcsQ0FBQyxNQUFNLENBQUM7UUFDeEIsS0FBSyxTQUFTLEVBQUUsc0hBQXNIO1lBQ3BJLE9BQU8sRUFBRSxNQUFNLEVBQUUsS0FBSyxFQUFFLE1BQU0sRUFBRSxLQUFLLEVBQUUsQ0FBQztRQUMxQztZQUNFLE1BQU0sSUFBSSxLQUFLLENBQUMsK0JBQStCLGNBQWMsRUFBRSxDQUFDLENBQUM7SUFDckUsQ0FBQztBQUNILENBQUMsQ0FBQztBQUVGOzs7R0FHRztBQUNXLHdDQUFnQixHQUFHLENBQUMsY0FBMkIsRUFBVSxFQUFFO0lBQ3ZFLFFBQVEsY0FBYyxFQUFFLENBQUM7UUFDdkIsS0FBSyx1QkFBVyxDQUFDLE1BQU07WUFDckIsT0FBTyxpQkFBaUIsQ0FBQztRQUMzQixLQUFLLHVCQUFXLENBQUMsT0FBTztZQUN0QixPQUFPLFNBQVMsQ0FBQztRQUNuQixLQUFL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QXVCLENBQUM7QUFDN0M7O0dBRUc7QUFDVywwQkFBTSxHQUFHLHlCQUF5QixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLyohIENvcHlyaWdodCBbQW1hem9uLmNvbV0oaHR0cDovL2FtYXpvbi5jb20vKSwgSW5jLiBvciBpdHMgYWZmaWxpYXRlcy4gQWxsIFJpZ2h0cyBSZXNlcnZlZC5cblNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBBcGFjaGUtMi4wICovXG5pbXBvcnQgeyBNYXZlbkNvbXBpbGVPcHRpb25zIH0gZnJvbSBcInByb2plbi9saWIvamF2YVwiO1xuaW1wb3J0IHsgSmF2YVZlcnNpb24sIE5vZGVWZXJzaW9uLCBQeXRob25WZXJzaW9uIH0gZnJvbSBcIi4uL2xhbmd1YWdlc1wiO1xuXG4vKipcbiAqIFV0aWxpdGllcyBmb3IgamF2YSBydW50aW1lIHZlcnNpb25zXG4gKi9cbmNsYXNzIEphdmFSdW50aW1lVmVyc2lvblV0aWxzIHtcbiAgLyoqXG4gICAqIEdldCB0aGUgbWF2ZW4gY29tcGlsZSBvcHRpb25zIGZvciB0aGUgZ2l2ZW4gamF2YSBydW50aW1lXG4gICAqL1xuICBwdWJsaWMgc3RhdGljIGdldE1hdmVuQ29tcGlsZU9wdGlvbnMgPSAoXG4gICAgcnVudGltZVZlcnNpb24/OiBKYXZhVmVyc2lvblxuICApOiBNYXZlbkNvbXBpbGVPcHRpb25zID0+IHtcbiAgICBzd2l0Y2ggKHJ1bnRpbWVWZXJzaW9uKSB7XG4gICAgICBjYXNlIEphdmFWZXJzaW9uLkpBVkFfMjE6XG4gICAgICAgIHJldHVybiB7IHNvdXJjZTogXCIyMVwiLCB0YXJnZXQ6IFwiMjFcIiB9O1xuICAgICAgY2FzZSBKYXZhVmVyc2lvbi5KQVZBXzE3OlxuICAgICAgICByZXR1cm4geyBzb3VyY2U6IFwiMTdcIiwgdGFyZ2V0OiBcIjE3XCIgfTtcbiAgICAgIGNhc2UgSmF2YVZlcnNpb24uSkFWQV8xMTpcbiAgICAgICAgcmV0dXJuIHsgc291cmNlOiBcIjExXCIsIHRhcmdldDogXCIxMVwiIH07XG4gICAgICBjYXNlIEphdmFWZXJzaW9uLkpBVkFfODpcbiAgICAgIGNhc2UgdW5kZWZpbmVkOiAvLyBGb3IgYmFja3dhcmRzIGNvbXBhdGliaWxpdHkgdGhlIGRlZmF1bHQgc291cmNlIGFuZCBjb21waWxlIHRhcmdldCB2ZXJzaW9uIGlzIEphdmEgOCwgcnVubmluZyBvbiB0aGUgSmF2YSAxNyBydW50aW1lXG4gICAgICAgIHJldHVybiB7IHNvdXJjZTogXCIxLjhcIiwgdGFyZ2V0OiBcIjEuOFwiIH07XG4gICAgICBkZWZhdWx0OlxuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYFVuc3VwcG9ydGVkIHJ1bnRpbWUgdmVyc2lvbiAke3J1bnRpbWVWZXJzaW9ufWApO1xuICAgIH1cbiAgfTtcblxuICAvKipcbiAgICogUmV0dXJuIHRoZSBDREsgbGFtYmRhIHJ1bnRpbWUgY29uc3RhbnQgZm9yIHRoZSBnaXZlbiBqYXZhIHZlcnNpb25cbiAgICogQHNlZSBodHRwczovL2RvY3MuYXdzLmFtYXpvbi5jb20vY2RrL2FwaS92Mi9kb2NzL2F3cy1jZGstbGliLmF3c19sYW1iZGEuUnVudGltZS5odG1sXG4gICAqL1xuICBwdWJsaWMgc3RhdGljIGdldExhbWJkYVJ1bnRpbWUgPSAocnVudGltZVZlcnNpb246IEphdmFWZXJzaW9uKTogc3RyaW5nID0+IHtcbiAgICBzd2l0Y2ggKHJ1bnRpbWVWZXJzaW9uKSB7XG4gICAgICBjYXNlIEphdmFWZXJzaW9uLkpBVkFfODpcbiAgICAgICAgcmV0dXJuIFwiSkFWQV84X0NPUlJFVFRPXCI7XG4gICAgICBjYXNlIEphdmFWZXJzaW9uLkpBVkFfMTE6XG4gICAgICAgIHJldHVybiBcIkpBVkFfMTFcIjtcbiAgICAgIGNhc2UgSmF2YVZlcnNpb24uSkFWQV8xNzpcbiAgICAgICAgcmV0dXJuIFwiSkFWQV8xN1wiO1xuICAgICAgY2FzZSBKYXZhVmVyc2lvbi5KQVZBXzIxOlxuICAgICAgICByZXR1cm4gXCJKQVZBXzIxXCI7XG4gICAgICBkZWZhdWx0OlxuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYFVuc3VwcG9ydGVkIGphdmEgcnVudGltZSAke3J1bnRpbWVWZXJzaW9ufWApO1xuICAgIH1cbiAgfTtcbn1cblxuLyoqXG4gKiBVdGlsaXRpZXMgZm9yIG5vZGUgcnVudGltZSB2ZXJzaW9uc1xuICovXG5jbGFzcyBOb2RlUnVudGltZVZlcnNpb25VdGlscyB7XG4gIC8qKlxuICAgKiBSZXR1cm4gdGhlIENESyBsYW1iZGEgcnVudGltZSBjb25zdGFudCBmb3IgdGhlIGdpdmVuIG5vZGUgdmVyc2lvblxuICAgKiBAc2VlIGh0dHBzOi8vZG9jcy5hd3MuYW1hem9uLmNvbS9jZGsvYXBpL3YyL2RvY3MvYXdzLWNkay1saWIuYXdzX2xhbWJkYS5SdW50aW1lLmh0bWxcbiAgICovXG4gIHB1YmxpYyBzdGF0aWMgZ2V0TGFtYmRhUnVudGltZSA9IChydW50aW1lVmVyc2lvbjogTm9kZVZlcnNpb24pOiBzdHJpbmcgPT4ge1xuICAgIHN3aXRjaCAocnVudGltZVZlcnNpb24pIHtcbiAgICAgIGNhc2UgTm9kZVZlcnNpb24uTk9ERV8xODpcbiAgICAgICAgcmV0dXJuIFwiTk9ERUpTXzE4X1hcIjtcbiAgICAgIGNhc2UgTm9kZVZlcnNpb24uTk9ERV8yMDpcbiAgICAgICAgcmV0dXJuIFwiTk9ERUpTXzIwX1hcIjtcbiAgICAgIGNhc2UgTm9kZVZlcnNpb24uTk9ERV8yMjpcbiAgICAgICAgcmV0dXJuIFwiTk9ERUpTXzIyX1hcIjtcbiAgICAgIGRlZmF1bHQ6XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgVW5zdXBwb3J0ZWQgbm9kZSBydW50aW1lICR7cnVudGltZVZlcnNpb259YCk7XG4gICAgfVxuICB9O1xuXG4gIC8qKlxuICAgKiBSZXR1cm4gdGhlIHRhcmdldCBub2RlIHZlcnNpb24gZm9yIGVzYnVpbGRcbiAgICogQHNlZSBodHRwczovL2VzYnVpbGQuZ2l0aHViLmlvL2FwaS8jdGFyZ2V0XG4gICAqL1xuICBwdWJsaWMgc3RhdGljIGdldEVzYnVpbGROb2RlVGFyZ2V0ID0gKFxuICAgIHJ1bnRpbWVWZXJzaW9uOiBOb2RlVmVyc2lvblxuICApOiBzdHJpbmcgPT4ge1xuICAgIHN3aXRjaCAocnVudGltZVZlcnNpb24pIHtcbiAgICAgIGNhc2UgTm9kZVZlcnNpb24uTk9ERV8yMjpcbiAgICAgICAgcmV0dXJuIFwibm9kZTIyXCI7XG4gICAgICBjYXNlIE5vZGVWZXJzaW9uLk5PREVfMjA6XG4gICAgICAgIHJldHVybiBcIm5vZGUyMFwiO1xuICAgICAgY2FzZSBOb2RlVmVyc2lvbi5OT0RFXzE4OlxuICAgICAgICByZXR1cm4gXCJub2RlMThcIjtcbiAgICAgIGRlZmF1bHQ6XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgVW5zdXBwb3J0ZWQgbm9kZSBydW50aW1lICR7cnVudGltZVZlcnNpb259YCk7XG4gICAgfVxuICB9O1xufVxuXG4vKipcbiAqIFV0aWxpdGllcyBmb3IgcHl0aG9uIHJ1bnRpbWUgdmVyc2lvbnNcbiAqL1xuY2xhc3MgUHl0aG9uUnVudGltZVZlcnNpb25VdGlscyB7XG4gIC8qKlxuICAgKiBSZXR1cm4gdGhlIENESyBsYW1iZGEgcnVudGltZSBjb25zdGFudCBmb3IgdGhlIGdpdmVuIHB5dGhvbiB2ZXJzaW9uXG4gICAqIEBzZWUgaHR0cHM6Ly9kb2NzLmF3cy5hbWF6b24uY29tL2Nkay9hcGkvdjIvZG9jcy9hd3MtY2RrLWxpYi5hd3NfbGFtYmRhLlJ1bnRpbWUuaHRtbFxuICAgKi9cbiAgcHVibGljIHN0YXRpYyBnZXRMYW1iZGFSdW50aW1lID0gKHJ1bnRpbWVWZXJzaW9uOiBQeXRob25WZXJzaW9uKTogc3RyaW5nID0+IHtcbiAgICBzd2l0Y2ggKHJ1bnRpbWVWZXJzaW9uKSB7XG4gICAgICBjYXNlIFB5dGhvblZlcnNpb24uUFlUSE9OXzNfMTE6XG4gICAgICAgIHJldHVybiBcIlBZVEhPTl8zXzExXCI7XG4gICAgICBjYXNlIFB5dGhvblZlcnNpb24uUFlUSE9OXzNfMTI6XG4gICAgICAgIHJldHVybiBcIlBZVEhPTl8zXzEyXCI7XG4gICAgICBjYXNlIFB5dGhvblZlcnNpb24uUFlUSE9OXzNfMTM6XG4gICAgICAgIHJldHVybiBcIlBZVEhPTl8zXzEzXCI7XG4gICAgICBkZWZhdWx0OlxuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYFVuc3VwcG9ydGVkIHB5dGhvbiBydW50aW1lICR7cnVudGltZVZlcnNpb259YCk7XG4gICAgfVxuICB9O1xuXG4gIC8qKlxuICAgKiBSZXR1cm4gdGhlIHZlcnNpb24gc3RyaW5nIHVzZWQgZm9yIGEgZGVwZW5kZW5jeSBvbiBweXRob25cbiAgICovXG4gIHB1YmxpYyBzdGF0aWMgZ2V0UHl0aG9uRGVwZW5kZW5jeVZlcnNpb24gPSAoXG4gICAgcnVudGltZVZlcnNpb246IFB5dGhvblZlcnNpb25cbiAgKTogc3RyaW5nID0+IHtcbiAgICByZXR1cm4gYHB5dGhvbkBeJHtQeXRob25SdW50aW1lVmVyc2lvblV0aWxzLmdldFB5dGhvblZlcnNpb25TdHJpbmcoXG4gICAgICBydW50aW1lVmVyc2lvblxuICAgICl9YDtcbiAgfTtcblxuICAvKipcbiAgICogUmV0dXJuIHRoZSB2ZXJzaW9uIHN0cmluZyB1c2VkIGZvciBwYWNrYWdpbmcgcHl0aG9uIGxhbWJkYXMgd2l0aCBwaXBcbiAgICovXG4gIHB1YmxpYyBzdGF0aWMgZ2V0UGlwUGFja2FnaW5nUHl0aG9uVmVyc2lvbiA9IChcbiAgICBydW50aW1lVmVyc2lvbjogUHl0aG9uVmVyc2lvblxuICApOiBzdHJpbmcgPT4ge1xuICAgIHJldHVybiBQeXRob25SdW50aW1lVmVyc2lvblV0aWxzLmdldFB5dGhvblZlcnNpb25TdHJpbmcocnVudGltZVZlcnNpb24pO1xuICB9O1xuXG4gIC8qKlxuICAgKiBSZXR1cm4gdGhlIHZlcnNpb24gc3RyaW5nIGZvciBweXRob25cbiAgICovXG4gIHByaXZhdGUgc3RhdGljIGdldFB5dGhvblZlcnNpb25TdHJpbmcgPSAoXG4gICAgcnVudGltZVZlcnNpb246IFB5dGhvblZlcnNpb25cbiAgKTogc3RyaW5nID0+IHtcbiAgICBzd2l0Y2ggKHJ1bnRpbWVWZXJzaW9uKSB7XG4gICAgICBjYXNlIFB5dGhvblZlcnNpb24uUFlUSE9OXzNfMTM6XG4gICAgICAgIHJldHVybiBcIjMuMTNcIjtcbiAgICAgIGNhc2UgUHl0aG9uVmVyc2lvbi5QWVRIT05fM18xMjpcbiAgICAgICAgcmV0dXJuIFwiMy4xMlwiO1xuICAgICAgY2FzZSBQeXRob25WZXJzaW9uLlBZVEhPTl8zXzExOlxuICAgICAgICByZXR1cm4gXCIzLjExXCI7XG4gICAgICBkZWZhdWx0OlxuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYFVuc3VwcG9ydGVkIHB5dGhvbiBydW50aW1lICR7cnVudGltZVZlcnNpb259YCk7XG4gICAgfVxuICB9O1xufVxuXG4vKipcbiAqIEEgY29sbGVjdGlvbiBvZiB1dGlsaXRpZXMgZm9yIHJ1bnRpbWUgdmVyc2lvbnMuXG4gKi9cbmV4cG9ydCBjbGFzcyBSdW50aW1lVmVyc2lvblV0aWxzIHtcbiAgLyoqXG4gICAqIEphdmEgdXRpbGl0aWVzXG4gICAqL1xuICBwdWJsaWMgc3RhdGljIEpBVkEgPSBKYXZhUnVudGltZVZlcnNpb25VdGlscztcbiAgLyoqXG4gICAqIE5vZGUgdXRpbGl0aWVzXG4gICAqL1xuICBwdWJsaWMgc3RhdGljIE5PREUgPSBOb2RlUnVudGltZVZlcnNpb25VdGlscztcbiAgLyoqXG4gICAqIFB5dGhvbiB1dGlsaXRpZXNcbiAgICovXG4gIHB1YmxpYyBzdGF0aWMgUFlUSE9OID0gUHl0aG9uUnVudGltZVZlcnNpb25VdGlscztcbn1cbiJdfQ==

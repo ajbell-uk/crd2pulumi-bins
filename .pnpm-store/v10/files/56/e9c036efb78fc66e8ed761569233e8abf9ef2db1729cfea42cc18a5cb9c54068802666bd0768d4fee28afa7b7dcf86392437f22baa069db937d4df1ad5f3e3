@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BasePalette = void 0;
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+var BasePalette;
+(function (BasePalette) {
+    BasePalette["WHITE"] = "#FFFFFF";
+    BasePalette["BLACK"] = "#000000";
+    BasePalette["DARK_BLUE"] = "#232F3E";
+    BasePalette["BLUE"] = "#4472C4";
+    BasePalette["LIGHT_BLUE"] = "#5B9BD5";
+    BasePalette["ORANGE"] = "#ED7D31";
+    BasePalette["LIGHT_GRAY"] = "#A5A5A5";
+    BasePalette["GREEN"] = "#70AD47";
+    BasePalette["YELLOW"] = "#FFC000";
+})(BasePalette || (exports.BasePalette = BasePalette = {}));
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicGFsZXR0ZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbInBhbGV0dGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUE7c0NBQ3NDO0FBQ3RDLElBQVksV0FVWDtBQVZELFdBQVksV0FBVztJQUNyQixnQ0FBaUIsQ0FBQTtJQUNqQixnQ0FBaUIsQ0FBQTtJQUNqQixvQ0FBcUIsQ0FBQTtJQUNyQiwrQkFBZ0IsQ0FBQTtJQUNoQixxQ0FBc0IsQ0FBQTtJQUN0QixpQ0FBa0IsQ0FBQTtJQUNsQixxQ0FBc0IsQ0FBQTtJQUN0QixnQ0FBaUIsQ0FBQTtJQUNqQixpQ0FBa0IsQ0FBQTtBQUNwQixDQUFDLEVBVlcsV0FBVywyQkFBWCxXQUFXLFFBVXRCIiwic291cmNlc0NvbnRlbnQiOlsiLyohIENvcHlyaWdodCBbQW1hem9uLmNvbV0oaHR0cDovL2FtYXpvbi5jb20vKSwgSW5jLiBvciBpdHMgYWZmaWxpYXRlcy4gQWxsIFJpZ2h0cyBSZXNlcnZlZC5cblNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBBcGFjaGUtMi4wICovXG5leHBvcnQgZW51bSBCYXNlUGFsZXR0ZSB7XG4gIFdISVRFID0gXCIjRkZGRkZGXCIsXG4gIEJMQUNLID0gXCIjMDAwMDAwXCIsXG4gIERBUktfQkxVRSA9IFwiIzIzMkYzRVwiLFxuICBCTFVFID0gXCIjNDQ3MkM0XCIsXG4gIExJR0hUX0JMVUUgPSBcIiM1QjlCRDVcIixcbiAgT1JBTkdFID0gXCIjRUQ3RDMxXCIsXG4gIExJR0hUX0dSQVkgPSBcIiNBNUE1QTVcIixcbiAgR1JFRU4gPSBcIiM3MEFENDdcIixcbiAgWUVMTE9XID0gXCIjRkZDMDAwXCIsXG59XG4iXX0=

@@ -1,0 +1,38 @@
+"use strict";
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TypeSpecModelProject = void 0;
+const JSII_RTTI_SYMBOL_1 = Symbol.for("jsii.rtti");
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+const javascript_1 = require("projen/lib/javascript");
+const type_spec_definition_1 = require("./type-spec-definition");
+const type_safe_api_command_environment_1 = require("../../codegen/components/type-safe-api-command-environment");
+const types_1 = require("../../types");
+const model_readme_1 = require("../model-readme");
+const type_safe_api_model_build_1 = require("../type-safe-api-model-build");
+/**
+ * Model project for defining a REST API in TypeSpec
+ */
+class TypeSpecModelProject extends javascript_1.NodeProject {
+    constructor(options) {
+        super(options);
+        type_safe_api_command_environment_1.TypeSafeApiCommandEnvironment.ensure(this);
+        // Add the TypeSpec model
+        this.definition = new type_spec_definition_1.TypeSpecDefinition(this, options);
+        this.apiName = options.typeSpecOptions.namespace;
+        // Add the model build to parse/bundle our generated OpenAPI specification
+        new type_safe_api_model_build_1.TypeSafeApiModelBuild(this, {
+            openApiSpecificationPath: this.definition.openApiSpecificationPath,
+            parsedSpecFile: options.parsedSpecFile,
+        });
+        new model_readme_1.ModelReadme(this, {
+            modelLanguage: types_1.ModelLanguage.TYPESPEC,
+            apiType: "rest",
+        });
+    }
+}
+exports.TypeSpecModelProject = TypeSpecModelProject;
+_a = JSII_RTTI_SYMBOL_1;
+TypeSpecModelProject[_a] = { fqn: "@aws/pdk.type_safe_api.TypeSpecModelProject", version: "0.26.14" };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidHlwZS1zcGVjLW1vZGVsLXByb2plY3QuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJ0eXBlLXNwZWMtbW9kZWwtcHJvamVjdC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUFBO3NDQUNzQztBQUN0QyxzREFBd0U7QUFDeEUsaUVBR2dDO0FBQ2hDLGtIQUEyRztBQUMzRyx1Q0FBNEM7QUFDNUMsa0RBQThDO0FBQzlDLDRFQUdzQztBQVV0Qzs7R0FFRztBQUNILE1BQWEsb0JBQXFCLFNBQVEsd0JBQVc7SUFJbkQsWUFBWSxPQUFvQztRQUM5QyxLQUFLLENBQUMsT0FBTyxDQUFDLENBQUM7UUFDZixpRUFBNkIsQ0FBQyxNQUFNLENBQUMsSUFBSSxDQUFDLENBQUM7UUFFM0MseUJBQXlCO1FBQ3pCLElBQUksQ0FBQyxVQUFVLEdBQUcsSUFBSSx5Q0FBa0IsQ0FBQyxJQUFJLEVBQUUsT0FBTyxDQUFDLENBQUM7UUFDeEQsSUFBSSxDQUFDLE9BQU8sR0FBRyxPQUFPLENBQUMsZUFBZSxDQUFDLFNBQVMsQ0FBQztRQUVqRCwwRUFBMEU7UUFDMUUsSUFBSSxpREFBcUIsQ0FBQyxJQUFJLEVBQUU7WUFDOUIsd0JBQXdCLEVBQUUsSUFBSSxDQUFDLFVBQVUsQ0FBQyx3QkFBd0I7WUFDbEUsY0FBYyxFQUFFLE9BQU8sQ0FBQyxjQUFjO1NBQ3ZDLENBQUMsQ0FBQztRQUVILElBQUksMEJBQVcsQ0FBQyxJQUFJLEVBQUU7WUFDcEIsYUFBYSxFQUFFLHFCQUFhLENBQUMsUUFBUTtZQUNyQyxPQUFPLEVBQUUsTUFBTTtTQUNoQixDQUFDLENBQUM7SUFDTCxDQUFDOztBQXRCSCxvREF1QkMiLCJzb3VyY2VzQ29udGVudCI6WyIvKiEgQ29weXJpZ2h0IFtBbWF6b24uY29tXShodHRwOi8vYW1hem9uLmNvbS8pLCBJbmMuIG9yIGl0cyBhZmZpbGlhdGVzLiBBbGwgUmlnaHRzIFJlc2VydmVkLlxuU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEFwYWNoZS0yLjAgKi9cbmltcG9ydCB7IE5vZGVQcm9qZWN0LCBOb2RlUHJvamVjdE9wdGlvbnMgfSBmcm9tIFwicHJvamVuL2xpYi9qYXZhc2NyaXB0XCI7XG5pbXBvcnQge1xuICBUeXBlU3BlY0RlZmluaXRpb24sXG4gIFR5cGVTcGVjRGVmaW5pdGlvbk9wdGlvbnMsXG59IGZyb20gXCIuL3R5cGUtc3BlYy1kZWZpbml0aW9uXCI7XG5pbXBvcnQgeyBUeXBlU2FmZUFwaUNvbW1hbmRFbnZpcm9ubWVudCB9IGZyb20gXCIuLi8uLi9jb2RlZ2VuL2NvbXBvbmVudHMvdHlwZS1zYWZlLWFwaS1jb21tYW5kLWVudmlyb25tZW50XCI7XG5pbXBvcnQgeyBNb2RlbExhbmd1YWdlIH0gZnJvbSBcIi4uLy4uL3R5cGVzXCI7XG5pbXBvcnQgeyBNb2RlbFJlYWRtZSB9IGZyb20gXCIuLi9tb2RlbC1yZWFkbWVcIjtcbmltcG9ydCB7XG4gIFR5cGVTYWZlQXBpTW9kZWxCdWlsZCxcbiAgVHlwZVNhZmVBcGlNb2RlbEJ1aWxkT3V0cHV0T3B0aW9ucyxcbn0gZnJvbSBcIi4uL3R5cGUtc2FmZS1hcGktbW9kZWwtYnVpbGRcIjtcblxuLyoqXG4gKiBPcHRpb25zIGZvciB0aGUgVHlwZVNwZWMgbW9kZWwgcHJvamVjdFxuICovXG5leHBvcnQgaW50ZXJmYWNlIFR5cGVTcGVjTW9kZWxQcm9qZWN0T3B0aW9uc1xuICBleHRlbmRzIE5vZGVQcm9qZWN0T3B0aW9ucyxcbiAgICBUeXBlU3BlY0RlZmluaXRpb25PcHRpb25zLFxuICAgIFR5cGVTYWZlQXBpTW9kZWxCdWlsZE91dHB1dE9wdGlvbnMge31cblxuLyoqXG4gKiBNb2RlbCBwcm9qZWN0IGZvciBkZWZpbmluZyBhIFJFU1QgQVBJIGluIFR5cGVTcGVjXG4gKi9cbmV4cG9ydCBjbGFzcyBUeXBlU3BlY01vZGVsUHJvamVjdCBleHRlbmRzIE5vZGVQcm9qZWN0IHtcbiAgcHVibGljIHJlYWRvbmx5IGFwaU5hbWU6IHN0cmluZztcbiAgcHVibGljIHJlYWRvbmx5IGRlZmluaXRpb246IFR5cGVTcGVjRGVmaW5pdGlvbjtcblxuICBjb25zdHJ1Y3RvcihvcHRpb25zOiBUeXBlU3BlY01vZGVsUHJvamVjdE9wdGlvbnMpIHtcbiAgICBzdXBlcihvcHRpb25zKTtcbiAgICBUeXBlU2FmZUFwaUNvbW1hbmRFbnZpcm9ubWVudC5lbnN1cmUodGhpcyk7XG5cbiAgICAvLyBBZGQgdGhlIFR5cGVTcGVjIG1vZGVsXG4gICAgdGhpcy5kZWZpbml0aW9uID0gbmV3IFR5cGVTcGVjRGVmaW5pdGlvbih0aGlzLCBvcHRpb25zKTtcbiAgICB0aGlzLmFwaU5hbWUgPSBvcHRpb25zLnR5cGVTcGVjT3B0aW9ucy5uYW1lc3BhY2U7XG5cbiAgICAvLyBBZGQgdGhlIG1vZGVsIGJ1aWxkIHRvIHBhcnNlL2J1bmRsZSBvdXIgZ2VuZXJhdGVkIE9wZW5BUEkgc3BlY2lmaWNhdGlvblxuICAgIG5ldyBUeXBlU2FmZUFwaU1vZGVsQnVpbGQodGhpcywge1xuICAgICAgb3BlbkFwaVNwZWNpZmljYXRpb25QYXRoOiB0aGlzLmRlZmluaXRpb24ub3BlbkFwaVNwZWNpZmljYXRpb25QYXRoLFxuICAgICAgcGFyc2VkU3BlY0ZpbGU6IG9wdGlvbnMucGFyc2VkU3BlY0ZpbGUsXG4gICAgfSk7XG5cbiAgICBuZXcgTW9kZWxSZWFkbWUodGhpcywge1xuICAgICAgbW9kZWxMYW5ndWFnZTogTW9kZWxMYW5ndWFnZS5UWVBFU1BFQyxcbiAgICAgIGFwaVR5cGU6IFwicmVzdFwiLFxuICAgIH0pO1xuICB9XG59XG4iXX0=

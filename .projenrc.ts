@@ -99,9 +99,6 @@ const root = new MonorepoTsProject({
   githubOptions: {
     downloadLfs: true,
   },
-  gitOptions: {
-    lfsPatterns: ['package/*/bin/*'],
-  },
   buildWorkflowOptions,
   biomeOptions,
   devDeps: ['@aws/pdk']

@@ -1,0 +1,33 @@
+import { PrepareApiSpecOptions } from "./prepare-spec";
+/**
+ * Represents an object location in an s3 bucket
+ */
+export interface S3Location {
+    /**
+     * The bucket in which the object resides
+     */
+    readonly bucket: string;
+    /**
+     * The object key
+     */
+    readonly key: string;
+}
+/**
+ * Properties required to prepare the api specification with the given integrations, authorizers, etc
+ */
+export interface PrepareApiSpecCustomResourceProperties extends PrepareApiSpecOptions {
+    /**
+     * The location from which to read the spec to prepare
+     */
+    readonly inputSpecLocation: S3Location;
+    /**
+     * The location to write the prepared spec. Note that the key is used as a prefix and the output location will
+     * include a hash.
+     */
+    readonly outputSpecLocation: S3Location;
+}
+/**
+ * Due to a bug in cloudformation, primitive types are coerced into strings! Coerce them back here.
+ * @see https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/1037
+ */
+export declare const ensurePrimitiveTypes: (options: PrepareApiSpecCustomResourceProperties) => PrepareApiSpecCustomResourceProperties;

@@ -1,0 +1,11 @@
+import * as reflect from 'jsii-reflect';
+import { ParameterSchema } from '../schema';
+import { Transpile } from '../transpile/transpile';
+export declare class Parameter {
+    private readonly transpile;
+    private readonly parameter;
+    private readonly transpiledParam;
+    private readonly transpiledCallable;
+    constructor(transpile: Transpile, parameter: reflect.Parameter);
+    toJson(): ParameterSchema;
+}

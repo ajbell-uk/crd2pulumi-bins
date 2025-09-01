@@ -1,0 +1,23 @@
+import { Project, ProjectOptions } from "projen";
+import { SmithyProjectDefinition } from "./smithy-project-definition";
+/**
+ * Options for a Smithy project
+ */
+export interface SmithyBaseProjectOptions extends ProjectOptions {
+}
+/**
+ * Base project for Smithy projects
+ */
+export declare abstract class SmithyBaseProject extends Project {
+    private readonly smithyDeps;
+    constructor(options: SmithyBaseProjectOptions);
+    /**
+     * Returns the smithy project definition
+     */
+    abstract smithyProjectDefinition(): SmithyProjectDefinition;
+    /**
+     * Add a dependency on other smithy projects
+     */
+    addSmithyDeps(...deps: SmithyBaseProject[]): void;
+    private allSmithyDeps;
+}

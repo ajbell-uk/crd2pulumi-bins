@@ -17,7 +17,6 @@
     "pre-compile": "pnpm exec projen pre-compile",
     "run-many": "pnpm exec projen run-many",
     "test": "pnpm exec projen test",
-    "update-bin": "pnpm exec projen update-bin",
     "upgrade-deps": "pnpm exec projen upgrade-deps",
     "watch": "pnpm exec projen watch",
     "install:ci": "pnpm exec projen install:ci",

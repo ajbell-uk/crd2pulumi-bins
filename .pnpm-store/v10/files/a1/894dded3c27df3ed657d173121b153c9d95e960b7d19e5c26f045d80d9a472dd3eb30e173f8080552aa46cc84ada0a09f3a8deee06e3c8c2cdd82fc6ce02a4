@@ -1,0 +1,86 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NestedStackCluster = exports.StackCluster = exports.StageCluster = exports.Cluster = exports.Container = exports.Subgraph = void 0;
+const Dot = require("ts-graphviz");
+const theme_1 = require("../theme");
+/**
+ * Subgraph class is the base diagram {@link Dot.Subgraph} entity, which is the base container
+ * for grouping {@link Dot.Node} entities.
+ * @internal
+ */
+class Subgraph extends Dot.Subgraph {
+    get linkChildren() {
+        return this._linkChildren;
+    }
+    constructor(id, label) {
+        super(id);
+        /** @internal */
+        this._linkChildren = true;
+        this.apply(theme_1.GraphTheme.instance.subgraph);
+        this.set("label", label);
+    }
+}
+exports.Subgraph = Subgraph;
+/**
+ * Container class is the base for styled diagram {@link Dot.Subgraph} entities,
+ * which defines a group of {@link Dot.Node} entities
+ * @internal
+ */
+class Container extends Subgraph {
+    constructor(node, prefix = "container") {
+        super(`${prefix}_${node.uuid}`, node.id);
+        this.set("style", "rounded,dashed");
+        this.graphNode = node;
+    }
+}
+exports.Container = Container;
+/**
+ * Cluster class is the base for styled diagram **cluster** {@link Dot.Subgraph} entities.
+ * @internal
+ */
+class Cluster extends Container {
+    /** @internal */
+    constructor(node, subprefix) {
+        super(node, "cluster" + (subprefix ? `_${subprefix}` : ""));
+        this.apply(theme_1.GraphTheme.instance.cluster);
+        this._linkChildren = false;
+    }
+}
+exports.Cluster = Cluster;
+/**
+ * StageCluster class defines a {@link Dot.Subgraph} based on a {@link Graph.StageNode}
+ * @internal
+ */
+class StageCluster extends Cluster {
+    /** @internal */
+    constructor(node, subprefix = "stage") {
+        super(node, subprefix);
+        this.apply(theme_1.GraphTheme.instance.stage);
+    }
+}
+exports.StageCluster = StageCluster;
+/**
+ * StackCluster class defines a {@link Dot.Subgraph} based on a {@link Graph.StackNode}
+ * @internal
+ */
+class StackCluster extends Cluster {
+    /** @internal */
+    constructor(node, subprefix = "stack") {
+        super(node, subprefix);
+        this.apply(theme_1.GraphTheme.instance.stack);
+    }
+}
+exports.StackCluster = StackCluster;
+/**
+ * NestedStackCluster class defines a {@link Dot.Subgraph} based on a {@link Graph.NestedStackNode}
+ * @internal
+ */
+class NestedStackCluster extends StackCluster {
+    /** @internal */
+    constructor(node) {
+        super(node, "nstack");
+        this.apply(theme_1.GraphTheme.instance.nestedStack);
+    }
+}
+exports.NestedStackCluster = NestedStackCluster;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3ViZ3JhcGhzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsic3ViZ3JhcGhzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUdBLG1DQUFtQztBQUNuQyxvQ0FBc0M7QUFFdEM7Ozs7R0FJRztBQUNILE1BQWEsUUFBUyxTQUFRLEdBQUcsQ0FBQyxRQUFRO0lBSXhDLElBQUksWUFBWTtRQUNkLE9BQU8sSUFBSSxDQUFDLGFBQWEsQ0FBQztJQUM1QixDQUFDO0lBRUQsWUFBWSxFQUFVLEVBQUUsS0FBYTtRQUNuQyxLQUFLLENBQUMsRUFBRSxDQUFDLENBQUM7UUFSWixnQkFBZ0I7UUFDTixrQkFBYSxHQUFZLElBQUksQ0FBQztRQVN0QyxJQUFJLENBQUMsS0FBSyxDQUFDLGtCQUFVLENBQUMsUUFBUSxDQUFDLFFBQVEsQ0FBQyxDQUFDO1FBRXpDLElBQUksQ0FBQyxHQUFHLENBQUMsT0FBTyxFQUFFLEtBQUssQ0FBQyxDQUFDO0lBQzNCLENBQUM7Q0FDRjtBQWZELDRCQWVDO0FBRUQ7Ozs7R0FJRztBQUNILE1BQWEsU0FBVSxTQUFRLFFBQVE7SUFHckMsWUFBWSxJQUFnQixFQUFFLFNBQWlCLFdBQVc7UUFDeEQsS0FBSyxDQUFDLEdBQUcsTUFBTSxJQUFJLElBQUksQ0FBQyxJQUFJLEVBQUUsRUFBRSxJQUFJLENBQUMsRUFBRSxDQUFDLENBQUM7UUFFekMsSUFBSSxDQUFDLEdBQUcsQ0FBQyxPQUFPLEVBQUUsZ0JBQWdCLENBQUMsQ0FBQztRQUVwQyxJQUFJLENBQUMsU0FBUyxHQUFHLElBQUksQ0FBQztJQUN4QixDQUFDO0NBQ0Y7QUFWRCw4QkFVQztBQUVEOzs7R0FHRztBQUNILE1BQWEsT0FBUSxTQUFRLFNBQVM7SUFDcEMsZ0JBQWdCO0lBQ2hCLFlBQVksSUFBZ0IsRUFBRSxTQUFrQjtRQUM5QyxLQUFLLENBQUMsSUFBSSxFQUFFLFNBQVMsR0FBRyxDQUFDLFNBQVMsQ0FBQyxDQUFDLENBQUMsSUFBSSxTQUFTLEVBQUUsQ0FBQyxDQUFDLENBQUMsRUFBRSxDQUFDLENBQUMsQ0FBQztRQUU1RCxJQUFJLENBQUMsS0FBSyxDQUFDLGtCQUFVLENBQUMsUUFBUSxDQUFDLE9BQU8sQ0FBQyxDQUFDO1FBRXhDLElBQUksQ0FBQyxhQUFhLEdBQUcsS0FBSyxDQUFDO0lBQzdCLENBQUM7Q0FDRjtBQVRELDBCQVNDO0FBRUQ7OztHQUdHO0FBQ0gsTUFBYSxZQUFhLFNBQVEsT0FBTztJQUN2QyxnQkFBZ0I7SUFDaEIsWUFBWSxJQUFxQixFQUFFLFlBQW9CLE9BQU87UUFDNUQsS0FBSyxDQUFDLElBQUksRUFBRSxTQUFTLENBQUMsQ0FBQztRQUV2QixJQUFJLENBQUMsS0FBSyxDQUFDLGtCQUFVLENBQUMsUUFBUSxDQUFDLEtBQUssQ0FBQyxDQUFDO0lBQ3hDLENBQUM7Q0FDRjtBQVBELG9DQU9DO0FBRUQ7OztHQUdHO0FBQ0gsTUFBYSxZQUFhLFNBQVEsT0FBTztJQUN2QyxnQkFBZ0I7SUFDaEIsWUFBWSxJQUFxQixFQUFFLFlBQW9CLE9BQU87UUFDNUQsS0FBSyxDQUFDLElBQUksRUFBRSxTQUFTLENBQUMsQ0FBQztRQUV2QixJQUFJLENBQUMsS0FBSyxDQUFDLGtCQUFVLENBQUMsUUFBUSxDQUFDLEtBQUssQ0FBQyxDQUFDO0lBQ3hDLENBQUM7Q0FDRjtBQVBELG9DQU9DO0FBRUQ7OztHQUdHO0FBQ0gsTUFBYSxrQkFBbUIsU0FBUSxZQUFZO0lBQ2xELGdCQUFnQjtJQUNoQixZQUFZLElBQTJCO1FBQ3JDLEtBQUssQ0FBQyxJQUFJLEVBQUUsUUFBUSxDQUFDLENBQUM7UUFFdEIsSUFBSSxDQUFDLEtBQUssQ0FBQyxrQkFBVSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsQ0FBQztJQUM5QyxDQUFDO0NBQ0Y7QUFQRCxnREFPQyIsInNvdXJjZXNDb250ZW50IjpbIi8qISBDb3B5cmlnaHQgW0FtYXpvbi5jb21dKGh0dHA6Ly9hbWF6b24uY29tLyksIEluYy4gb3IgaXRzIGFmZmlsaWF0ZXMuIEFsbCBSaWdodHMgUmVzZXJ2ZWQuXG5TUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogQXBhY2hlLTIuMCAqL1xuaW1wb3J0IHsgR3JhcGggfSBmcm9tIFwiQGF3cy9jZGstZ3JhcGhcIjtcbmltcG9ydCAqIGFzIERvdCBmcm9tIFwidHMtZ3JhcGh2aXpcIjtcbmltcG9ydCB7IEdyYXBoVGhlbWUgfSBmcm9tIFwiLi4vdGhlbWVcIjtcblxuLyoqXG4gKiBTdWJncmFwaCBjbGFzcyBpcyB0aGUgYmFzZSBkaWFncmFtIHtAbGluayBEb3QuU3ViZ3JhcGh9IGVudGl0eSwgd2hpY2ggaXMgdGhlIGJhc2UgY29udGFpbmVyXG4gKiBmb3IgZ3JvdXBpbmcge0BsaW5rIERvdC5Ob2RlfSBlbnRpdGllcy5cbiAqIEBpbnRlcm5hbFxuICovXG5leHBvcnQgY2xhc3MgU3ViZ3JhcGggZXh0ZW5kcyBEb3QuU3ViZ3JhcGgge1xuICAvKiogQGludGVybmFsICovXG4gIHByb3RlY3RlZCBfbGlua0NoaWxkcmVuOiBib29sZWFuID0gdHJ1ZTtcblxuICBnZXQgbGlua0NoaWxkcmVuKCk6IGJvb2xlYW4ge1xuICAgIHJldHVybiB0aGlzLl9saW5rQ2hpbGRyZW47XG4gIH1cblxuICBjb25zdHJ1Y3RvcihpZDogc3RyaW5nLCBsYWJlbDogc3RyaW5nKSB7XG4gICAgc3VwZXIoaWQpO1xuXG4gICAgdGhpcy5hcHBseShHcmFwaFRoZW1lLmluc3RhbmNlLnN1YmdyYXBoKTtcblxuICAgIHRoaXMuc2V0KFwibGFiZWxcIiwgbGFiZWwpO1xuICB9XG59XG5cbi8qKlxuICogQ29udGFpbmVyIGNsYXNzIGlzIHRoZSBiYXNlIGZvciBzdHlsZWQgZGlhZ3JhbSB7QGxpbmsgRG90LlN1YmdyYXBofSBlbnRpdGllcyxcbiAqIHdoaWNoIGRlZmluZXMgYSBncm91cCBvZiB7QGxpbmsgRG90Lk5vZGV9IGVudGl0aWVzXG4gKiBAaW50ZXJuYWxcbiAqL1xuZXhwb3J0IGNsYXNzIENvbnRhaW5lciBleHRlbmRzIFN1YmdyYXBoIHtcbiAgcmVhZG9ubHkgZ3JhcGhOb2RlOiBHcmFwaC5Ob2RlO1xuXG4gIGNvbnN0cnVjdG9yKG5vZGU6IEdyYXBoLk5vZGUsIHByZWZpeDogc3RyaW5nID0gXCJjb250YWluZXJcIikge1xuICAgIHN1cGVyKGAke3ByZWZpeH1fJHtub2RlLnV1aWR9YCwgbm9kZS5pZCk7XG5cbiAgICB0aGlzLnNldChcInN0eWxlXCIsIFwicm91bmRlZCxkYXNoZWRcIik7XG5cbiAgICB0aGlzLmdyYXBoTm9kZSA9IG5vZGU7XG4gIH1cbn1cblxuLyoqXG4gKiBDbHVzdGVyIGNsYXNzIGlzIHRoZSBiYXNlIGZvciBzdHlsZWQgZGlhZ3JhbSAqKmNsdXN0ZXIqKiB7QGxpbmsgRG90LlN1YmdyYXBofSBlbnRpdGllcy5cbiAqIEBpbnRlcm5hbFxuICovXG5leHBvcnQgY2xhc3MgQ2x1c3RlciBleHRlbmRzIENvbnRhaW5lciB7XG4gIC8qKiBAaW50ZXJuYWwgKi9cbiAgY29uc3RydWN0b3Iobm9kZTogR3JhcGguTm9kZSwgc3VicHJlZml4Pzogc3RyaW5nKSB7XG4gICAgc3VwZXIobm9kZSwgXCJjbHVzdGVyXCIgKyAoc3VicHJlZml4ID8gYF8ke3N1YnByZWZpeH1gIDogXCJcIikpO1xuXG4gICAgdGhpcy5hcHBseShHcmFwaFRoZW1lLmluc3RhbmNlLmNsdXN0ZXIpO1xuXG4gICAgdGhpcy5fbGlua0NoaWxkcmVuID0gZmFsc2U7XG4gIH1cbn1cblxuLyoqXG4gKiBTdGFnZUNsdXN0ZXIgY2xhc3MgZGVmaW5lcyBhIHtAbGluayBEb3QuU3ViZ3JhcGh9IGJhc2VkIG9uIGEge0BsaW5rIEdyYXBoLlN0YWdlTm9kZX1cbiAqIEBpbnRlcm5hbFxuICovXG5leHBvcnQgY2xhc3MgU3RhZ2VDbHVzdGVyIGV4dGVuZHMgQ2x1c3RlciB7XG4gIC8qKiBAaW50ZXJuYWwgKi9cbiAgY29uc3RydWN0b3Iobm9kZTogR3JhcGguU3RhZ2VOb2RlLCBzdWJwcmVmaXg6IHN0cmluZyA9IFwic3RhZ2VcIikge1xuICAgIHN1cGVyKG5vZGUsIHN1YnByZWZpeCk7XG5cbiAgICB0aGlzLmFwcGx5KEdyYXBoVGhlbWUuaW5zdGFuY2Uuc3RhZ2UpO1xuICB9XG59XG5cbi8qKlxuICogU3RhY2tDbHVzdGVyIGNsYXNzIGRlZmluZXMgYSB7QGxpbmsgRG90LlN1YmdyYXBofSBiYXNlZCBvbiBhIHtAbGluayBHcmFwaC5TdGFja05vZGV9XG4gKiBAaW50ZXJuYWxcbiAqL1xuZXhwb3J0IGNsYXNzIFN0YWNrQ2x1c3RlciBleHRlbmRzIENsdXN0ZXIge1xuICAvKiogQGludGVybmFsICovXG4gIGNvbnN0cnVjdG9yKG5vZGU6IEdyYXBoLlN0YWNrTm9kZSwgc3VicHJlZml4OiBzdHJpbmcgPSBcInN0YWNrXCIpIHtcbiAgICBzdXBlcihub2RlLCBzdWJwcmVmaXgpO1xuXG4gICAgdGhpcy5hcHBseShHcmFwaFRoZW1lLmluc3RhbmNlLnN0YWNrKTtcbiAgfVxufVxuXG4vKipcbiAqIE5lc3RlZFN0YWNrQ2x1c3RlciBjbGFzcyBkZWZpbmVzIGEge0BsaW5rIERvdC5TdWJncmFwaH0gYmFzZWQgb24gYSB7QGxpbmsgR3JhcGguTmVzdGVkU3RhY2tOb2RlfVxuICogQGludGVybmFsXG4gKi9cbmV4cG9ydCBjbGFzcyBOZXN0ZWRTdGFja0NsdXN0ZXIgZXh0ZW5kcyBTdGFja0NsdXN0ZXIge1xuICAvKiogQGludGVybmFsICovXG4gIGNvbnN0cnVjdG9yKG5vZGU6IEdyYXBoLk5lc3RlZFN0YWNrTm9kZSkge1xuICAgIHN1cGVyKG5vZGUsIFwibnN0YWNrXCIpO1xuXG4gICAgdGhpcy5hcHBseShHcmFwaFRoZW1lLmluc3RhbmNlLm5lc3RlZFN0YWNrKTtcbiAgfVxufVxuIl19

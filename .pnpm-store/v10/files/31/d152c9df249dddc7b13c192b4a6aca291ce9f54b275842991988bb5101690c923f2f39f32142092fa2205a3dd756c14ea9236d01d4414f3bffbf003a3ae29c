@@ -1,0 +1,8 @@
+import { IAspect } from "aws-cdk-lib";
+import { IConstruct } from "constructs";
+/**
+ * Adds information to CloudFormation stack descriptions to provide usage metrics for @aws/pdk
+ */
+export declare class MetricsAspect implements IAspect {
+    visit(node: IConstruct): void;
+}

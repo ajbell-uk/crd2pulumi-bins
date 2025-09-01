@@ -1,0 +1,101 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { GatewayResponseOptions } from "aws-cdk-lib/aws-apigateway";
+import type { OpenAPIV3 } from "openapi-types";
+import { ApiGatewayIntegration } from "../integrations";
+import type { MethodAndPath, OperationLookup, SerializedCorsOptions, TypeSafeApiIntegrationOptions } from "../spec";
+import { SerialisedAuthorizerReference } from "../spec/api-gateway-auth";
+/**
+ * Serialise a method and path into a single string
+ */
+export declare const concatMethodAndPath: ({ method, path }: MethodAndPath) => string;
+/**
+ * Serialized integration for a method
+ */
+export interface SerializedMethodIntegration {
+    /**
+     * The lambda function invocation uri for the api method
+     */
+    readonly integration: ApiGatewayIntegration;
+    /**
+     * The authorizer (if any) to apply to the method
+     */
+    readonly methodAuthorizer?: SerialisedAuthorizerReference;
+    /**
+     * Options for the integration
+     */
+    readonly options?: TypeSafeApiIntegrationOptions;
+}
+/**
+ * Options for API keys
+ */
+export interface SerializedApiKeyOptions {
+    /**
+     * Source type for an API key
+     */
+    readonly source: string;
+    /**
+     * Set to true to require an API key on all operations by default.
+     * Only applicable when the source is HEADER.
+     */
+    readonly requiredByDefault?: boolean;
+}
+/**
+ * Options for preparing an api spec for deployment by api gateway
+ */
+export interface PrepareApiSpecOptions {
+    /**
+     * Integrations for api operations
+     */
+    readonly integrations: {
+        [operationId: string]: SerializedMethodIntegration;
+    };
+    /**
+     * Options for cross-origin resource sharing
+     */
+    readonly corsOptions?: SerializedCorsOptions;
+    /**
+     * Operation id to method and path mapping
+     */
+    readonly operationLookup: OperationLookup;
+    /**
+     * Security schemes to add to the spec
+     */
+    readonly securitySchemes: {
+        [key: string]: OpenAPIV3.SecuritySchemeObject;
+    };
+    /**
+     * The default authorizer to reference
+     */
+    readonly defaultAuthorizerReference?: SerialisedAuthorizerReference;
+    /**
+     * Default options for API keys
+     */
+    readonly apiKeyOptions?: SerializedApiKeyOptions;
+    /**
+     * Optional gateway responses for the API
+     * @see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-gatewayResponse-definition.html
+     */
+    readonly gatewayResponses?: GatewayResponseOptions[];
+}
+export declare const generateCorsResponseParameters: (corsOptions: SerializedCorsOptions, prefix?: string) => {
+    [key: string]: string;
+};
+export declare const validatePathItem: (path: string, pathItem: OpenAPIV3.PathItemObject) => void;
+/**
+ * Generate a gateway response snippet
+ * @see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-swagger-extensions-gateway-responses.gatewayResponse.html
+ */
+export declare const generateGatewayResponse: ({ statusCode, templates, responseHeaders, }: GatewayResponseOptions) => {
+    responseTemplates: {
+        [key: string]: string;
+    } | undefined;
+    responseParameters?: {
+        [k: string]: string;
+    } | undefined;
+    statusCode: string | undefined;
+};
+/**
+ * Prepares the api spec for deployment by adding integrations, configuring auth, etc
+ */
+export declare const prepareApiSpec: (spec: OpenAPIV3.Document, options: PrepareApiSpecOptions) => OpenAPIV3.Document;

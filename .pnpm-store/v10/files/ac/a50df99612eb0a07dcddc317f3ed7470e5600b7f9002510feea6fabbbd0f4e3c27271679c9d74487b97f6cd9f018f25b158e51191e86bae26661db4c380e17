@@ -1,0 +1,7 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import type { AwsAsset } from "../../generated/assets";
+/** Mapping of variant resource names to asset resource name */
+export declare const NORMALIZED_RESOURCE_VARIANTS: {
+    [K in AwsAsset.Resource]?: string[];
+};

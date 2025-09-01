@@ -1,0 +1,26 @@
+import { Task } from "projen";
+import { TypeScriptProject, TypeScriptProjectOptions } from "projen/lib/typescript";
+import { CodeGenerationSourceOptions, GeneratedProjectOptions } from "../../types";
+import { CodegenOptions } from "../components/utils";
+/**
+ * Configuration for a generated typescript library
+ */
+export interface GeneratedTypescriptLibraryProjectOptions extends TypeScriptProjectOptions, GeneratedProjectOptions, CodeGenerationSourceOptions {
+    /**
+     * Whether this project is parented by an monorepo or not
+     */
+    readonly isWithinMonorepo?: boolean;
+}
+/**
+ * Typescript generated library project
+ */
+export declare abstract class GeneratedTypescriptLibraryProject extends TypeScriptProject {
+    /**
+     * Options configured for the project
+     */
+    protected readonly options: GeneratedTypescriptLibraryProjectOptions;
+    protected readonly generateTask: Task;
+    constructor(options: GeneratedTypescriptLibraryProjectOptions);
+    buildGenerateCommandArgs: () => string;
+    protected abstract buildCodegenOptions(): CodegenOptions;
+}

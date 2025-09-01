@@ -1,0 +1,44 @@
+import * as reflect from 'jsii-reflect';
+import * as transpile from './transpile';
+export declare class JavaTranspile extends transpile.TranspileBase {
+    constructor();
+    moduleLike(moduleLike: reflect.ModuleLike): transpile.TranspiledModuleLike;
+    type(type: reflect.Type): transpile.TranspiledType;
+    callable(callable: reflect.Callable): transpile.TranspiledCallable;
+    class(klass: reflect.ClassType): transpile.TranspiledClass;
+    struct(struct: reflect.InterfaceType): transpile.TranspiledStruct;
+    interface(iface: reflect.InterfaceType): transpile.TranspiledInterface;
+    parameter(parameter: reflect.Parameter): transpile.TranspiledParameter;
+    property(property: reflect.Property): transpile.TranspiledProperty;
+    enum(enu: reflect.EnumType): transpile.TranspiledEnum;
+    enumMember(em: reflect.EnumMember): transpile.TranspiledEnumMember;
+    unionOf(types: string[]): string;
+    listOf(type: string): string;
+    variadicOf(type: string): string;
+    mapOf(type: string): string;
+    any(): string;
+    void(): string;
+    str(): string;
+    number(): string;
+    boolean(): string;
+    json(): string;
+    date(): string;
+    readme(readme: string): string;
+    private formatImport;
+    private formatParameter;
+    private formatInputs;
+    private formatStructBuilder;
+    private formatClassInitialization;
+    private formatClassBuilder;
+    private formatSignature;
+    private formatBuilderMethod;
+    private formatInvocation;
+    private isStruct;
+    private isClassBuilderGenerated;
+    /**
+     * Extracts the first struct out of a list of parameters (and throws
+     * if there is none), removing it from the array.
+     */
+    private extractFirstStruct;
+    private formatProperty;
+}

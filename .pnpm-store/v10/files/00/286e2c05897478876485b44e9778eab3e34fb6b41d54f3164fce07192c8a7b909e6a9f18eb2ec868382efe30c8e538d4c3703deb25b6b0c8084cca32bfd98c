@@ -1,0 +1,30 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { Project, SampleDir } from "projen";
+/**
+ * Options for Smithy sample code
+ */
+export interface SmithySampleCodeOptions {
+    /**
+     * Directory in which the smithy sample code should be written
+     */
+    readonly modelDir: string;
+    /**
+     * Service namespace
+     */
+    readonly serviceNamespace: string;
+    /**
+     * Service name
+     */
+    readonly serviceName: string;
+    /**
+     * Optional first handler project language (to add the @handler trait to the sample operation)
+     */
+    readonly firstHandlerLanguage?: string;
+}
+/**
+ * Defines sample code for a Smithy REST API
+ */
+export declare class SmithySampleCode extends SampleDir {
+    constructor(project: Project, { modelDir, serviceName, serviceNamespace, firstHandlerLanguage, }: SmithySampleCodeOptions);
+}

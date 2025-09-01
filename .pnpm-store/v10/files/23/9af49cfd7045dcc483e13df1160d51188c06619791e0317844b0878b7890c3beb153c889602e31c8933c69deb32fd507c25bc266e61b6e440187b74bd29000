@@ -1,0 +1,25 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { Project } from "projen";
+import { Nx } from "../../nx-types";
+/** @struct */
+export interface InferBuildTargetOptions {
+    /**
+     * Indicates if outputs are automatically excluded from inputs.
+     * @default true
+     */
+    readonly excludeOutputs?: boolean;
+    /**
+     * Specifies how `dependsOn` for the target is derived.
+     * - If `false`, no `dependsOn` will be added.
+     * - If `true`, the default `^build` will be used.
+     * - If explicit list of strings, the value will be used.
+     */
+    readonly dependsOn?: boolean | string[];
+}
+/**
+ * Infer nx target values for build task
+ * @experimental
+ * @internal
+ */
+export declare function inferBuildTarget(project: Project, options?: InferBuildTargetOptions): Nx.IProjectTarget | undefined;

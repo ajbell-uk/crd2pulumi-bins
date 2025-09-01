@@ -1,0 +1,8 @@
+import { S3Location } from ".";
+export interface WebSocketSchemaResourceProperties {
+    readonly apiId: string;
+    readonly inputSpecLocation: S3Location;
+    readonly serverOperationPaths: {
+        [routeKey: string]: string;
+    };
+}

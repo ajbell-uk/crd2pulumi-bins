@@ -1,0 +1,40 @@
+import * as reflect from 'jsii-reflect';
+/**
+ * Check whether A is a supertype of B
+ *
+ * Put differently: whether any value of type B would be assignable to a
+ * variable of type A.
+ *
+ * We always check the relationship in the NEW (latest, updated) typesystem.
+ */
+export declare function isSuperType(a: reflect.TypeReference, b: reflect.TypeReference, updatedSystem: reflect.TypeSystem): Analysis;
+/**
+ * Find types A and B in the updated type system, and check whether they have a supertype relationship in the type system
+ */
+export declare function isNominalSuperType(a: reflect.TypeReference, b: reflect.TypeReference, updatedSystem: reflect.TypeSystem): Analysis;
+/**
+ * Is struct A a structural supertype of struct B?
+ *
+ * Trying to answer the question, is this assignment legal for all values
+ * of `expr in B`.
+ *
+ * ```ts
+ * const var: A = expr as B;
+ * ```
+ *
+ * A is a structural supertype of B if all required members of A are also
+ * required in B, and of a compatible type.
+ *
+ * Nullable members of A must either not exist in B, or be of a compatible
+ * type.
+ */
+export declare function isStructuralSuperType(a: reflect.InterfaceType, b: reflect.InterfaceType, updatedSystem: reflect.TypeSystem): Analysis;
+export type Analysis = {
+    success: true;
+} | FailedAnalysis;
+export type FailedAnalysis = {
+    success: false;
+    reasons: string[];
+};
+export declare function prependReason(analysis: Analysis, message: string): Analysis;
+//# sourceMappingURL=type-analysis.d.ts.map

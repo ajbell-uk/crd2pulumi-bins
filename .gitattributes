@@ -27,7 +27,6 @@
 /pnpm-workspace.yaml linguist-generated
 /tsconfig.dev.json linguist-generated
 /tsconfig.json linguist-generated
-package/*/bin/* filter=lfs diff=lfs merge=lfs -text
 bin/crd2pulumi-darwin-amd64 filter=lfs diff=lfs merge=lfs -text
 bin/crd2pulumi-darwin-arm64 filter=lfs diff=lfs merge=lfs -text
 bin/crd2pulumi-linux-amd64 filter=lfs diff=lfs merge=lfs -text

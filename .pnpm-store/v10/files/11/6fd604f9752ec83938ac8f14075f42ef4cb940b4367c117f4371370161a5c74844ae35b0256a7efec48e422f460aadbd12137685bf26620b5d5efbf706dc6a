@@ -1,0 +1,7 @@
+import { Graph } from "../../../../../cdk-graph";
+/** Resolves CfnResource image from {@link AwsArchitecture} asset */
+export declare function resolveCfnResourceImage(node: Graph.CfnResourceNode): string | undefined;
+/** Resolves Resource image from {@link AwsArchitecture} asset */
+export declare function resolveResourceImage(node: Graph.ResourceNode): string | undefined;
+/** Resolves CustomResource image from {@link AwsArchitecture} asset */
+export declare function resolveCustomResourceImage(_node: Graph.Node): string | undefined;

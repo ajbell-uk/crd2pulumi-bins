@@ -1,0 +1,20 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { Project, FileBase, IResolver } from "projen";
+/**
+ * Options for the Smithy settings.gradle file
+ */
+export interface SmithySettingsGradleFileOptions {
+    /**
+     * Name of the gradle project
+     */
+    readonly gradleProjectName: string;
+}
+/**
+ * Synthesize a settings.gradle file for Smithy projects
+ */
+export declare class SmithySettingsGradleFile extends FileBase {
+    readonly options: SmithySettingsGradleFileOptions;
+    constructor(project: Project, options: SmithySettingsGradleFileOptions);
+    synthesizeContent(_: IResolver): string | undefined;
+}

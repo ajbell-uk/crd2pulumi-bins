@@ -1,0 +1,56 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { Graph } from "../../../../../../cdk-graph";
+import * as Dot from "ts-graphviz";
+/**
+ * Subgraph class is the base diagram {@link Dot.Subgraph} entity, which is the base container
+ * for grouping {@link Dot.Node} entities.
+ * @internal
+ */
+export declare class Subgraph extends Dot.Subgraph {
+    /** @internal */
+    protected _linkChildren: boolean;
+    get linkChildren(): boolean;
+    constructor(id: string, label: string);
+}
+/**
+ * Container class is the base for styled diagram {@link Dot.Subgraph} entities,
+ * which defines a group of {@link Dot.Node} entities
+ * @internal
+ */
+export declare class Container extends Subgraph {
+    readonly graphNode: Graph.Node;
+    constructor(node: Graph.Node, prefix?: string);
+}
+/**
+ * Cluster class is the base for styled diagram **cluster** {@link Dot.Subgraph} entities.
+ * @internal
+ */
+export declare class Cluster extends Container {
+    /** @internal */
+    constructor(node: Graph.Node, subprefix?: string);
+}
+/**
+ * StageCluster class defines a {@link Dot.Subgraph} based on a {@link Graph.StageNode}
+ * @internal
+ */
+export declare class StageCluster extends Cluster {
+    /** @internal */
+    constructor(node: Graph.StageNode, subprefix?: string);
+}
+/**
+ * StackCluster class defines a {@link Dot.Subgraph} based on a {@link Graph.StackNode}
+ * @internal
+ */
+export declare class StackCluster extends Cluster {
+    /** @internal */
+    constructor(node: Graph.StackNode, subprefix?: string);
+}
+/**
+ * NestedStackCluster class defines a {@link Dot.Subgraph} based on a {@link Graph.NestedStackNode}
+ * @internal
+ */
+export declare class NestedStackCluster extends StackCluster {
+    /** @internal */
+    constructor(node: Graph.NestedStackNode);
+}

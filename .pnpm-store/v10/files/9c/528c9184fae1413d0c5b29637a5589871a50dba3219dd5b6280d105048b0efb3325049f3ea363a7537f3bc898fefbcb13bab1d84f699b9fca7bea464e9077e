@@ -1,0 +1,97 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SmithySampleCode = void 0;
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+const projen_1 = require("projen");
+/**
+ * Defines sample code for a Smithy REST API
+ */
+class SmithySampleCode extends projen_1.SampleDir {
+    constructor(project, { modelDir, serviceName, serviceNamespace, firstHandlerLanguage, }) {
+        super(project, modelDir, {
+            files: {
+                "main.smithy": `$version: "2"
+namespace ${serviceNamespace}
+
+use aws.protocols#restJson1
+
+/// A sample smithy api
+@restJson1
+service ${serviceName} {
+    version: "1.0"
+    operations: [SayHello]
+    errors: [
+      BadRequestError
+      NotAuthorizedError
+      InternalFailureError
+    ]
+}`,
+                "operations/say-hello.smithy": `$version: "2"
+namespace ${serviceNamespace}
+
+@readonly
+@http(method: "GET", uri: "/hello")${firstHandlerLanguage
+                    ? `\n@handler(language: "${firstHandlerLanguage}")`
+                    : ""}
+operation SayHello {
+    input := {
+        @httpQuery("name")
+        @required
+        name: String
+    }
+    output := {
+        @required
+        message: String
+    }
+    errors: [NotFoundError]
+}
+`,
+                "types/errors.smithy": `$version: "2"
+namespace ${serviceNamespace}
+
+/// An error message
+string ErrorMessage
+
+/// An internal failure at the fault of the server
+@error("server")
+@httpError(500)
+structure InternalFailureError {
+    /// Message with details about the error
+    @required
+    message: ErrorMessage
+}
+
+/// An error at the fault of the client sending invalid input
+@error("client")
+@httpError(400)
+structure BadRequestError {
+    /// Message with details about the error
+    @required
+    message: ErrorMessage
+}
+
+/// An error due to the client attempting to access a missing resource
+@error("client")
+@httpError(404)
+structure NotFoundError {
+    /// Message with details about the error
+    @required
+    message: ErrorMessage
+}
+
+/// An error due to the client not being authorized to access the resource
+@error("client")
+@httpError(403)
+structure NotAuthorizedError {
+    /// Message with details about the error
+    @required
+    message: ErrorMessage
+}
+`,
+            },
+        });
+    }
+}
+exports.SmithySampleCode = SmithySampleCode;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic21pdGh5LXNhbXBsZS1jb2RlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsic21pdGh5LXNhbXBsZS1jb2RlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBO3NDQUNzQztBQUN0QyxtQ0FBNEM7QUF3QjVDOztHQUVHO0FBQ0gsTUFBYSxnQkFBaUIsU0FBUSxrQkFBUztJQUM3QyxZQUNFLE9BQWdCLEVBQ2hCLEVBQ0UsUUFBUSxFQUNSLFdBQVcsRUFDWCxnQkFBZ0IsRUFDaEIsb0JBQW9CLEdBQ0k7UUFFMUIsS0FBSyxDQUFDLE9BQU8sRUFBRSxRQUFRLEVBQUU7WUFDdkIsS0FBSyxFQUFFO2dCQUNMLGFBQWEsRUFBRTtZQUNYLGdCQUFnQjs7Ozs7O1VBTWxCLFdBQVc7Ozs7Ozs7O0VBUW5CO2dCQUNNLDZCQUE2QixFQUFFO1lBQzNCLGdCQUFnQjs7O3FDQUlsQixvQkFBb0I7b0JBQ2xCLENBQUMsQ0FBQyx5QkFBeUIsb0JBQW9CLElBQUk7b0JBQ25ELENBQUMsQ0FBQyxFQUNOOzs7Ozs7Ozs7Ozs7O0NBYVA7Z0JBQ08scUJBQXFCLEVBQUU7WUFDbkIsZ0JBQWdCOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0NBd0MzQjthQUNNO1NBQ0YsQ0FBQyxDQUFDO0lBQ0wsQ0FBQztDQUNGO0FBL0ZELDRDQStGQyIsInNvdXJjZXNDb250ZW50IjpbIi8qISBDb3B5cmlnaHQgW0FtYXpvbi5jb21dKGh0dHA6Ly9hbWF6b24uY29tLyksIEluYy4gb3IgaXRzIGFmZmlsaWF0ZXMuIEFsbCBSaWdodHMgUmVzZXJ2ZWQuXG5TUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogQXBhY2hlLTIuMCAqL1xuaW1wb3J0IHsgUHJvamVjdCwgU2FtcGxlRGlyIH0gZnJvbSBcInByb2plblwiO1xuXG4vKipcbiAqIE9wdGlvbnMgZm9yIFNtaXRoeSBzYW1wbGUgY29kZVxuICovXG5leHBvcnQgaW50ZXJmYWNlIFNtaXRoeVNhbXBsZUNvZGVPcHRpb25zIHtcbiAgLyoqXG4gICAqIERpcmVjdG9yeSBpbiB3aGljaCB0aGUgc21pdGh5IHNhbXBsZSBjb2RlIHNob3VsZCBiZSB3cml0dGVuXG4gICAqL1xuICByZWFkb25seSBtb2RlbERpcjogc3RyaW5nO1xuICAvKipcbiAgICogU2VydmljZSBuYW1lc3BhY2VcbiAgICovXG4gIHJlYWRvbmx5IHNlcnZpY2VOYW1lc3BhY2U6IHN0cmluZztcbiAgLyoqXG4gICAqIFNlcnZpY2UgbmFtZVxuICAgKi9cbiAgcmVhZG9ubHkgc2VydmljZU5hbWU6IHN0cmluZztcbiAgLyoqXG4gICAqIE9wdGlvbmFsIGZpcnN0IGhhbmRsZXIgcHJvamVjdCBsYW5ndWFnZSAodG8gYWRkIHRoZSBAaGFuZGxlciB0cmFpdCB0byB0aGUgc2FtcGxlIG9wZXJhdGlvbilcbiAgICovXG4gIHJlYWRvbmx5IGZpcnN0SGFuZGxlckxhbmd1YWdlPzogc3RyaW5nO1xufVxuXG4vKipcbiAqIERlZmluZXMgc2FtcGxlIGNvZGUgZm9yIGEgU21pdGh5IFJFU1QgQVBJXG4gKi9cbmV4cG9ydCBjbGFzcyBTbWl0aHlTYW1wbGVDb2RlIGV4dGVuZHMgU2FtcGxlRGlyIHtcbiAgY29uc3RydWN0b3IoXG4gICAgcHJvamVjdDogUHJvamVjdCxcbiAgICB7XG4gICAgICBtb2RlbERpcixcbiAgICAgIHNlcnZpY2VOYW1lLFxuICAgICAgc2VydmljZU5hbWVzcGFjZSxcbiAgICAgIGZpcnN0SGFuZGxlckxhbmd1YWdlLFxuICAgIH06IFNtaXRoeVNhbXBsZUNvZGVPcHRpb25zXG4gICkge1xuICAgIHN1cGVyKHByb2plY3QsIG1vZGVsRGlyLCB7XG4gICAgICBmaWxlczoge1xuICAgICAgICBcIm1haW4uc21pdGh5XCI6IGAkdmVyc2lvbjogXCIyXCJcbm5hbWVzcGFjZSAke3NlcnZpY2VOYW1lc3BhY2V9XG5cbnVzZSBhd3MucHJvdG9jb2xzI3Jlc3RKc29uMVxuXG4vLy8gQSBzYW1wbGUgc21pdGh5IGFwaVxuQHJlc3RKc29uMVxuc2VydmljZSAke3NlcnZpY2VOYW1lfSB7XG4gICAgdmVyc2lvbjogXCIxLjBcIlxuICAgIG9wZXJhdGlvbnM6IFtTYXlIZWxsb11cbiAgICBlcnJvcnM6IFtcbiAgICAgIEJhZFJlcXVlc3RFcnJvclxuICAgICAgTm90QXV0aG9yaXplZEVycm9yXG4gICAgICBJbnRlcm5hbEZhaWx1cmVFcnJvclxuICAgIF1cbn1gLFxuICAgICAgICBcIm9wZXJhdGlvbnMvc2F5LWhlbGxvLnNtaXRoeVwiOiBgJHZlcnNpb246IFwiMlwiXG5uYW1lc3BhY2UgJHtzZXJ2aWNlTmFtZXNwYWNlfVxuXG5AcmVhZG9ubHlcbkBodHRwKG1ldGhvZDogXCJHRVRcIiwgdXJpOiBcIi9oZWxsb1wiKSR7XG4gICAgICAgICAgZmlyc3RIYW5kbGVyTGFuZ3VhZ2VcbiAgICAgICAgICAgID8gYFxcbkBoYW5kbGVyKGxhbmd1YWdlOiBcIiR7Zmlyc3RIYW5kbGVyTGFuZ3VhZ2V9XCIpYFxuICAgICAgICAgICAgOiBcIlwiXG4gICAgICAgIH1cbm9wZXJhdGlvbiBTYXlIZWxsbyB7XG4gICAgaW5wdXQgOj0ge1xuICAgICAgICBAaHR0cFF1ZXJ5KFwibmFtZVwiKVxuICAgICAgICBAcmVxdWlyZWRcbiAgICAgICAgbmFtZTogU3RyaW5nXG4gICAgfVxuICAgIG91dHB1dCA6PSB7XG4gICAgICAgIEByZXF1aXJlZFxuICAgICAgICBtZXNzYWdlOiBTdHJpbmdcbiAgICB9XG4gICAgZXJyb3JzOiBbTm90Rm91bmRFcnJvcl1cbn1cbmAsXG4gICAgICAgIFwidHlwZXMvZXJyb3JzLnNtaXRoeVwiOiBgJHZlcnNpb246IFwiMlwiXG5uYW1lc3BhY2UgJHtzZXJ2aWNlTmFtZXNwYWNlfVxuXG4vLy8gQW4gZXJyb3IgbWVzc2FnZVxuc3RyaW5nIEVycm9yTWVzc2FnZVxuXG4vLy8gQW4gaW50ZXJuYWwgZmFpbHVyZSBhdCB0aGUgZmF1bHQgb2YgdGhlIHNlcnZlclxuQGVycm9yKFwic2VydmVyXCIpXG5AaHR0cEVycm9yKDUwMClcbnN0cnVjdHVyZSBJbnRlcm5hbEZhaWx1cmVFcnJvciB7XG4gICAgLy8vIE1lc3NhZ2Ugd2l0aCBkZXRhaWxzIGFib3V0IHRoZSBlcnJvclxuICAgIEByZXF1aXJlZFxuICAgIG1lc3NhZ2U6IEVycm9yTWVzc2FnZVxufVxuXG4vLy8gQW4gZXJyb3IgYXQgdGhlIGZhdWx0IG9mIHRoZSBjbGllbnQgc2VuZGluZyBpbnZhbGlkIGlucHV0XG5AZXJyb3IoXCJjbGllbnRcIilcbkBodHRwRXJyb3IoNDAwKVxuc3RydWN0dXJlIEJhZFJlcXVlc3RFcnJvciB7XG4gICAgLy8vIE1lc3NhZ2Ugd2l0aCBkZXRhaWxzIGFib3V0IHRoZSBlcnJvclxuICAgIEByZXF1aXJlZFxuICAgIG1lc3NhZ2U6IEVycm9yTWVzc2FnZVxufVxuXG4vLy8gQW4gZXJyb3IgZHVlIHRvIHRoZSBjbGllbnQgYXR0ZW1wdGluZyB0byBhY2Nlc3MgYSBtaXNzaW5nIHJlc291cmNlXG5AZXJyb3IoXCJjbGllbnRcIilcbkBodHRwRXJyb3IoNDA0KVxuc3RydWN0dXJlIE5vdEZvdW5kRXJyb3Ige1xuICAgIC8vLyBNZXNzYWdlIHdpdGggZGV0YWlscyBhYm91dCB0aGUgZXJyb3JcbiAgICBAcmVxdWlyZWRcbiAgICBtZXNzYWdlOiBFcnJvck1lc3NhZ2Vcbn1cblxuLy8vIEFuIGVycm9yIGR1ZSB0byB0aGUgY2xpZW50IG5vdCBiZWluZyBhdXRob3JpemVkIHRvIGFjY2VzcyB0aGUgcmVzb3VyY2VcbkBlcnJvcihcImNsaWVudFwiKVxuQGh0dHBFcnJvcig0MDMpXG5zdHJ1Y3R1cmUgTm90QXV0aG9yaXplZEVycm9yIHtcbiAgICAvLy8gTWVzc2FnZSB3aXRoIGRldGFpbHMgYWJvdXQgdGhlIGVycm9yXG4gICAgQHJlcXVpcmVkXG4gICAgbWVzc2FnZTogRXJyb3JNZXNzYWdlXG59XG5gLFxuICAgICAgfSxcbiAgICB9KTtcbiAgfVxufVxuIl19

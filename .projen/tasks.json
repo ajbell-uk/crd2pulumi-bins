@@ -165,14 +165,6 @@
         }
       ]
     },
-    "update-bin": {
-      "name": "update-bin",
-      "steps": [
-        {
-          "exec": "yarn exec nx run-many --target=update-bin"
-        }
-      ]
-    },
     "upgrade-deps": {
       "name": "upgrade-deps",
       "description": "Upgrade dependencies in the monorepo",

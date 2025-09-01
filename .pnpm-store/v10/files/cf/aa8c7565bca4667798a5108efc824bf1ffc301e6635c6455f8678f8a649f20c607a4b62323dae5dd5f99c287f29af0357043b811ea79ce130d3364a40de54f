@@ -1,0 +1,488 @@
+import * as reflect from 'jsii-reflect';
+import { JsiiEntity, TypeSchema } from '../schema';
+/**
+ * Supported languages to generate documentation in.
+ */
+export declare class Language {
+    /**
+     * TypeScript.
+     */
+    static readonly TYPESCRIPT: Language;
+    /**
+     * Python.
+     */
+    static readonly PYTHON: Language;
+    /**
+     * Java.
+     */
+    static readonly JAVA: Language;
+    /**
+     * C#
+     */
+    static readonly CSHARP: Language;
+    /**
+     *
+     * Go
+     */
+    static readonly GO: Language;
+    /**
+     * Transform a literal string to the `Language` object.
+     *
+     * Throws an `UnsupportedLanguageError` if the language is not supported.
+     */
+    static fromString(lang: string): Language;
+    static values(): Language[];
+    readonly name: string;
+    readonly targetName: string;
+    private readonly validator;
+    private constructor();
+    isValidConfiguration(config: Record<string, unknown> | undefined): boolean;
+    toString(): string;
+}
+export declare class UnsupportedLanguageError extends Error {
+    constructor(lang: string, supported: Language[]);
+}
+/**
+ * Outcome of transpiling a jsii struct.
+ */
+export interface TranspiledStruct {
+    /**
+     * The (transpiled) type.
+     */
+    readonly type: TranspiledType;
+    /**
+     * The name.
+     */
+    readonly name: string;
+    /**
+     * The import statement needed in order to use this struct.
+     */
+    readonly import: string;
+    /**
+     * How to initialize this struct.
+     */
+    readonly initialization: string;
+}
+/**
+ * Outcome of transpiling a jsii class.
+ */
+export interface TranspiledClass {
+    /**
+     * The (transpiled) type.
+     */
+    readonly type: TranspiledType;
+    /**
+     * The name.
+     */
+    readonly name: string;
+}
+/**
+ * Outcome of transpiling a jsii callable.
+ */
+export interface TranspiledCallable {
+    /**
+     * The (transpiled) parent type.
+     */
+    readonly parentType: TranspiledType;
+    /**
+     * How a signature of the callable looks like. In some languages
+     * (like Java), a callable may be transliterated to multiple overloaded
+     * methods, so there may be multiple signatures
+     */
+    readonly signatures: string[];
+    /**
+     * The name.
+     */
+    readonly name: string;
+    /**
+     * The import statement needed in order to use this callable.
+     */
+    readonly import: string;
+    /**
+     * How a invocations of this callable look like. In some languages
+     * (like Java), a callable may be transliterated to multiple overloaded
+     * methods, so there may be multiple invocations.
+     */
+    readonly invocations: string[];
+    /**
+     * The jsii parameters this callable accepts.
+     */
+    readonly parameters: reflect.Parameter[];
+    /**
+     * The (transpiled) return type - this is undefined if void or initializer.
+     */
+    readonly returnType?: TranspiledTypeReference;
+}
+/**
+ * Outcome of transpiling a jsii parameter.
+ */
+export interface TranspiledParameter extends TranspiledProperty {
+    /**
+     * Whether or not the parameter is variadic.
+     */
+    readonly variadic: boolean;
+}
+/**
+ * Outcome of transpiling a jsii interface (not data type).
+ */
+export interface TranspiledInterface {
+    /**
+     * The (transpiled) type.
+     */
+    readonly type: TranspiledType;
+    /**
+     * The name.
+     */
+    readonly name: string;
+}
+/**
+ * Outcome of transpiling a generic jsii type.
+ */
+export declare class TranspiledType {
+    /**
+     * The source type this was transliterated from.
+     */
+    readonly source: reflect.Type;
+    /**
+     * The transliteration language.
+     */
+    readonly language: Language;
+    /**
+     * The language specific fqn.
+     */
+    readonly fqn: string;
+    /**
+     * Simple name of the type.
+     */
+    readonly name: string;
+    /**
+     * Namespace of the type.
+     */
+    readonly namespace?: string;
+    /**
+     * The language specific module name the type belongs to.
+     */
+    readonly module: string;
+    /**
+     * The language specific submodule name the type belongs to.
+     */
+    readonly submodule?: string;
+    /**
+     * The language-independent name of the submodule the type belongs to.
+     */
+    readonly submodulePath?: string;
+    constructor(options: {
+        source: reflect.Type;
+        language: Language;
+        fqn: string;
+        name: string;
+        namespace?: string;
+        module: string;
+        submodule?: string;
+        submodulePath?: string;
+    });
+    toJson(): JsiiEntity;
+}
+/**
+ * Options for how to render a string representation of a type reference.
+ */
+export interface TranspiledTypeReferenceToStringOptions {
+    /**
+     * Type formatter.
+     */
+    typeFormatter?: (type: TranspiledType) => string;
+    /**
+     * String formatter.
+     */
+    stringFormatter?: (typeName: string) => string;
+}
+/**
+ * Outcome of transpiling a jsii type reference.
+ */
+export declare class TranspiledTypeReference {
+    /**
+     * A transpiler
+     */
+    private readonly transpile;
+    /**
+     * The original type reference.
+     */
+    private readonly ref;
+    /**
+     * Primitive type ref.
+     */
+    private readonly primitive?;
+    /**
+     * 'Any' type ref
+     */
+    private readonly isAny?;
+    /**
+     * Concrete type.
+     */
+    private readonly type?;
+    /**
+     * Array of ref.
+     */
+    private readonly arrayOfType?;
+    /**
+     * Map of ref.
+     */
+    private readonly mapOfType?;
+    /**
+     * Union of ref.
+     */
+    private readonly unionOfTypes?;
+    /**
+     * 'Void' type ref.
+     */
+    private readonly isVoid?;
+    /**
+     * Create a type reference that represents a primitive.
+     */
+    static primitive(transpile: Transpile, ref: reflect.TypeReference, primitive: string): TranspiledTypeReference;
+    /**
+     * Create a type reference that represents any type.
+     */
+    static any(transpile: Transpile, ref: reflect.TypeReference): TranspiledTypeReference;
+    /**
+     * Create a type reference that represents the void (return) type.
+     */
+    static void(transpile: Transpile, ref: reflect.TypeReference): TranspiledTypeReference;
+    /**
+     * Create a type reference that represents a concrete type.
+     */
+    static type(transpile: Transpile, ref: reflect.TypeReference, type: TranspiledType): TranspiledTypeReference;
+    /**
+     * Create a type reference that represents an array of a type reference.
+     */
+    static arrayOfType(transpile: Transpile, ref: reflect.TypeReference, tf: TranspiledTypeReference): TranspiledTypeReference;
+    /**
+     * Create a type reference that represents a map of a type reference.
+     */
+    static mapOfType(transpile: Transpile, ref: reflect.TypeReference, tf: TranspiledTypeReference): TranspiledTypeReference;
+    /**
+     * Create a type reference that represents a union of a type references.
+     */
+    static unionOfTypes(transpile: Transpile, ref: reflect.TypeReference, tfs: TranspiledTypeReference[]): TranspiledTypeReference;
+    private constructor();
+    toString(options?: TranspiledTypeReferenceToStringOptions): string;
+    toJson(): TypeSchema;
+}
+/**
+ * Outcome of transpiling a jsii property.
+ */
+export interface TranspiledProperty {
+    /**
+     * The name.
+     */
+    readonly name: string;
+    /**
+     * The (transpiled) parent type.
+     */
+    readonly parentType: TranspiledType;
+    /**
+     * The (transpiled) type reference.
+     */
+    readonly typeReference: TranspiledTypeReference;
+    /**
+     * Whether or not the parameter is optional.
+     */
+    readonly optional: boolean;
+    /**
+     * The signature of the property, or its getter if the language
+     * supports that.
+     */
+    readonly declaration: string;
+}
+/**
+ * Outcome of transpiling a jsii enum.
+ */
+export interface TranspiledEnum {
+    /**
+     * The language specific fqn.
+     */
+    readonly fqn: string;
+    /**
+     * The name.
+     */
+    readonly name: string;
+}
+/**
+ * Outcome of transpiling a specific enum member.
+ */
+export interface TranspiledEnumMember {
+    /**
+     * The language specific fqn.
+     */
+    readonly fqn: string;
+    /**
+     * The name.
+     */
+    readonly name: string;
+}
+/**
+ * Outcome of transpiling a module like object. (Assembly | Submodule)
+ */
+export interface TranspiledModuleLike {
+    /**
+     * The language specific module name.
+     *
+     * In case the module like object is a submodule, this should contain
+     * only the root module name.
+     *
+     * In case the module like object is the root module, this should contain
+     * the module fqn.
+     *
+     * Examples:
+     *
+     *   `aws-cdk-lib` -> `aws_cdk`
+     *   `aws-cdk-lib.aws_eks` -> `aws_cdk`
+     *   `@aws-cdk/aws-eks` -> `aws_cdk.aws_eks`
+     */
+    readonly name: string;
+    /**
+     * The language specific submodule name.
+     *
+     * In case the module like object is a submodule, this should contain
+     * only the submodule name.
+     *
+     * In case the module like object is the root module, this should be undefined
+     *
+     * Examples:
+     *
+     *   `aws-cdk-lib` -> undefined
+     *   `aws-cdk-lib.aws_eks` -> `aws_eks`
+     *   `@aws-cdk/aws-eks` -> undefined
+     */
+    readonly submodule?: string;
+}
+/**
+ * Language transpiling for jsii types.
+ */
+export interface Transpile {
+    /**
+     * The language of the transpiler.
+     */
+    readonly language: Language;
+    /**
+     * How links to types should be formatted.
+     *
+     * @default '#{fqn}'
+     */
+    readonly linkFormatter?: (type: TranspiledType) => string;
+    /**
+     * Transpile a module like object (Assembly | Submodule)
+     */
+    moduleLike(moduleLike: reflect.ModuleLike): TranspiledModuleLike;
+    /**
+     * Transpile a callable (method, static function, initializer).
+     * In some languages such as Java, a single callable may generate multiple
+     * overloaded methods to support optional parameters.
+     */
+    callable(callable: reflect.Callable): TranspiledCallable;
+    /**
+     * Transpile a class.
+     */
+    class(klass: reflect.ClassType): TranspiledClass;
+    /**
+     * Transpile a struct (data type interface).
+     */
+    struct(struct: reflect.InterfaceType): TranspiledStruct;
+    /**
+     * Transpile an interface (non data type).
+     */
+    interface(iface: reflect.InterfaceType): TranspiledInterface;
+    /**
+     * Transpile a parameter.
+     */
+    parameter(parameter: reflect.Parameter): TranspiledParameter;
+    /**
+     * Transpile a property.
+     */
+    property(property: reflect.Property): TranspiledProperty;
+    /**
+     * Transpile an enum.
+     */
+    enum(enu: reflect.EnumType): TranspiledEnum;
+    /**
+     * Transpile an enum member.
+     */
+    enumMember(em: reflect.EnumMember): TranspiledEnumMember;
+    /**
+     * Transpile a type.
+     */
+    type(type: reflect.Type): TranspiledType;
+    /**
+     * Transpile (recursively) a type reference.
+     */
+    typeReference(typeReference: reflect.TypeReference): TranspiledTypeReference;
+    /**
+     * How a union looks like in the target language.
+     */
+    unionOf(types: string[]): string;
+    /**
+    * How a variadic parameter looks in the target language.
+    */
+    variadicOf(type: string): string;
+    /**
+     * How a list looks like in the target language.
+     */
+    listOf(type: string): string;
+    /**
+     * How a map looks like in the target language.
+     */
+    mapOf(type: string): string;
+    /**
+     * How the 'any' type is represented in the target language.
+     */
+    any(): string;
+    /**
+     * How the 'void' (return) type is represented in the target language.
+     */
+    void(): string;
+    /**
+     * How the 'string' type is represented in the target language.
+     */
+    str(): string;
+    /**
+     * How the 'number' type is represented in the target language.
+     */
+    number(): string;
+    /**
+     * How the 'boolean' type is represented in the target language.
+     */
+    boolean(): string;
+    /**
+     * How the 'json' type is represented in the target language.
+     */
+    json(): string;
+    /**
+     * How the 'date' type is represented in the target language.
+     */
+    date(): string;
+    /**
+     * How a readme is displayed in the target language.
+     */
+    readme(readme: string): string;
+}
+export interface TranspileBase extends Transpile {
+}
+/**
+ * Common functionality between different transpilers.
+ */
+export declare abstract class TranspileBase implements Transpile {
+    readonly language: Language;
+    private readonly parentModulesCache;
+    private readonly submodulesCache;
+    constructor(language: Language);
+    typeReference(ref: reflect.TypeReference): TranspiledTypeReference;
+    protected findSubmodule(type: reflect.Type): reflect.Submodule | undefined;
+    protected getParentModule(moduleLike: reflect.ModuleLike): reflect.Assembly;
+    protected optionalityCompare(p1: reflect.Parameter, p2: reflect.Parameter): number;
+}
+/**
+ * Return the root-relative name for a submodule
+ *
+ * Ex: for a submodule `asm.sub1.sub2`, return `sub1.sub2`.
+ */
+export declare function submoduleRelName(submodule: reflect.Submodule): string;

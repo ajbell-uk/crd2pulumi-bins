@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Structs = void 0;
+const interface_1 = require("./interface");
+const struct_1 = require("./struct");
+class Structs {
+    constructor(transpile, interfaces) {
+        this.structs = interfaces
+            .filter((i) => interface_1.Interface.isStruct(i))
+            .map((i) => new struct_1.Struct(transpile, i));
+    }
+    toJson() {
+        return this.structs.map((s) => s.toJson());
+    }
+}
+exports.Structs = Structs;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3RydWN0cy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9kb2NnZW4vdmlldy9zdHJ1Y3RzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUNBLDJDQUF3QztBQUN4QyxxQ0FBa0M7QUFJbEMsTUFBYSxPQUFPO0lBRWxCLFlBQVksU0FBb0IsRUFBRSxVQUFtQztRQUNuRSxJQUFJLENBQUMsT0FBTyxHQUFHLFVBQVU7YUFDdEIsTUFBTSxDQUFDLENBQUMsQ0FBQyxFQUFFLEVBQUUsQ0FBQyxxQkFBUyxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQzthQUNwQyxHQUFHLENBQUMsQ0FBQyxDQUFDLEVBQUUsRUFBRSxDQUFDLElBQUksZUFBTSxDQUFDLFNBQVMsRUFBRSxDQUFDLENBQUMsQ0FBQyxDQUFDO0lBQzFDLENBQUM7SUFFTSxNQUFNO1FBQ1gsT0FBTyxJQUFJLENBQUMsT0FBTyxDQUFDLEdBQUcsQ0FBQyxDQUFDLENBQUMsRUFBRSxFQUFFLENBQUMsQ0FBQyxDQUFDLE1BQU0sRUFBRSxDQUFDLENBQUM7SUFDN0MsQ0FBQztDQUNGO0FBWEQsMEJBV0MiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgKiBhcyByZWZsZWN0IGZyb20gJ2pzaWktcmVmbGVjdCc7XG5pbXBvcnQgeyBJbnRlcmZhY2UgfSBmcm9tICcuL2ludGVyZmFjZSc7XG5pbXBvcnQgeyBTdHJ1Y3QgfSBmcm9tICcuL3N0cnVjdCc7XG5pbXBvcnQgeyBTdHJ1Y3RTY2hlbWEgfSBmcm9tICcuLi9zY2hlbWEnO1xuaW1wb3J0IHsgVHJhbnNwaWxlIH0gZnJvbSAnLi4vdHJhbnNwaWxlL3RyYW5zcGlsZSc7XG5cbmV4cG9ydCBjbGFzcyBTdHJ1Y3RzIHtcbiAgcHJpdmF0ZSByZWFkb25seSBzdHJ1Y3RzOiBTdHJ1Y3RbXTtcbiAgY29uc3RydWN0b3IodHJhbnNwaWxlOiBUcmFuc3BpbGUsIGludGVyZmFjZXM6IHJlZmxlY3QuSW50ZXJmYWNlVHlwZVtdKSB7XG4gICAgdGhpcy5zdHJ1Y3RzID0gaW50ZXJmYWNlc1xuICAgICAgLmZpbHRlcigoaSkgPT4gSW50ZXJmYWNlLmlzU3RydWN0KGkpKVxuICAgICAgLm1hcCgoaSkgPT4gbmV3IFN0cnVjdCh0cmFuc3BpbGUsIGkpKTtcbiAgfVxuXG4gIHB1YmxpYyB0b0pzb24oKTogU3RydWN0U2NoZW1hW10ge1xuICAgIHJldHVybiB0aGlzLnN0cnVjdHMubWFwKChzKSA9PiBzLnRvSnNvbigpKTtcbiAgfVxufVxuIl19

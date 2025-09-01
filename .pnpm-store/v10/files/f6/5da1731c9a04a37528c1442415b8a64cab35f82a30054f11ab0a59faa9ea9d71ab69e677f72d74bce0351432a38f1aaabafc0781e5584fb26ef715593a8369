@@ -1,0 +1,18 @@
+import { Component, Project } from "projen";
+/**
+ * Common commands for infrastructure projects
+ */
+export declare class InfrastructureCommands extends Component {
+    /**
+     * Retrieves an instance of InfrastructureCommands if one is associated to the given project
+     * @param project project instance
+     */
+    static of(project: Project): InfrastructureCommands | undefined;
+    /**
+     * Retrieves an instance of InfrastructureCommands if one is associated to the given project,
+     * otherwise creates an InfrastructureCommands instance for the project.
+     * @param project project instance
+     */
+    static ensure(project: Project): InfrastructureCommands;
+    constructor(project: Project);
+}

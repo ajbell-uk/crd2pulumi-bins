@@ -1,0 +1,113 @@
+import { Distribution, IOrigin, OriginBindConfig, OriginBindOptions } from "aws-cdk-lib/aws-cloudfront";
+import { Key } from "aws-cdk-lib/aws-kms";
+import { BucketEncryption, IBucket } from "aws-cdk-lib/aws-s3";
+import { BucketDeployment } from "aws-cdk-lib/aws-s3-deployment";
+import { Construct } from "constructs";
+import { BucketDeploymentProps } from "./bucket-deployment-props";
+import { CloudFrontWebAclProps } from "./cloudfront-web-acl";
+import { DistributionProps } from "./distribution-props";
+/**
+ * Dynamic configuration which gets resolved only during deployment.
+ *
+ * @example
+ *
+ * // Will store a JSON file called runtime-config.json in the root of the StaticWebsite S3 bucket containing any
+ * // and all resolved values.
+ * const runtimeConfig = {jsonPayload: {bucketArn: s3Bucket.bucketArn}};
+ * new StaticWebsite(scope, 'StaticWebsite', {websiteContentPath: 'path/to/website', runtimeConfig});
+ */
+export interface RuntimeOptions {
+    /**
+     * File name to store runtime configuration (jsonPayload).
+     *
+     * Must follow pattern: '*.json'
+     *
+     * @default "runtime-config.json"
+     */
+    readonly jsonFileName?: string;
+    /**
+     * Arbitrary JSON payload containing runtime values to deploy. Typically this contains resourceArns, etc which
+     * are only known at deploy time.
+     *
+     * @example { userPoolId: some.userPool.userPoolId, someResourceArn: some.resource.Arn }
+     */
+    readonly jsonPayload: any;
+}
+/**
+ * Properties for configuring the StaticWebsite.
+ */
+export interface StaticWebsiteProps {
+    /**
+     * Path to the directory containing the static website files and assets. This directory must contain an index.html file.
+     */
+    readonly websiteContentPath: string;
+    /**
+     * Dynamic configuration which gets resolved only during deployment.
+     */
+    readonly runtimeOptions?: RuntimeOptions;
+    /**
+     * Bucket encryption to use for the default bucket.
+     *
+     * Supported options are KMS or S3MANAGED.
+     *
+     * Note: If planning to use KMS, ensure you associate a Lambda Edge function to sign requests to S3 as OAI does not currently support KMS encryption. Refer to {@link https://aws.amazon.com/blogs/networking-and-content-delivery/serving-sse-kms-encrypted-content-from-s3-using-cloudfront/}
+     *
+     * @default - "S3MANAGED"
+     */
+    readonly defaultWebsiteBucketEncryption?: BucketEncryption;
+    /**
+     * A predefined KMS customer encryption key to use for the default bucket that gets created.
+     *
+     * Note: This is only used if the websiteBucket is left undefined, otherwise all settings from the provided websiteBucket will be used.
+     */
+    readonly defaultWebsiteBucketEncryptionKey?: Key;
+    /**
+     * Predefined bucket to deploy the website into.
+     */
+    readonly websiteBucket?: IBucket;
+    /**
+     * Custom distribution properties.
+     *
+     * Note: defaultBehaviour.origin is a required parameter, however it will not be used as this construct will wire it on your behalf.
+     * You will need to pass in an instance of StaticWebsiteOrigin (NoOp) to keep the compiler happy.
+     */
+    readonly distributionProps?: DistributionProps;
+    /**
+     * Custom bucket deployment properties.
+     *
+     * ```
+     */
+    readonly bucketDeploymentProps?: BucketDeploymentProps;
+    /**
+     * Limited configuration settings for the generated webAcl. For more advanced settings, create your own ACL and pass in the webAclId as a param to distributionProps.
+     *
+     * Note: If pass in your own ACL, make sure the SCOPE is CLOUDFRONT and it is created in us-east-1.
+     */
+    readonly webAclProps?: CloudFrontWebAclProps;
+}
+/**
+ * Deploys a Static Website using by default a private S3 bucket as an origin and Cloudfront as the entrypoint.
+ *
+ * This construct configures a webAcl containing rules that are generally applicable to web applications. This
+ * provides protection against exploitation of a wide range of vulnerabilities, including some of the high risk
+ * and commonly occurring vulnerabilities described in OWASP publications such as OWASP Top 10.
+ *
+ */
+export declare class StaticWebsite extends Construct {
+    readonly websiteBucket: IBucket;
+    readonly cloudFrontDistribution: Distribution;
+    readonly bucketDeployment: BucketDeployment;
+    constructor(scope: Construct, id: string, props: StaticWebsiteProps);
+    private validateProps;
+    private validateRuntimeConfig;
+    private validateBucketConfig;
+    private validateEncryptionSettings;
+    private suppressCDKNagViolations;
+}
+/**
+ * If passing in distributionProps, the default behaviour.origin is a required parameter. An instance of this class can be passed in
+ * to make the compiler happy.
+ */
+export declare class StaticWebsiteOrigin implements IOrigin {
+    bind(_scope: Construct, _options: OriginBindOptions): OriginBindConfig;
+}

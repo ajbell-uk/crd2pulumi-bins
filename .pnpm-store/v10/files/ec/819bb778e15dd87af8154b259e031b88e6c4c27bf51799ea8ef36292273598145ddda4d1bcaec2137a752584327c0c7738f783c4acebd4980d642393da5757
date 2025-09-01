@@ -1,0 +1,14 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { Project, ProjectOptions } from "projen";
+import { GeneratedMarkdownDocumentationOptions } from "../../types";
+export interface GeneratedMarkdownDocumentationProjectOptions extends ProjectOptions, GeneratedMarkdownDocumentationOptions {
+    /**
+     * Path to the OpenAPI Specification for which to generate docs, relative to the project outdir
+     */
+    readonly specPath: string;
+}
+export declare class GeneratedMarkdownDocumentationProject extends Project {
+    private readonly generateTask;
+    constructor(options: GeneratedMarkdownDocumentationProjectOptions);
+}

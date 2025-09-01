@@ -1,0 +1,303 @@
+###TSAPI_WRITE_FILE###
+{
+  "id": "operation-config",
+  "dir": "<%= metadata.srcDir || 'src' %>/server",
+  "name": "operation-config",
+  "ext": ".ts",
+  "overwrite": true
+}
+###/TSAPI_WRITE_FILE###// Import models
+import {
+<%_ models.forEach((model) => { _%>
+    <%- model.name %>,
+    <%- model.name %>FromJSON,
+    <%- model.name %>ToJSON,
+<%_ }); _%>
+} from '../models<%_ if (metadata.esm) { _%>/index.js<%_ } _%>';
+
+<%_ const serviceClassName = services[0] ? services[0].className : "DefaultApi"; _%>
+// API Gateway Types
+import { APIGatewayProxyWebsocketEventV2, APIGatewayProxyResultV2, Context } from "aws-lambda";
+import { <%- serviceClassName %>ServerSdk } from "./server-sdk<%_ if (metadata.esm) { _%>.js<%_ } _%>";
+
+<%_ const toServerOperations = allOperations.filter(op => op.vendorExtensions && op.vendorExtensions['x-async'] && ['client_to_server', 'bidirectional'].includes(op.vendorExtensions['x-async'].direction)); _%>
+// Generic type for object keyed by operation names
+export interface OperationConfig<T> {
+<%_ toServerOperations.forEach((operation) => { _%>
+    <%- operation.name %>: T;
+<%_ }); _%>
+}
+
+// Look up path and http method for a given operation name
+export const OperationLookup = {
+<%_ toServerOperations.forEach((operation) => { _%>
+    <%- operation.name %>: {
+        path: '<%- operation.path %>',
+        method: '<%- operation.method %>',
+        contentTypes: [<%- operation.parametersBody ? operation.parametersBody.mediaTypes.map(m => `'${m}'`).join(',') : "'application/json'"%>],
+    },
+<%_ }); _%>
+};
+
+export class Operations {
+  /**
+   * Return an OperationConfig with the same value for every operation
+   */
+  public static all = <T>(value: T): OperationConfig<T> => Object.fromEntries(
+    Object.keys(OperationLookup).map((operationId) => [operationId, value])
+  ) as unknown as OperationConfig<T>;
+}
+
+/**
+ * Parse the body if the content type is json and return the payload, otherwise leave as a raw string
+ */
+const parseBody = (body: string, demarshal: (body: string) => any, contentTypes: string[]): any => contentTypes.filter((contentType) => contentType !== 'application/json').length === 0 ? demarshal(body || '{}') : body;
+
+/**
+ * Utilities for the $connect route to allow or deny a pending connection
+ */
+export class $PendingConnection {
+  public static DENY_CONTEXT_KEY = '$PendingConnectionDenied';
+
+  public static of = (request: PayloadlessChainedRequestInput) => {
+    return new $PendingConnection(request.interceptorContext);
+  };
+
+  private constructor(private interceptorContext: Record<string, any>) {}
+
+  /**
+   * Allows the connection (not immediate, takes effect when the lambda handler returns)
+   */
+  public allow = () => {
+    this.interceptorContext[$PendingConnection.DENY_CONTEXT_KEY] = false;
+  };
+
+  /**
+   * Denies the connection (not immediate, takes effect when the lambda handler returns)
+   */
+  public deny = () => {
+    this.interceptorContext[$PendingConnection.DENY_CONTEXT_KEY] = true;
+  };
+}
+
+export type OperationIds = "$connect" | "$disconnect"<% toServerOperations.forEach((operation) => { %> | '<%- operation.name %>'<% }); %>;
+export type OperationApiGatewayProxyResult<T extends OperationIds> = APIGatewayProxyResultV2 & { __operationId?: T };
+
+// Api gateway lambda handler type
+export type OperationApiGatewayLambdaHandler<T extends OperationIds> = (event: APIGatewayProxyWebsocketEventV2, context: Context) => Promise<OperationApiGatewayProxyResult<T>>;
+
+export type InterceptorContext = { [key: string]: any };
+
+export interface PayloadlessRequestInput {
+    connectionId: string;
+    sdk: <%- serviceClassName %>ServerSdk;
+    event: APIGatewayProxyWebsocketEventV2;
+    context: Context;
+    interceptorContext: InterceptorContext;
+}
+
+export interface RequestInput<RequestBody> extends PayloadlessRequestInput {
+    input: RequestBody;
+}
+
+export interface PayloadlessChainedRequestInput extends PayloadlessRequestInput {
+    chain: PayloadlessLambdaHandlerChain;
+}
+
+export interface ChainedRequestInput<RequestBody> extends RequestInput<RequestBody> {
+    chain: LambdaHandlerChain<RequestBody>;
+}
+
+export type PayloadlessChainedLambdaHandlerFunction = (
+  input: PayloadlessChainedRequestInput
+) => Promise<void>;
+
+/**
+ * A lambda handler function which is part of a chain. It may invoke the remainder of the chain via the given chain input
+ */
+export type ChainedLambdaHandlerFunction<RequestBody> = (
+  input: ChainedRequestInput<RequestBody>,
+) => Promise<void>;
+
+export type PayloadlessLambdaHandlerFunction = (
+  input: PayloadlessRequestInput
+) => Promise<void>;
+
+// Type for a lambda handler function to be wrapped
+export type LambdaHandlerFunction<RequestBody> = (
+  input: RequestInput<RequestBody>,
+) => Promise<void>;
+
+export interface PayloadlessLambdaHandlerChain {
+  next: PayloadlessLambdaHandlerFunction;
+}
+
+export interface LambdaHandlerChain<RequestBody> {
+  next: LambdaHandlerFunction<RequestBody>;
+}
+
+// Interceptor is a type alias for ChainedLambdaHandlerFunction
+export type Interceptor<RequestBody> = ChainedLambdaHandlerFunction<RequestBody>;
+
+/**
+ * Build a chain from the given array of chained lambda handlers
+ */
+const buildHandlerChain = <RequestBody>(
+  ...handlers: ChainedLambdaHandlerFunction<RequestBody>[]
+): LambdaHandlerChain<RequestBody> => {
+  if (handlers.length === 0) {
+    return {
+      next: () => {
+        throw new Error("No more handlers remain in the chain! The last handler should not call next.");
+      }
+    };
+  }
+  const [currentHandler, ...remainingHandlers] = handlers;
+  return {
+    next: (input) => {
+      return currentHandler({
+        ...input,
+        chain: buildHandlerChain(...remainingHandlers),
+      });
+    },
+  };
+};
+
+<%_ toServerOperations.forEach((operation) => { _%>
+
+/**
+ * Request body parameter for <%- operation.operationIdPascalCase %>
+ */
+export type <%- operation.operationIdPascalCase %>RequestBody = <% if (operation.parametersBody) { %><%- operation.parametersBody.isPrimitive ? 'string' : operation.parametersBody.typescriptType %><% } else { %>never<% } %>;
+
+// Type that the handler function provided to the wrapper must conform to
+export type <%- operation.operationIdPascalCase %>HandlerFunction = LambdaHandlerFunction<<%- operation.operationIdPascalCase %>RequestBody>;
+export type <%- operation.operationIdPascalCase %>ChainedHandlerFunction = ChainedLambdaHandlerFunction<<%- operation.operationIdPascalCase %>RequestBody>;
+export type <%- operation.operationIdPascalCase %>ChainedRequestInput = ChainedRequestInput<<%- operation.operationIdPascalCase %>RequestBody>;
+
+/**
+ * Lambda handler wrapper to provide typed interface for the implementation of <%- operation.name %>
+ */
+export const <%- operation.name %>Handler = (
+    ...handlers: [...(PayloadlessChainedLambdaHandlerFunction | <%- operation.operationIdPascalCase %>ChainedHandlerFunction)[], <%- operation.operationIdPascalCase %>ChainedHandlerFunction]
+): OperationApiGatewayLambdaHandler<'<%- operation.name %>'> => async (event: APIGatewayProxyWebsocketEventV2, context: any, _callback?: any, additionalInterceptors: (PayloadlessChainedLambdaHandlerFunction | <%- operation.operationIdPascalCase %>ChainedHandlerFunction)[] = []): Promise<APIGatewayProxyResultV2> => {
+    const operationId = "<%- operation.name %>";
+
+    const demarshal = (bodyString: string): any => {
+        <%_ if (operation.parametersBody) { _%>
+        <%_ if (!operation.parametersBody.isPrimitive) { _%>
+        return <%- operation.parametersBody.typescriptType %>FromJSON(JSON.parse(bodyString)?.payload ?? {});
+        <%_ } else { _%>
+        return bodyString;
+        <%_ } _%>
+        <%_ } else { _%>
+        return {};
+        <%_ } _%>
+    };
+    const body = parseBody(event.body, demarshal, [<%- operation.parametersBody ? operation.parametersBody.mediaTypes.map(m => `'${m}'`).join(',') : "'application/json'" %>]) as <%- operation.operationIdPascalCase %>RequestBody;
+
+    const chain = buildHandlerChain(...additionalInterceptors, ...handlers);
+    await chain.next({
+        input: body,
+        connectionId: event.requestContext.connectionId,
+        sdk: new <%- serviceClassName %>ServerSdk({
+          callbackUrl: `https://${event.requestContext.domainName}/${event.requestContext.stage}`,
+        }),
+        event,
+        context,
+        interceptorContext: { operationId },
+    });
+
+    return {
+        // Respond success to indicate to API gateway that we have implemented the integration
+        // Websocket operations are one-way.
+        statusCode: 200,
+    };
+};
+<%_ }); _%>
+
+export type $ConnectChainedLambdaHandlerFunction = PayloadlessChainedLambdaHandlerFunction;
+
+export const $connectHandler = (
+  ...handlers: [...(PayloadlessChainedLambdaHandlerFunction | ChainedLambdaHandlerFunction<any>)[], $ConnectChainedLambdaHandlerFunction]
+): OperationApiGatewayLambdaHandler<'$connect'> => async (event: APIGatewayProxyWebsocketEventV2, context: any, _callback?: any, additionalInterceptors: PayloadlessChainedLambdaHandlerFunction[] = []): Promise<APIGatewayProxyResultV2> => {
+  const operationId = "$connect";
+  const chain = buildHandlerChain(...additionalInterceptors, ...(handlers as any)) as PayloadlessLambdaHandlerChain;
+  const interceptorContext = { operationId };
+  await chain.next({
+      connectionId: event.requestContext.connectionId,
+      sdk: new <%- serviceClassName %>ServerSdk({
+        callbackUrl: `https://${event.requestContext.domainName}/${event.requestContext.stage}`,
+      }),
+      event,
+      context,
+      interceptorContext,
+  });
+
+  return {
+      // Respond with 200, unless the handler explicitly denies the connection
+      statusCode: interceptorContext[$PendingConnection.DENY_CONTEXT_KEY] ? 403 : 200,
+  };
+};
+
+export type $DisconnectChainedLambdaHandlerFunction = PayloadlessChainedLambdaHandlerFunction;
+
+export const $disconnectHandler = (
+  ...handlers: [...(PayloadlessChainedLambdaHandlerFunction | ChainedLambdaHandlerFunction<any>)[], $DisconnectChainedLambdaHandlerFunction]
+): OperationApiGatewayLambdaHandler<'$disconnect'> => async (event: APIGatewayProxyWebsocketEventV2, context: any, _callback?: any, additionalInterceptors: PayloadlessChainedLambdaHandlerFunction[] = []): Promise<APIGatewayProxyResultV2> => {
+  const operationId = "$disconnect";
+  const chain = buildHandlerChain(...additionalInterceptors, ...handlers) as PayloadlessLambdaHandlerChain;
+  await chain.next({
+      connectionId: event.requestContext.connectionId,
+      sdk: new <%- serviceClassName %>ServerSdk({
+        callbackUrl: `https://${event.requestContext.domainName}/${event.requestContext.stage}`,
+      }),
+      event,
+      context,
+      interceptorContext: { operationId },
+  });
+
+  return {
+      // Respond success to indicate to API gateway that we have implemented the integration
+      // Websocket operations are one-way.
+      statusCode: 200,
+  };
+};
+
+export interface HandlerRouterHandlers {
+<%_ toServerOperations.forEach((operation) => { _%>
+  readonly <%- operation.name %>: OperationApiGatewayLambdaHandler<'<%- operation.name %>'>;
+<%_ }); _%>
+  readonly $connect?: OperationApiGatewayLambdaHandler<'$connect'>;
+  readonly $disconnect?: OperationApiGatewayLambdaHandler<'$disconnect'>;
+}
+
+export type AnyOperationRequestBodies = <% toServerOperations.forEach((operation) => { %>| <%- operation.operationIdPascalCase %>RequestBody<% }); %>;
+
+export interface HandlerRouterProps<
+  RequestBody,
+> {
+  /**
+   * Interceptors to apply to all handlers
+   */
+  readonly interceptors?: ReadonlyArray<(PayloadlessChainedLambdaHandlerFunction | ChainedLambdaHandlerFunction<RequestBody>)>;
+
+  /**
+   * Handlers to register for each operation
+   */
+  readonly handlers: HandlerRouterHandlers;
+}
+
+const OperationIdByPath = Object.fromEntries(Object.entries(OperationLookup).map(
+  ([operationId, details]: [string, {path: string}]) => [details.path.replace(/\//g, ''), operationId]
+));
+
+/**
+ * Returns a lambda handler which can be used to route requests to the appropriate typed lambda handler function.
+ */
+export const handlerRouter = (props: HandlerRouterProps<
+  AnyOperationRequestBodies
+>): OperationApiGatewayLambdaHandler<OperationIds> => async (event, context) => {
+  const handler = props.handlers[OperationIdByPath[event.requestContext.routeKey]];
+  return handler(event, context, undefined, props.interceptors);
+};

@@ -1,0 +1,206 @@
+"use strict";
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NxWorkspace = exports.NX_DEFAULT_BUILD_OUTPUTS = void 0;
+const JSII_RTTI_SYMBOL_1 = Symbol.for("jsii.rtti");
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+const projen_1 = require("projen");
+const utils_1 = require("../utils");
+const common_1 = require("../utils/common");
+const ALWAYS_IGNORE = [".tmp", ".env", ".pytest_cache"];
+/** Default NX outputs to cache */
+exports.NX_DEFAULT_BUILD_OUTPUTS = [
+    "{projectRoot}/dist",
+    "{projectRoot}/lib",
+    "{projectRoot}/build",
+    "{projectRoot}/coverage",
+    "{projectRoot}/test-reports",
+    "{projectRoot}/target",
+    "{projectRoot}/cdk.out",
+    "{projectRoot}/LICENSE_THIRD_PARTY",
+    "{projectRoot}/.jsii",
+];
+/**
+ * Component which manages the workspace specific NX Config for the root monorepo.
+ * @experimental
+ */
+class NxWorkspace extends projen_1.Component {
+    /**
+     * Retrieves the singleton instance associated with project root.
+     *
+     * @param scope project instance.
+     */
+    static of(scope) {
+        return scope.root.components.find((c) => utils_1.ProjectUtils.isNamedInstanceOf(c, NxWorkspace));
+    }
+    constructor(project) {
+        // Make sure only being added to the root project.
+        if (project.root !== project) {
+            throw new Error("NxJson can only be added to the root project");
+        }
+        // Make sure we only ever have 1 instance of NxJson component per project
+        if (NxWorkspace.of(project)) {
+            throw new Error(`Project ${project.name} already has associated NxJson component.`);
+        }
+        if (project.tryFindObjectFile("nx.json")) {
+            throw new Error(`Project ${project.name} already has "nx.json" file defined.`);
+        }
+        super(project);
+        /**
+         * Automatically infer NxProject targets based on project type.
+         * @experimental
+         */
+        this.autoInferProjectTargets = false;
+        /**
+         * Indicates if non-native nx hasher will be used.
+         *
+         * If true, the NX_NON_NATIVE_HASHER env var will be set
+         * to true for all project tasks.
+         */
+        this.nonNativeHasher = false;
+        /**
+         * List of cacheable operations.
+         */
+        this.cacheableOperations = ["build", "test"];
+        /**
+         * Some presets use the extends property to hide some default options in a separate json file.
+         * The json file specified in the extends property is located in your node_modules folder.
+         * The Nx preset files are specified in the nx package.
+         *
+         * @default "nx/presets/npm.json"
+         */
+        this.extends = "nx/presets/npm.json";
+        /**
+         * Tells Nx what prefix to use when generating library imports.
+         */
+        this.npmScope = "monorepo";
+        /**
+         * Plugins for extending the project graph
+         */
+        this.plugins = [];
+        /**
+         * Configuration for Nx Plugins
+         */
+        this.pluginsConfig = {};
+        /**
+         * Default options for `nx affected`
+         */
+        this.affected = {
+            defaultBase: "mainline",
+        };
+        /**
+         * Named inputs
+         * @see https://nx.dev/reference/nx-json#inputs-&-namedinputs
+         */
+        this.namedInputs = {
+            // https://nx.dev/more-concepts/customizing-inputs#defaults
+            default: ["{projectRoot}/**/*"],
+        };
+        /**
+         * Dependencies between different target names across all projects
+         *
+         * @see https://nx.dev/reference/nx-json#target-defaults
+         */
+        this.targetDefaults = {
+            build: {
+                inputs: ["default", "^default"],
+                outputs: exports.NX_DEFAULT_BUILD_OUTPUTS,
+                dependsOn: ["^build"],
+            },
+        };
+        /**
+         * Default task runner
+         */
+        this.defaultTaskRunner = "nx/tasks-runners/default";
+        /**
+         * Default task runner options
+         */
+        this.defaultTaskRunnerOptions = {
+            useDaemonProcess: false,
+            cacheableOperations: () => this.cacheableOperations,
+            cacheDirectory: () => this.cacheDirectory,
+        };
+        /**
+         * Task runner options.
+         */
+        this.tasksRunnerOptions = {
+            default: {
+                runner: () => this.defaultTaskRunner,
+                options: () => this.defaultTaskRunnerOptions,
+            },
+        };
+        this.nxJson = new projen_1.JsonFile(project, "nx.json", {
+            obj: {
+                extends: () => this.extends,
+                npmScope: () => this.npmScope,
+                affected: () => (0, common_1.asUndefinedIfEmpty)(this.affected),
+                workspaceLayout: () => (0, common_1.asUndefinedIfEmpty)(this.workspaceLayout),
+                plugins: () => (0, common_1.asUndefinedIfEmpty)(this.plugins),
+                pluginsConfig: () => (0, common_1.asUndefinedIfEmpty)(this.pluginsConfig),
+                namedInputs: () => (0, common_1.asUndefinedIfEmpty)(this.namedInputs),
+                targetDefaults: () => (0, common_1.asUndefinedIfEmpty)(this.targetDefaults),
+                tasksRunnerOptions: () => (0, common_1.asUndefinedIfEmpty)(this.tasksRunnerOptions),
+            },
+        });
+        this.nxIgnore = new projen_1.IgnoreFile(project, ".nxignore");
+        this.nxIgnore.addPatterns(...ALWAYS_IGNORE);
+    }
+    /**
+     * Setup workspace to use nx-cloud
+     * @param readOnlyAccessToken
+     */
+    useNxCloud(readOnlyAccessToken) {
+        this.defaultTaskRunner = "nx-cloud";
+        this.defaultTaskRunnerOptions.accessToken = readOnlyAccessToken;
+        if (this.project.deps.all.find((dep) => dep.type === projen_1.DependencyType.BUILD && dep.name === "nx-cloud") == null) {
+            this.project.deps.addDependency("nx-cloud", projen_1.DependencyType.BUILD);
+        }
+    }
+    /**
+     * Set `namedInput` value helper
+     */
+    setNamedInput(name, inputs) {
+        this.namedInputs[name] = inputs;
+    }
+    /** Set `targetDefaults` helper */
+    setTargetDefault(name, target, merge = false) {
+        this.targetDefaults[name] = (0, common_1.deepMerge)([merge ? this.targetDefaults[name] || {} : {}, target], { append: true });
+    }
+    /** @internal */
+    _recursivelyApplyToProject(project, fn) {
+        fn(project);
+        project.subprojects.forEach(fn);
+    }
+    /** @internal */
+    _applyNonNativeHasher(project) {
+        project.tasks.addEnvironment("NX_NON_NATIVE_HASHER", "true");
+    }
+    /** @internal */
+    _applyCacheDirectory(project) {
+        this.cacheDirectory &&
+            project.tasks.addEnvironment("NX_CACHE_DIRECTORY", this.cacheDirectory);
+    }
+    /** @inheritdoc */
+    preSynthesize() {
+        super.preSynthesize();
+        if (this.cacheDirectory) {
+            this.project.logger.warn("[NxWorkspace] Overriding nx cacheDirectory is experimental and may cause `Could not find 'nx' module in this workspace.` issue. \nIf you experience this issue, please remove cacheDirectory override. \nhttps://github.com/nrwl/nx/issues/8929");
+            this.project.addGitIgnore(this.cacheDirectory);
+            // https://github.com/nrwl/nx/issues/8929
+            // For cacheDirectory override to propagate during initialization we need to set as env var
+            this._recursivelyApplyToProject(this.project, this._applyCacheDirectory.bind(this));
+        }
+        if (this.nonNativeHasher) {
+            this._recursivelyApplyToProject(this.project, this._applyNonNativeHasher.bind(this));
+        }
+    }
+    /** @inheritdoc */
+    synthesize() {
+        super.synthesize();
+    }
+}
+exports.NxWorkspace = NxWorkspace;
+_a = JSII_RTTI_SYMBOL_1;
+NxWorkspace[_a] = { fqn: "@aws/pdk.monorepo.NxWorkspace", version: "0.26.14" };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibngtd29ya3NwYWNlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibngtd29ya3NwYWNlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUE7c0NBQ3NDO0FBQ3RDLG1DQU1nQjtBQUdoQixvQ0FBd0M7QUFDeEMsNENBQWdFO0FBRWhFLE1BQU0sYUFBYSxHQUFhLENBQUMsTUFBTSxFQUFFLE1BQU0sRUFBRSxlQUFlLENBQUMsQ0FBQztBQUVsRSxrQ0FBa0M7QUFDckIsUUFBQSx3QkFBd0IsR0FBRztJQUN0QyxvQkFBb0I7SUFDcEIsbUJBQW1CO0lBQ25CLHFCQUFxQjtJQUNyQix3QkFBd0I7SUFDeEIsNEJBQTRCO0lBQzVCLHNCQUFzQjtJQUN0Qix1QkFBdUI7SUFDdkIsbUNBQW1DO0lBQ25DLHFCQUFxQjtDQUN0QixDQUFDO0FBRUY7OztHQUdHO0FBQ0gsTUFBYSxXQUFZLFNBQVEsa0JBQVM7SUFDeEM7Ozs7T0FJRztJQUNILE1BQU0sQ0FBQyxFQUFFLENBQUMsS0FBYztRQUN0QixPQUFPLEtBQUssQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLElBQUksQ0FBQyxDQUFDLENBQUMsRUFBRSxFQUFFLENBQ3RDLG9CQUFZLENBQUMsaUJBQWlCLENBQUMsQ0FBQyxFQUFFLFdBQVcsQ0FBQyxDQUNwQixDQUFDO0lBQy9CLENBQUM7SUFrSEQsWUFBWSxPQUFnQjtRQUMxQixrREFBa0Q7UUFDbEQsSUFBSSxPQUFPLENBQUMsSUFBSSxLQUFLLE9BQU8sRUFBRSxDQUFDO1lBQzdCLE1BQU0sSUFBSSxLQUFLLENBQUMsOENBQThDLENBQUMsQ0FBQztRQUNsRSxDQUFDO1FBQ0QseUVBQXlFO1FBQ3pFLElBQUksV0FBVyxDQUFDLEVBQUUsQ0FBQyxPQUFPLENBQUMsRUFBRSxDQUFDO1lBQzVCLE1BQU0sSUFBSSxLQUFLLENBQ2IsV0FBVyxPQUFPLENBQUMsSUFBSSwyQ0FBMkMsQ0FDbkUsQ0FBQztRQUNKLENBQUM7UUFFRCxJQUFJLE9BQU8sQ0FBQyxp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LFVBQVU7UUFDUixLQUFLLENBQUMsVUFBVSxFQUFFLENBQUM7SUFDckIsQ0FBQzs7QUFyUEgsa0NBc1BDIiwic291cmNlc0NvbnRlbnQiOlsiLyohIENvcHlyaWdodCBbQW1hem9uLmNvbV0oaHR0cDovL2FtYXpvbi5jb20vKSwgSW5jLiBvciBpdHMgYWZmaWxpYXRlcy4gQWxsIFJpZ2h0cyBSZXNlcnZlZC5cblNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBBcGFjaGUtMi4wICovXG5pbXBvcnQge1xuICBDb21wb25lbnQsXG4gIERlcGVuZGVuY3lUeXBlLFxuICBJZ25vcmVGaWxlLFxuICBKc29uRmlsZSxcbiAgUHJvamVjdCxcbn0gZnJvbSBcInByb2plblwiO1xuaW1wb3J0IHsgT2JqIH0gZnJvbSBcInByb2plbi9saWIvdXRpbFwiO1xuaW1wb3J0IHsgTnggfSBmcm9tIFwiLi4vbngtdHlwZXNcIjtcbmltcG9ydCB7IFByb2plY3RVdGlscyB9IGZyb20gXCIuLi91dGlsc1wiO1xuaW1wb3J0IHsgYXNVbmRlZmluZWRJZkVtcHR5LCBkZWVwTWVyZ2UgfSBmcm9tIFwiLi4vdXRpbHMvY29tbW9uXCI7XG5cbmNvbnN0IEFMV0FZU19JR05PUkU6IHN0cmluZ1tdID0gW1wiLnRtcFwiLCBcIi5lbnZcIiwgXCIucHl0ZXN0X2NhY2hlXCJdO1xuXG4vKiogRGVmYXVsdCBOWCBvdXRwdXRzIHRvIGNhY2hlICovXG5leHBvcnQgY29uc3QgTlhfREVGQVVMVF9CVUlMRF9PVVRQVVRTID0gW1xuICBcIntwcm9qZWN0Um9vdH0vZGlzdFwiLFxuICBcIntwcm9qZWN0Um9vdH0vbGliXCIsXG4gIFwie3Byb2plY3RSb290fS9idWlsZFwiLFxuICBcIntwcm9qZWN0Um9vdH0vY292ZXJhZ2VcIixcbiAgXCJ7cHJvamVjdFJvb3R9L3Rlc3QtcmVwb3J0c1wiLFxuICBcIntwcm9qZWN0Um9vdH0vdGFyZ2V0XCIsXG4gIFwie3Byb2plY3RSb290fS9jZGsub3V0XCIsXG4gIFwie3Byb2plY3RSb290fS9MSUNFTlNFX1RISVJEX1BBUlRZXCIsXG4gIFwie3Byb2plY3RSb290fS8uanNpaVwiLFxuXTtcblxuLyoqXG4gKiBDb21wb25lbnQgd2hpY2ggbWFuYWdlcyB0aGUgd29ya3NwYWNlIHNwZWNpZmljIE5YIENvbmZpZyBmb3IgdGhlIHJvb3QgbW9ub3JlcG8uXG4gKiBAZXhwZXJpbWVudGFsXG4gKi9cbmV4cG9ydCBjbGFzcyBOeFdvcmtzcGFjZSBleHRlbmRzIENvbXBvbmVudCB7XG4gIC8qKlxuICAgKiBSZXRyaWV2ZXMgdGhlIHNpbmdsZXRvbiBpbnN0YW5jZSBhc3NvY2lhdGVkIHdpdGggcHJvamVjdCByb290LlxuICAgKlxuICAgKiBAcGFyYW0gc2NvcGUgcHJvamVjdCBpbnN0YW5jZS5cbiAgICovXG4gIHN0YXRpYyBvZihzY29wZTogUHJvamVjdCk6IE54V29ya3NwYWNlIHwgdW5kZWZpbmVkIHtcbiAgICByZXR1cm4gc2NvcGUucm9vdC5jb21wb25lbnRzLmZpbmQoKGMpID0+XG4gICAgICBQcm9qZWN0VXRpbHMuaXNOYW1lZEluc3RhbmNlT2YoYywgTnhXb3Jrc3BhY2UpXG4gICAgKSBhcyBOeFdvcmtzcGFjZSB8IHVuZGVmaW5lZDtcbiAgfVxuXG4gIC8qKlxuICAgKiBSYXcgbnguanNvbiBmaWxlIHRvIHN1cHBvcnQgb3ZlcnJpZGVzIHRoYXQgYXJlbid0IGhhbmRsZWRcbiAgICogZGlyZWN0bHkuXG4gICAqXG4gICAqICoqQXR0ZW50aW9uOioqIGFueSBvdmVycmlkZXMgYXBwbGllZCBoZXJlIHdpbGwgbm90IGJlIHZpc2libGVcbiAgICogaW4gdGhlIHByb3BlcnRpZXMgYW5kIG9ubHkgaW5jbHVkZWQgaW4gZmluYWwgc3ludGhlc2l6ZWQgb3V0cHV0LFxuICAgKiBhbmQgbGlrZWx5IHRvIG92ZXJyaWRlIG5hdGl2ZSBoYW5kbGluZy5cbiAgICogQGFkdmFuY2VkXG4gICAqL1xuICBwdWJsaWMgcmVhZG9ubHkgbnhKc29uOiBKc29uRmlsZTtcbiAgLyoqXG4gICAqIC5ueGlnbm9yZSBmaWxlXG4gICAqL1xuICBwdWJsaWMgcmVhZG9ubHkgbnhJZ25vcmU6IElnbm9yZUZpbGU7XG5cbiAgLyoqXG4gICAqIEF1dG9tYXRpY2FsbHkgaW5mZXIgTnhQcm9qZWN0IHRhcmdldHMgYmFzZWQgb24gcHJvamVjdCB0eXBlLlxuICAgKiBAZXhwZXJpbWVudGFsXG4gICAqL1xuICBwdWJsaWMgYXV0b0luZmVyUHJvamVjdFRhcmdldHM6IGJvb2xlYW4gPSBmYWxzZTtcblxuICAvKipcbiAgICogT3ZlcnJpZGUgdGhlIGRlZmF1bHQgbnggY2FjaGVEaXJlY3RvcnlcbiAgICogQGV4cGVyaW1lbnRhbCBNYXkgY2F1c2UgYENvdWxkIG5vdCBmaW5kICdueCcgbW9kdWxlIGluIHRoaXMgd29ya3NwYWNlLmAgW2lzc3VlXShodHRwczovL2dpdGh1Yi5jb20vbnJ3bC9ueC9pc3N1ZXMvODkyOSkuIElmIHlvdSBleHBlcmllbmNlIHRoaXMgaXNzdWUsIHBsZWFzZSByZW1vdmUgYGNhY2hlRGlyZWN0b3J5YCBvdmVycmlkZS5cbiAgICovXG4gIHB1YmxpYyBjYWNoZURpcmVjdG9yeT86IHN0cmluZztcblxuICAvKipcbiAgICogSW5kaWNhdGVzIGlmIG5vbi1uYXRpdmUgbnggaGFzaGVyIHdpbGwgYmUgdXNlZC5cbiAgICpcbiAgICogSWYgdHJ1ZSwgdGhlIE5YX05PTl9OQVRJVkVfSEFTSEVSIGVudiB2YXIgd2lsbCBiZSBzZXRcbiAgICogdG8gdHJ1ZSBmb3IgYWxsIHByb2plY3QgdGFza3MuXG4gICAqL1xuICBwdWJsaWMgbm9uTmF0aXZlSGFzaGVyOiBib29sZWFuID0gZmFsc2U7XG4gIC8qKlxuICAgKiBMaXN0IG9mIGNhY2hlYWJsZSBvcGVyYXRpb25zLlxuICAgKi9cbiAgcHVibGljIGNhY2hlYWJsZU9wZXJhdGlvbnM6IHN0cmluZ1tdID0gW1wiYnVpbGRcIiwgXCJ0ZXN0XCJdO1xuXG4gIC8qKlxuICAgKiBTb21lIHByZXNldHMgdXNlIHRoZSBleHRlbmRzIHByb3BlcnR5IHRvIGhpZGUgc29tZSBkZWZhdWx0IG9wdGlvbnMgaW4gYSBzZXBhcmF0ZSBqc29uIGZpbGUuXG4gICAqIFRoZSBqc29uIGZpbGUgc3BlY2lmaWVkIGluIHRoZSBleHRlbmRzIHByb3BlcnR5IGlzIGxvY2F0ZWQgaW4geW91ciBub2RlX21vZHVsZXMgZm9sZGVyLlxuICAgKiBUaGUgTnggcHJlc2V0IGZpbGVzIGFyZSBzcGVjaWZpZWQgaW4gdGhlIG54IHBhY2thZ2UuXG4gICAqXG4gICAqIEBkZWZhdWx0IFwibngvcHJlc2V0cy9ucG0uanNvblwiXG4gICAqL1xuICBwdWJsaWMgZXh0ZW5kczogc3RyaW5nID0gXCJueC9wcmVzZXRzL25wbS5qc29uXCI7XG4gIC8qKlxuICAgKiBUZWxscyBOeCB3aGF0IHByZWZpeCB0byB1c2Ugd2hlbiBnZW5lcmF0aW5nIGxpYnJhcnkgaW1wb3J0cy5cbiAgICovXG4gIHB1YmxpYyBucG1TY29wZTogc3RyaW5nID0gXCJtb25vcmVwb1wiO1xuICAvKipcbiAgICogV2hlcmUgbmV3IGFwcHMgKyBsaWJzIHNob3VsZCBiZSBwbGFjZWRcbiAgICovXG4gIHB1YmxpYyB3b3Jrc3BhY2VMYXlvdXQ/OiBOeC5JV29ya3NwYWNlTGF5b3V0O1xuICAvKipcbiAgICogUGx1Z2lucyBmb3IgZXh0ZW5kaW5nIHRoZSBwcm9qZWN0IGdyYXBoXG4gICAqL1xuICBwdWJsaWMgcGx1Z2luczogc3RyaW5nW10gPSBbXTtcbiAgLyoqXG4gICAqIENvbmZpZ3VyYXRpb24gZm9yIE54IFBsdWdpbnNcbiAgICovXG4gIHB1YmxpYyBwbHVnaW5zQ29uZmlnOiBPYmo8YW55PiA9IHt9O1xuICAvKipcbiAgICogRGVmYXVsdCBvcHRpb25zIGZvciBgbnggYWZmZWN0ZWRgXG4gICAqL1xuICBwdWJsaWMgYWZmZWN0ZWQ6IE54LklOeEFmZmVjdGVkQ29uZmlnID0ge1xuICAgIGRlZmF1bHRCYXNlOiBcIm1haW5saW5lXCIsXG4gIH07XG4gIC8qKlxuICAgKiBOYW1lZCBpbnB1dHNcbiAgICogQHNlZSBodHRwczovL254LmRldi9yZWZlcmVuY2UvbngtanNvbiNpbnB1dHMtJi1uYW1lZGlucHV0c1xuICAgKi9cbiAgcHVibGljIG5hbWVkSW5wdXRzOiBOeC5JTmFtZWRJbnB1dHMgPSB7XG4gICAgLy8gaHR0cHM6Ly9ueC5kZXYvbW9yZS1jb25jZXB0cy9jdXN0b21pemluZy1pbnB1dHMjZGVmYXVsdHNcbiAgICBkZWZhdWx0OiBbXCJ7cHJvamVjdFJvb3R9LyoqLypcIl0sXG4gIH07XG4gIC8qKlxuICAgKiBEZXBlbmRlbmNpZXMgYmV0d2VlbiBkaWZmZXJlbnQgdGFyZ2V0IG5hbWVzIGFjcm9zcyBhbGwgcHJvamVjdHNcbiAgICpcbiAgICogQHNlZSBodHRwczovL254LmRldi9yZWZlcmVuY2UvbngtanNvbiN0YXJnZXQtZGVmYXVsdHNcbiAgICovXG4gIHB1YmxpYyB0YXJnZXREZWZhdWx0czogTnguSVRhcmdldERlZmF1bHRzID0ge1xuICAgIGJ1aWxkOiB7XG4gICAgICBpbnB1dHM6IFtcImRlZmF1bHRcIiwgXCJeZGVmYXVsdFwiXSxcbiAgICAgIG91dHB1dHM6IE5YX0RFRkFVTFRfQlVJTERfT1VUUFVUUyxcbiAgICAgIGRlcGVuZHNPbjogW1wiXmJ1aWxkXCJdLFxuICAgIH0sXG4gIH07XG4gIC8qKlxuICAgKiBEZWZhdWx0IHRhc2sgcnVubmVyXG4gICAqL1xuICBwdWJsaWMgZGVmYXVsdFRhc2tSdW5uZXI6IHN0cmluZyA9IFwibngvdGFza3MtcnVubmVycy9kZWZhdWx0XCI7XG4gIC8qKlxuICAgKiBEZWZhdWx0IHRhc2sgcnVubmVyIG9wdGlvbnNcbiAgICovXG4gIHB1YmxpYyBkZWZhdWx0VGFza1J1bm5lck9wdGlvbnM6IE9iajxhbnk+ID0ge1xuICAgIHVzZURhZW1vblByb2Nlc3M6IGZhbHNlLFxuICAgIGNhY2hlYWJsZU9wZXJhdGlvbnM6ICgpID0+IHRoaXMuY2FjaGVhYmxlT3BlcmF0aW9ucyxcbiAgICBjYWNoZURpcmVjdG9yeTogKCkgPT4gdGhpcy5jYWNoZURpcmVjdG9yeSxcbiAgfTtcblxuICAvKipcbiAgICogVGFzayBydW5uZXIgb3B0aW9ucy5cbiAgICovXG4gIHB1YmxpYyB0YXNrc1J1bm5lck9wdGlvbnM6IE9iajxhbnk+ID0ge1xuICAgIGRlZmF1bHQ6IHtcbiAgICAgIHJ1bm5lcjogKCkgPT4gdGhpcy5kZWZhdWx0VGFza1J1bm5lcixcbiAgICAgIG9wdGlvbnM6ICgpID0+IHRoaXMuZGVmYXVsdFRhc2tSdW5uZXJPcHRpb25zLFxuICAgIH0sXG4gIH07XG5cbiAgY29uc3RydWN0b3IocHJvamVjdDogUHJvamVjdCkge1xuICAgIC8vIE1ha2Ugc3VyZSBvbmx5IGJlaW5nIGFkZGVkIHRvIHRoZSByb290IHByb2plY3QuXG4gICAgaWYgKHByb2plY3Qucm9vdCAhPT0gcHJvamVjdCkge1xuICAgICAgdGhyb3cgbmV3IEVycm9yKFwiTnhKc29uIGNhbiBvbmx5IGJlIGFkZGVkIHRvIHRoZSByb290IHByb2plY3RcIik7XG4gICAgfVxuICAgIC8vIE1ha2Ugc3VyZSB3ZSBvbmx5IGV2ZXIgaGF2ZSAxIGluc3RhbmNlIG9mIE54SnNvbiBjb21wb25lbnQgcGVyIHByb2plY3RcbiAgICBpZiAoTnhXb3Jrc3BhY2Uub2YocHJvamVjdCkpIHtcbiAgICAgIHRocm93IG5ldyBFcnJvcihcbiAgICAgICAgYFByb2plY3QgJHtwcm9qZWN0Lm5hbWV9IGFscmVhZHkgaGFzIGFzc29jaWF0ZWQgTnhKc29uIGNvbXBvbmVudC5gXG4gICAgICApO1xuICAgIH1cblxuICAgIGlmIChwcm9qZWN0LnRyeUZpbmRPYmplY3RGaWxlKFwibnguanNvblwiKSkge1xuICAgICAgdGhyb3cgbmV3IEVycm9yKFxuICAgICAgICBgUHJvamVjdCAke3Byb2plY3QubmFtZX0gYWxyZWFkeSBoYXMgXCJueC5qc29uXCIgZmlsZSBkZWZpbmVkLmBcbiAgICAgICk7XG4gICAgfVxuXG4gICAgc3VwZXIocHJvamVjdCk7XG5cbiAgICB0aGlzLm54SnNvbiA9IG5ldyBKc29uRmlsZShwcm9qZWN0LCBcIm54Lmpzb25cIiwge1xuICAgICAgb2JqOiB7XG4gICAgICAgIGV4dGVuZHM6ICgpID0+IHRoaXMuZXh0ZW5kcyxcbiAgICAgICAgbnBtU2NvcGU6ICgpID0+IHRoaXMubnBtU2NvcGUsXG4gICAgICAgIGFmZmVjdGVkOiAoKSA9PiBhc1VuZGVmaW5lZElmRW1wdHkodGhpcy5hZmZlY3RlZCksXG4gICAgICAgIHdvcmtzcGFjZUxheW91dDogKCkgPT4gYXNVbmRlZmluZWRJZkVtcHR5KHRoaXMud29ya3NwYWNlTGF5b3V0KSxcbiAgICAgICAgcGx1Z2luczogKCkgPT4gYXNVbmRlZmluZWRJZkVtcHR5KHRoaXMucGx1Z2lucyksXG4gICAgICAgIHBsdWdpbnNDb25maWc6ICgpID0+IGFzVW5kZWZpbmVkSWZFbXB0eSh0aGlzLnBsdWdpbnNDb25maWcpLFxuICAgICAgICBuYW1lZElucHV0czogKCkgPT4gYXNVbmRlZmluZWRJZkVtcHR5KHRoaXMubmFtZWRJbnB1dHMpLFxuICAgICAgICB0YXJnZXREZWZhdWx0czogKCkgPT4gYXNVbmRlZmluZWRJZkVtcHR5KHRoaXMudGFyZ2V0RGVmYXVsdHMpLFxuICAgICAgICB0YXNrc1J1bm5lck9wdGlvbnM6ICgpID0+IGFzVW5kZWZpbmVkSWZFbXB0eSh0aGlzLnRhc2tzUnVubmVyT3B0aW9ucyksXG4gICAgICB9LFxuICAgIH0pO1xuXG4gICAgdGhpcy5ueElnbm9yZSA9IG5ldyBJZ25vcmVGaWxlKHByb2plY3QsIFwiLm54aWdub3JlXCIpO1xuICAgIHRoaXMubnhJZ25vcmUuYWRkUGF0dGVybnMoLi4uQUxXQVlTX0lHTk9SRSk7XG4gIH1cblxuICAvKipcbiAgICogU2V0dXAgd29ya3NwYWNlIHRvIHVzZSBueC1jbG91ZFxuICAgKiBAcGFyYW0gcmVhZE9ubHlBY2Nlc3NUb2tlblxuICAgKi9cbiAgcHVibGljIHVzZU54Q2xvdWQocmVhZE9ubHlBY2Nlc3NUb2tlbjogc3RyaW5nKTogdm9pZCB7XG4gICAgdGhpcy5kZWZhdWx0VGFza1J1bm5lciA9IFwibngtY2xvdWRcIjtcbiAgICB0aGlzLmRlZmF1bHRUYXNrUnVubmVyT3B0aW9ucy5hY2Nlc3NUb2tlbiA9IHJlYWRPbmx5QWNjZXNzVG9rZW47XG5cbiAgICBpZiAoXG4gICAgICB0aGlzLnByb2plY3QuZGVwcy5hbGwuZmluZChcbiAgICAgICAgKGRlcCkgPT4gZGVwLnR5cGUgPT09IERlcGVuZGVuY3lUeXBlLkJVSUxEICYmIGRlcC5uYW1lID09PSBcIm54LWNsb3VkXCJcbiAgICAgICkgPT0gbnVsbFxuICAgICkge1xuICAgICAgdGhpcy5wcm9qZWN0LmRlcHMuYWRkRGVwZW5kZW5jeShcIm54LWNsb3VkXCIsIERlcGVuZGVuY3lUeXBlLkJVSUxEKTtcbiAgICB9XG4gIH1cblxuICAvKipcbiAgICogU2V0IGBuYW1lZElucHV0YCB2YWx1ZSBoZWxwZXJcbiAgICovXG4gIHB1YmxpYyBzZXROYW1lZElucHV0KG5hbWU6IHN0cmluZywgaW5wdXRzOiBzdHJpbmdbXSk6IHZvaWQge1xuICAgIHRoaXMubmFtZWRJbnB1dHNbbmFtZV0gPSBpbnB1dHM7XG4gIH1cblxuICAvKiogU2V0IGB0YXJnZXREZWZhdWx0c2AgaGVscGVyICovXG4gIHB1YmxpYyBzZXRUYXJnZXREZWZhdWx0KFxuICAgIG5hbWU6IHN0cmluZyxcbiAgICB0YXJnZXQ6IE54LklQcm9qZWN0VGFyZ2V0LFxuICAgIG1lcmdlOiBib29sZWFuID0gZmFsc2VcbiAgKTogdm9pZCB7XG4gICAgdGhpcy50YXJnZXREZWZhdWx0c1tuYW1lXSA9IGRlZXBNZXJnZShcbiAgICAgIFttZXJnZSA/IHRoaXMudGFyZ2V0RGVmYXVsdHNbbmFtZV0gfHwge30gOiB7fSwgdGFyZ2V0XSxcbiAgICAgIHsgYXBwZW5kOiB0cnVlIH1cbiAgICApO1xuICB9XG5cbiAgLyoqIEBpbnRlcm5hbCAqL1xuICBwcm90ZWN0ZWQgX3JlY3Vyc2l2ZWx5QXBwbHlUb1Byb2plY3QoXG4gICAgcHJvamVjdDogUHJvamVjdCxcbiAgICBmbjogKHByb2plY3Q6IFByb2plY3QpID0+IHZvaWRcbiAgKTogdm9pZCB7XG4gICAgZm4ocHJvamVjdCk7XG4gICAgcHJvamVjdC5zdWJwcm9qZWN0cy5mb3JFYWNoKGZuKTtcbiAgfVxuXG4gIC8qKiBAaW50ZXJuYWwgKi9cbiAgcHJvdGVjdGVkIF9hcHBseU5vbk5hdGl2ZUhhc2hlcihwcm9qZWN0OiBQcm9qZWN0KTogdm9pZCB7XG4gICAgcHJvamVjdC50YXNrcy5hZGRFbnZpcm9ubWVudChcIk5YX05PTl9OQVRJVkVfSEFTSEVSXCIsIFwidHJ1ZVwiKTtcbiAgfVxuICAvKiogQGludGVybmFsICovXG4gIHByb3RlY3RlZCBfYXBwbHlDYWNoZURpcmVjdG9yeShwcm9qZWN0OiBQcm9qZWN0KTogdm9pZCB7XG4gICAgdGhpcy5jYWNoZURpcmVjdG9yeSAmJlxuICAgICAgcHJvamVjdC50YXNrcy5hZGRFbnZpcm9ubWVudChcIk5YX0NBQ0hFX0RJUkVDVE9SWVwiLCB0aGlzLmNhY2hlRGlyZWN0b3J5KTtcbiAgfVxuXG4gIC8qKiBAaW5oZXJpdGRvYyAqL1xuICBwcmVTeW50aGVzaXplKCk6IHZvaWQge1xuICAgIHN1cGVyLnByZVN5bnRoZXNpemUoKTtcblxuICAgIGlmICh0aGlzLmNhY2hlRGlyZWN0b3J5KSB7XG4gICAgICB0aGlzLnByb2plY3QubG9nZ2VyLndhcm4oXG4gICAgICAgIFwiW054V29ya3NwYWNlXSBPdmVycmlkaW5nIG54IGNhY2hlRGlyZWN0b3J5IGlzIGV4cGVyaW1lbnRhbCBhbmQgbWF5IGNhdXNlIGBDb3VsZCBub3QgZmluZCAnbngnIG1vZHVsZSBpbiB0aGlzIHdvcmtzcGFjZS5gIGlzc3VlLiBcXG5JZiB5b3UgZXhwZXJpZW5jZSB0aGlzIGlzc3VlLCBwbGVhc2UgcmVtb3ZlIGNhY2hlRGlyZWN0b3J5IG92ZXJyaWRlLiBcXG5odHRwczovL2dpdGh1Yi5jb20vbnJ3bC9ueC9pc3N1ZXMvODkyOVwiXG4gICAgICApO1xuICAgICAgdGhpcy5wcm9qZWN0LmFkZEdpdElnbm9yZSh0aGlzLmNhY2hlRGlyZWN0b3J5KTtcbiAgICAgIC8vIGh0dHBzOi8vZ2l0aHViLmNvbS9ucndsL254L2lzc3Vlcy84OTI5XG4gICAgICAvLyBGb3IgY2FjaGVEaXJlY3Rvcnkgb3ZlcnJpZGUgdG8gcHJvcGFnYXRlIGR1cmluZyBpbml0aWFsaXphdGlvbiB3ZSBuZWVkIHRvIHNldCBhcyBlbnYgdmFyXG4gICAgICB0aGlzLl9yZWN1cnNpdmVseUFwcGx5VG9Qcm9qZWN0KFxuICAgICAgICB0aGlzLnByb2plY3QsXG4gICAgICAgIHRoaXMuX2FwcGx5Q2FjaGVEaXJlY3RvcnkuYmluZCh0aGlzKVxuICAgICAgKTtcbiAgICB9XG5cbiAgICBpZiAodGhpcy5ub25OYXRpdmVIYXNoZXIpIHtcbiAgICAgIHRoaXMuX3JlY3Vyc2l2ZWx5QXBwbHlUb1Byb2plY3QoXG4gICAgICAgIHRoaXMucHJvamVjdCxcbiAgICAgICAgdGhpcy5fYXBwbHlOb25OYXRpdmVIYXNoZXIuYmluZCh0aGlzKVxuICAgICAgKTtcbiAgICB9XG4gIH1cblxuICAvKiogQGluaGVyaXRkb2MgKi9cbiAgc3ludGhlc2l6ZSgpIHtcbiAgICBzdXBlci5zeW50aGVzaXplKCk7XG4gIH1cbn1cbiJdfQ==

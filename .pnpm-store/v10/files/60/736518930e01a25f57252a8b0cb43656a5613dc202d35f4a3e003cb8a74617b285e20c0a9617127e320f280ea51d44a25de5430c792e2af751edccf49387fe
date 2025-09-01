@@ -1,0 +1,18 @@
+import { IFunction } from "aws-cdk-lib/aws-lambda";
+import { ApiGatewayIntegration, Integration, IntegrationGrantProps, IntegrationRenderProps } from "./integration";
+/**
+ * A lambda integration
+ */
+export declare class LambdaIntegration extends Integration {
+    private readonly lambdaFunction;
+    constructor(lambdaFunction: IFunction);
+    /**
+     * Render the lambda integration as a snippet of OpenAPI
+     */
+    render(_props: IntegrationRenderProps): ApiGatewayIntegration;
+    private getOperationPermissionId;
+    /**
+     * Grant API Gateway permissions to invoke the lambda
+     */
+    grant({ scope, api, operationId, method, path, operationLookup, }: IntegrationGrantProps): void;
+}

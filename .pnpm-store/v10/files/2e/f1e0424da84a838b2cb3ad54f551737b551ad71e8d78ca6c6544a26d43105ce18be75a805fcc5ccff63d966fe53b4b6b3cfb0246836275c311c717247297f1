@@ -1,0 +1,7 @@
+"use strict";
+// Generated at 2025-07-31T12:48:06Z by generate.sh
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.VERSION = void 0;
+/** The qualified version number for this JSII compiler. */
+exports.VERSION = '1.113.0 (build fc68b25)';
+//# sourceMappingURL=version.js.map

@@ -1,0 +1,89 @@
+"use strict";
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.GithubCredentials = void 0;
+const JSII_RTTI_SYMBOL_1 = Symbol.for("jsii.rtti");
+const Case = require("case");
+/**
+ * Represents a method of providing GitHub API access for projen workflows.
+ */
+class GithubCredentials {
+    /**
+     * Provide API access through a GitHub personal access token.
+     *
+     * The token must be added as a secret to the GitHub repo, and the name of the
+     * secret can be specified here.
+     *
+     * @see https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+     * @default - a secret named "PROJEN_GITHUB_TOKEN"
+     */
+    static fromPersonalAccessToken(options = {}) {
+        return new GithubCredentials({
+            setupSteps: [],
+            tokenRef: `\${{ secrets.${options.secret ?? "PROJEN_GITHUB_TOKEN"} }}`,
+        });
+    }
+    /**
+     * Provide API access through a GitHub App.
+     *
+     * The GitHub App must be installed on the GitHub repo, its App ID and a
+     * private key must be added as secrets to the repo. The name of the secrets
+     * can be specified here.
+     *
+     * @see https://docs.github.com/en/developers/apps/building-github-apps/creating-a-github-app
+     * @see https://projen.io/docs/integrations/github/#github-app
+     * @default - app id stored in "PROJEN_APP_ID" and private key stored in "PROJEN_APP_PRIVATE_KEY" with all permissions attached to the app
+     */
+    static fromApp(options = {}) {
+        const appIdSecret = options.appIdSecret ?? "PROJEN_APP_ID";
+        const privateKeySecret = options.privateKeySecret ?? "PROJEN_APP_PRIVATE_KEY";
+        const actionConfig = {
+            "app-id": `\${{ secrets.${appIdSecret} }}`,
+            "private-key": `\${{ secrets.${privateKeySecret} }}`,
+        };
+        if (options.owner) {
+            actionConfig.owner = options.owner;
+        }
+        if (options.repositories) {
+            actionConfig.repositories = options.repositories.join(",");
+        }
+        const permissions = Object.entries(options.permissions ?? {}).reduce((map, [name, val]) => {
+            map[`permission-${Case.kebab(name)}`] = val;
+            return map;
+        }, {});
+        return new GithubCredentials({
+            setupSteps: [
+                {
+                    name: "Generate token",
+                    id: "generate_token",
+                    uses: "actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5",
+                    with: {
+                        ...actionConfig,
+                        ...permissions,
+                    },
+                },
+            ],
+            tokenRef: "${{ steps.generate_token.outputs.token }}",
+        });
+    }
+    constructor(options) {
+        this.options = options;
+    }
+    /**
+     * Setup steps to obtain GitHub credentials.
+     */
+    get setupSteps() {
+        return [...this.options.setupSteps];
+    }
+    /**
+     * The value to use in a workflow when a GitHub token is expected. This
+     * typically looks like "${{ some.path.to.a.value }}".
+     */
+    get tokenRef() {
+        return this.options.tokenRef;
+    }
+}
+exports.GithubCredentials = GithubCredentials;
+_a = JSII_RTTI_SYMBOL_1;
+GithubCredentials[_a] = { fqn: "projen.github.GithubCredentials", version: "0.95.4" };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ2l0aHViLWNyZWRlbnRpYWxzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL2dpdGh1Yi9naXRodWItY3JlZGVudGlhbHMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSw2QkFBNkI7QUFxRDdCOztHQUVHO0FBQ0gsTUFBYSxpQkFBaUI7SUFDNUI7Ozs7Ozs7O09BUUc7SUFDSSxNQUFNLENBQUMsdUJBQXVCLENBQ25DLFVBQXVELEVBQUU7UUFFekQsT0FBTyxJQUFJLGlCQUFpQixDQUFDO1lBQzNCLFVBQVUsRUFBRSxFQUFFO1lBQ2QsUUFBUSxFQUFFLGdCQUFnQixPQUFPLENBQUMsTUFBTSxJQUFJLHFCQUFxQixLQUFLO1NBQ3ZFLENBQUMsQ0FBQztJQUNMLENBQUM7SUFFRDs7Ozs7Ozs7OztPQVVHO0lBQ0ksTUFBTSxDQUFDLE9BQU8sQ0FBQyxVQUF1QyxFQUFFO1FBQzdELE1BQU0sV0FBVyxHQUFHLE9BQU8sQ0FBQyxXQUFXLElBQUksZUFBZSxDQUFDO1FBQzNELE1BQU0sZ0JBQWdCLEdBQ3BCLE9BQU8sQ0FBQyxnQkFBZ0IsSUFBSSx3QkFBd0IsQ0FBQztRQUV2RCxNQUFNLFlBQVksR0FBMkI7WUFDM0MsUUFBUSxFQUFFLGdCQUFnQixXQUFXLEtBQUs7WUFDMUMsYUFBYSxFQUFFLGdCQUFnQixnQkFBZ0IsS0FBSztTQUNyRCxDQUFDO1FBRUYsSUFBSSxPQUFPLENBQUMsS0FBSyxFQUFFLENBQUM7WUFDbEIsWUFBWSxDQUFDLEtBQUssR0FBRyxPQUFPLENBQUMsS0FBSyxDQUFDO1FBQ3JDLENBQUM7UUFDRCxJQUFJLE9BQU8sQ0FBQyxZQUFZLEVBQUUsQ0FBQztZQUN6QixZQUFZLENBQUMsWUFBWSxHQUFHLE9BQU8sQ0FBQyxZQUFZLENBQUMsSUFBSSxDQUFDLEdBQUcsQ0FBQyxDQUFDO1FBQzdELENBQUM7UUFFRCxNQUFNLFdBQVcsR0FBRyxNQUFNLENBQUMsT0FBTyxDQUFDLE9BQU8sQ0FBQyxXQUFXLElBQUksRUFBRSxDQUFDLENBQUMsTUFBTSxDQUVsRSxDQUFDLEdBQUcsRUFBRSxDQUFDLElBQUksRUFBRSxHQUFHLENBQUMsRUFBRSxFQUFFO1lBQ3JCLEdBQUcsQ0FBQyxjQUFjLElBQUksQ0FBQyxLQUFLLENBQUMsSUFBSSxDQUFDLEVBQUUsQ0FBQyxHQUFHLEdBQUcsQ0FBQztZQUM1QyxPQUFPLEdBQUcsQ0FBQztRQUNiLENBQUMsRUFBRSxFQUFFLENBQUMsQ0FBQztRQUVQLE9BQU8sSUFBSSxpQkFBaUIsQ0FBQztZQUMzQixVQUFVLEVBQUU7Z0JBQ1Y7b0JBQ0UsSUFBSSxFQUFFLGdCQUFnQjtvQkFDdEIsRUFBRSxFQUFFLGdCQUFnQjtvQkFDcEIsSUFBSSxFQUFFLDBFQUEwRTtvQkFDaEYsSUFBSSxFQUFFO3dCQUNKLEdBQUcsWUFBWTt3QkFDZixHQUFHLFdBQVc7cUJBQ2Y7aUJBQ0Y7YUFDRjtZQUNELFFBQVEsRUFBRSwyQ0FBMkM7U0FDdEQsQ0FBQyxDQUFDO0lBQ0wsQ0FBQztJQUVELFlBQXFDLE9BQWlDO1FBQWpDLFlBQU8sR0FBUCxPQUFPLENBQTBCO0lBQUcsQ0FBQztJQUUxRTs7T0FFRztJQUNILElBQVcsVUFBVTtRQUNuQixPQUFPLENBQUMsR0FBRyxJQUFJLENBQUMsT0FBTyxDQUFDLFVBQVUsQ0FBQyxDQUFDO0lBQ3RDLENBQUM7SUFFRDs7O09BR0c7SUFDSCxJQUFXLFFBQVE7UUFDakIsT0FBTyxJQUFJLENBQUMsT0FBTyxDQUFDLFFBQVEsQ0FBQztJQUMvQixDQUFDOztBQXJGSCw4Q0FzRkMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgKiBhcyBDYXNlIGZyb20gXCJjYXNlXCI7XG5pbXBvcnQgeyBKb2JTdGVwLCBBcHBQZXJtaXNzaW9ucyB9IGZyb20gXCIuL3dvcmtmbG93cy1tb2RlbFwiO1xuXG4vKipcbiAqIE9wdGlvbnMgZm9yIGBHaXRodWJDcmVkZW50aWFscy5mcm9tUGVyc29uYWxBY2Nlc3NUb2tlbmBcbiAqL1xuZXhwb3J0IGludGVyZmFjZSBHaXRodWJDcmVkZW50aWFsc1BlcnNvbmFsQWNjZXNzVG9rZW5PcHRpb25zIHtcbiAgcmVhZG9ubHkgc2VjcmV0Pzogc3RyaW5nO1xufVxuXG4vKipcbiAqIE9wdGlvbnMgZm9yIGBHaXRodWJDcmVkZW50aWFscy5mcm9tQXBwYFxuICovXG5leHBvcnQgaW50ZXJmYWNlIEdpdGh1YkNyZWRlbnRpYWxzQXBwT3B0aW9ucyB7XG4gIC8qKlxuICAgKiBUaGUgc2VjcmV0IGNvbnRhaW5pbmcgdGhlIEdpdEh1YiBBcHAgSURcbiAgICpcbiAgICogQGRlZmF1bHQgXCJQUk9KRU5fQVBQX0lEXCJcbiAgICovXG4gIHJlYWRvbmx5IGFwcElkU2VjcmV0Pzogc3RyaW5nO1xuXG4gIC8qKlxuICAgKiBUaGUgc2VjcmV0IGNvbnRhaW5pbmcgdGhlIEdpdEh1YiBBcHAgcHJpdmF0ZSBrZXlcbiAgICpcbiAgICogRXNjYXBlZCBuZXdsaW5lcyAoXFxcXG4pIHdpbGwgYmUgYXV0b21hdGljYWxseSByZXBsYWNlZCB3aXRoIGFjdHVhbCBuZXdsaW5lcy5cbiAgICpcbiAgICogQGRlZmF1bHQgXCJQUk9KRU5fQVBQX1BSSVZBVEVfS0VZXCJcbiAgICovXG4gIHJlYWRvbmx5IHByaXZhdGVLZXlTZWNyZXQ/OiBzdHJpbmc7XG5cbiAgLyoqXG4gICAqIFRoZSBvd25lciBvZiB0aGUgR2l0SHViIEFwcCBpbnN0YWxsYXRpb25cbiAgICpcbiAgICogQGRlZmF1bHQgLSBpZiBlbXB0eSwgZGVmYXVsdHMgdG8gdGhlIGN1cnJlbnQgcmVwb3NpdG9yeSBvd25lclxuICAgKi9cbiAgcmVhZG9ubHkgb3duZXI/OiBzdHJpbmc7XG5cbiAgLyoqXG4gICAqIExpc3Qgb2YgcmVwb3NpdG9yaWVzIHRvIGdyYW50IGFjY2VzcyB0b1xuICAgKlxuICAgKiBAZGVmYXVsdCAtIGlmIG93bmVyIGlzIHNldCBhbmQgcmVwb3NpdG9yaWVzIGlzIGVtcHR5LCBhY2Nlc3Mgd2lsbCBiZSBzY29wZWQgdG8gYWxsIHJlcG9zaXRvcmllcyBpbiB0aGUgcHJvdmlkZWQgcmVwb3NpdG9yeSBvd25lcidzIGluc3RhbGxhdGlvbi5cbiAgICogSWYgb3duZXIgYW5kIHJlcG9zaXRvcmllcyBhcmUgZW1wdHksIGFjY2VzcyB3aWxsIGJlIHNjb3BlZCB0byBvbmx5IHRoZSBjdXJyZW50IHJlcG9zaXRvcnkuXG4gICAqL1xuICByZWFkb25seSByZXBvc2l0b3JpZXM/OiBzdHJpbmdbXTtcblxuICAvKipcbiAgICogVGhlIHBlcm1pc3Npb25zIGdyYW50ZWQgdG8gdGhlIHRva2VuLlxuICAgKlxuICAgKiBAZGVmYXVsdCAtIGFsbCBwZXJtaXNzaW9ucyBncmFudGVkIHRvIHRoZSBhcHBcbiAgICovXG4gIHJlYWRvbmx5IHBlcm1pc3Npb25zPzogQXBwUGVybWlzc2lvbnM7XG59XG5cbi8qKlxuICogUmVwcmVzZW50cyBhIG1ldGhvZCBvZiBwcm92aWRpbmcgR2l0SHViIEFQSSBhY2Nlc3MgZm9yIHByb2plbiB3b3JrZmxvd3MuXG4gKi9cbmV4cG9ydCBjbGFzcyBHaXRodWJDcmVkZW50aWFscyB7XG4gIC8qKlxuICAgKiBQcm92aWRlIEFQSSBhY2Nlc3MgdGhyb3VnaCBhIEdpdEh1YiBwZXJzb25hbCBhY2Nlc3MgdG9rZW4uXG4gICAqXG4gICAqIFRoZSB0b2tlbiBtdXN0IGJlIGFkZGVkIGFzIGEgc2VjcmV0IHRvIHRoZSBHaXRIdWIgcmVwbywgYW5kIHRoZSBuYW1lIG9mIHRoZVxuICAgKiBzZWNyZXQgY2FuIGJlIHNwZWNpZmllZCBoZXJlLlxuICAgKlxuICAgKiBAc2VlIGh0dHBzOi8vZG9jcy5naXRodWIuY29tL2VuL2F1dGhlbnRpY2F0aW9uL2tlZXBpbmcteW91ci1hY2NvdW50LWFuZC1kYXRhLXNlY3VyZS9jcmVhdGluZy1hLXBlcnNvbmFsLWFjY2Vzcy10b2tlblxuICAgKiBAZGVmYXVsdCAtIGEgc2VjcmV0IG5hbWVkIFwiUFJPSkVOX0dJVEhVQl9UT0tFTlwiXG4gICAqL1xuICBwdWJsaWMgc3RhdGljIGZyb21QZXJzb25hbEFjY2Vzc1Rva2VuKFxuICAgIG9wdGlvbnM6IEdpdGh1YkNyZWRlbnRpYWxzUGVyc29uYWxBY2Nlc3NUb2tlbk9wdGlvbnMgPSB7fVxuICApIHtcbiAgICByZXR1cm4gbmV3IEdpdGh1YkNyZWRlbnRpYWxzKHtcbiAgICAgIHNldHVwU3RlcHM6IFtdLFxuICAgICAgdG9rZW5SZWY6IGBcXCR7eyBzZWNyZXRzLiR7b3B0aW9ucy5zZWNyZXQgPz8gXCJQUk9KRU5fR0lUSFVCX1RPS0VOXCJ9IH19YCxcbiAgICB9KTtcbiAgfVxuXG4gIC8qKlxuICAgKiBQcm92aWRlIEFQSSBhY2Nlc3MgdGhyb3VnaCBhIEdpdEh1YiBBcHAuXG4gICAqXG4gICAqIFRoZSBHaXRIdWIgQXBwIG11c3QgYmUgaW5zdGFsbGVkIG9uIHRoZSBHaXRIdWIgcmVwbywgaXRzIEFwcCBJRCBhbmQgYVxuICAgKiBwcml2YXRlIGtleSBtdXN0IGJlIGFkZGVkIGFzIHNlY3JldHMgdG8gdGhlIHJlcG8uIFRoZSBuYW1lIG9mIHRoZSBzZWNyZXRzXG4gICAqIGNhbiBiZSBzcGVjaWZpZWQgaGVyZS5cbiAgICpcbiAgICogQHNlZSBodHRwczovL2RvY3MuZ2l0aHViLmNvbS9lbi9kZXZlbG9wZXJzL2FwcHMvYnVpbGRpbmctZ2l0aHViLWFwcHMvY3JlYXRpbmctYS1naXRodWItYXBwXG4gICAqIEBzZWUgaHR0cHM6Ly9wcm9qZW4uaW8vZG9jcy9pbnRlZ3JhdGlvbnMvZ2l0aHViLyNnaXRodWItYXBwXG4gICAqIEBkZWZhdWx0IC0gYXBwIGlkIHN0b3JlZCBpbiBcIlBST0pFTl9BUFBfSURcIiBhbmQgcHJpdmF0ZSBrZXkgc3RvcmVkIGluIFwiUFJPSkVOX0FQUF9QUklWQVRFX0tFWVwiIHdpdGggYWxsIHBlcm1pc3Npb25zIGF0dGFjaGVkIHRvIHRoZSBhcHBcbiAgICovXG4gIHB1YmxpYyBzdGF0aWMgZnJvbUFwcChvcHRpb25zOiBHaXRodWJDcmVkZW50aWFsc0FwcE9wdGlvbnMgPSB7fSkge1xuICAgIGNvbnN0IGFwcElkU2VjcmV0ID0gb3B0aW9ucy5hcHBJZFNlY3JldCA/PyBcIlBST0pFTl9BUFBfSURcIjtcbiAgICBjb25zdCBwcml2YXRlS2V5U2VjcmV0ID1cbiAgICAgIG9wdGlvbnMucHJpdmF0ZUtleVNlY3JldCA/PyBcIlBST0pFTl9BUFBfUFJJVkFURV9LRVlcIjtcblxuICAgIGNvbnN0IGFjdGlvbkNvbmZpZzogUmVjb3JkPHN0cmluZywgc3RyaW5nPiA9IHtcbiAgICAgIFwiYXBwLWlkXCI6IGBcXCR7eyBzZWNyZXRzLiR7YXBwSWRTZWNyZXR9IH19YCxcbiAgICAgIFwicHJpdmF0ZS1rZXlcIjogYFxcJHt7IHNlY3JldHMuJHtwcml2YXRlS2V5U2VjcmV0fSB9fWAsXG4gICAgfTtcblxuICAgIGlmIChvcHRpb25zLm93bmVyKSB7XG4gICAgICBhY3Rpb25Db25maWcub3duZXIgPSBvcHRpb25zLm93bmVyO1xuICAgIH1cbiAgICBpZiAob3B0aW9ucy5yZXBvc2l0b3JpZXMpIHtcbiAgICAgIGFjdGlvbkNvbmZpZy5yZXBvc2l0b3JpZXMgPSBvcHRpb25zLnJlcG9zaXRvcmllcy5qb2luKFwiLFwiKTtcbiAgICB9XG5cbiAgICBjb25zdCBwZXJtaXNzaW9ucyA9IE9iamVjdC5lbnRyaWVzKG9wdGlvbnMucGVybWlzc2lvbnMgPz8ge30pLnJlZHVjZTxcbiAgICAgIFJlY29yZDxzdHJpbmcsIHN0cmluZz5cbiAgICA+KChtYXAsIFtuYW1lLCB2YWxdKSA9PiB7XG4gICAgICBtYXBbYHBlcm1pc3Npb24tJHtDYXNlLmtlYmFiKG5hbWUpfWBdID0gdmFsO1xuICAgICAgcmV0dXJuIG1hcDtcbiAgICB9LCB7fSk7XG5cbiAgICByZXR1cm4gbmV3IEdpdGh1YkNyZWRlbnRpYWxzKHtcbiAgICAgIHNldHVwU3RlcHM6IFtcbiAgICAgICAge1xuICAgICAgICAgIG5hbWU6IFwiR2VuZXJhdGUgdG9rZW5cIixcbiAgICAgICAgICBpZDogXCJnZW5lcmF0ZV90b2tlblwiLFxuICAgICAgICAgIHVzZXM6IFwiYWN0aW9ucy9jcmVhdGUtZ2l0aHViLWFwcC10b2tlbkAzZmYxY2FhYTI4YjY0YzljYzI3NmNlMGEwMmUyZmY1ODRmMzkwMGM1XCIsXG4gICAgICAgICAgd2l0aDoge1xuICAgICAgICAgICAgLi4uYWN0aW9uQ29uZmlnLFxuICAgICAgICAgICAgLi4ucGVybWlzc2lvbnMsXG4gICAgICAgICAgfSxcbiAgICAgICAgfSxcbiAgICAgIF0sXG4gICAgICB0b2tlblJlZjogXCIke3sgc3RlcHMuZ2VuZXJhdGVfdG9rZW4ub3V0cHV0cy50b2tlbiB9fVwiLFxuICAgIH0pO1xuICB9XG5cbiAgcHJpdmF0ZSBjb25zdHJ1Y3Rvcihwcml2YXRlIHJlYWRvbmx5IG9wdGlvbnM6IEdpdGh1YkNyZWRlbnRpYWxzT3B0aW9ucykge31cblxuICAvKipcbiAgICogU2V0dXAgc3RlcHMgdG8gb2J0YWluIEdpdEh1YiBjcmVkZW50aWFscy5cbiAgICovXG4gIHB1YmxpYyBnZXQgc2V0dXBTdGVwcygpOiBKb2JTdGVwW10ge1xuICAgIHJldHVybiBbLi4udGhpcy5vcHRpb25zLnNldHVwU3RlcHNdO1xuICB9XG5cbiAgLyoqXG4gICAqIFRoZSB2YWx1ZSB0byB1c2UgaW4gYSB3b3JrZmxvdyB3aGVuIGEgR2l0SHViIHRva2VuIGlzIGV4cGVjdGVkLiBUaGlzXG4gICAqIHR5cGljYWxseSBsb29rcyBsaWtlIFwiJHt7IHNvbWUucGF0aC50by5hLnZhbHVlIH19XCIuXG4gICAqL1xuICBwdWJsaWMgZ2V0IHRva2VuUmVmKCk6IHN0cmluZyB7XG4gICAgcmV0dXJuIHRoaXMub3B0aW9ucy50b2tlblJlZjtcbiAgfVxufVxuXG5pbnRlcmZhY2UgR2l0aHViQ3JlZGVudGlhbHNPcHRpb25zIHtcbiAgcmVhZG9ubHkgc2V0dXBTdGVwczogSm9iU3RlcFtdO1xuICByZWFkb25seSB0b2tlblJlZjogc3RyaW5nO1xufVxuIl19

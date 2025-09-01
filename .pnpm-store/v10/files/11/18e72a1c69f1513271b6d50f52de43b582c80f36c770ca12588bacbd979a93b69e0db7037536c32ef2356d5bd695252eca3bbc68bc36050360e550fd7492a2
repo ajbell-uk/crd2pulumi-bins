@@ -1,0 +1,22 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { PythonProject } from "projen/lib/python";
+import { CodeGenerationSourceOptions, GeneratedPythonRuntimeOptions } from "../../types";
+import { CodegenOptions } from "../components/utils";
+/**
+ * Configuration for the generated python types project
+ */
+export interface GeneratedPythonRuntimeBaseProjectOptions extends GeneratedPythonRuntimeOptions, CodeGenerationSourceOptions {
+}
+/**
+ * Python project containing types generated using OpenAPI Generator CLI
+ */
+export declare abstract class GeneratedPythonRuntimeBaseProject extends PythonProject {
+    /**
+     * Options configured for the project
+     */
+    protected readonly options: GeneratedPythonRuntimeBaseProjectOptions;
+    constructor(options: GeneratedPythonRuntimeBaseProjectOptions);
+    buildGenerateCommandArgs: () => string;
+    protected abstract buildCodegenOptions(): CodegenOptions;
+}

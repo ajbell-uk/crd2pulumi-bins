@@ -1,0 +1,36 @@
+import { Component } from "projen";
+import { NodeProject } from "projen/lib/javascript";
+import { Language } from "../../languages";
+import { TypeSpecModelOptions } from "../../types";
+/**
+ * Options for a TypeSpec model project
+ */
+export interface TypeSpecProjectDefinitionOptions {
+    /**
+     * TypeSpec model options
+     */
+    readonly typeSpecOptions: TypeSpecModelOptions;
+    /**
+     * The languages users have specified for handler projects (if any)
+     */
+    readonly handlerLanguages?: Language[];
+}
+/**
+ * Creates a project which allows APIs to be defined in TypeSpec
+ * @see https://typespec.io/
+ */
+export declare class TypeSpecProjectDefinition extends Component {
+    /**
+     * Path to the generated OpenAPI specification
+     */
+    readonly openApiSpecificationPath: string;
+    /**
+     * Directory in which the model source resides
+     */
+    protected readonly modelDir: string;
+    /**
+     * Directory in which generated model source resides
+     */
+    protected readonly generatedModelDir = "generated";
+    constructor(project: NodeProject, options: TypeSpecProjectDefinitionOptions);
+}

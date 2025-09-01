@@ -1,0 +1,32 @@
+import * as reflect from 'jsii-reflect';
+import * as transpile from './transpile';
+/**
+ * A TypeScript transpiler.
+ */
+export declare class TypeScriptTranspile extends transpile.TranspileBase {
+    constructor();
+    readme(readme: string): string;
+    unionOf(types: string[]): string;
+    listOf(type: string): string;
+    variadicOf(type: string): string;
+    mapOf(type: string): string;
+    any(): string;
+    void(): string;
+    boolean(): string;
+    str(): string;
+    number(): string;
+    date(): string;
+    json(): string;
+    enum(enu: reflect.EnumType): transpile.TranspiledEnum;
+    enumMember(em: reflect.EnumMember): transpile.TranspiledEnumMember;
+    property(property: reflect.Property): transpile.TranspiledProperty;
+    class(klass: reflect.ClassType): transpile.TranspiledClass;
+    parameter(parameter: reflect.Parameter): transpile.TranspiledParameter;
+    struct(struct: reflect.InterfaceType): transpile.TranspiledStruct;
+    callable(callable: reflect.Callable): transpile.TranspiledCallable;
+    interface(iface: reflect.InterfaceType): transpile.TranspiledInterface;
+    type(type: reflect.Type): transpile.TranspiledType;
+    moduleLike(moduleLike: reflect.ModuleLike): transpile.TranspiledModuleLike;
+    private formatParameters;
+    private formatProperty;
+}

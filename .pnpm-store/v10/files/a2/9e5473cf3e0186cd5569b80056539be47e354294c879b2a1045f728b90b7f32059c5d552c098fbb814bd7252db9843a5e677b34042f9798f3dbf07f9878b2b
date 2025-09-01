@@ -1,0 +1,119 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { PRICING_MANIFEST, PRICING_SLUGS } from "../../generated/pricing-manifest";
+/** Service pricing manifest namespace */
+export declare namespace PricingManifest {
+    /** Literal union of all service code values */
+    type ServiceCode = keyof typeof PRICING_MANIFEST;
+    /** Literal union of all service slug values */
+    type Slug = (typeof PRICING_SLUGS)[number];
+    /** Set of service slugs */
+    const Slugs: Set<"Amplify" | "AppStream" | "Athena" | "Backup" | "CloudFormation" | "CloudFront" | "CloudTrail" | "CloudWatch" | "CodeArtifact" | "CodeDeploy" | "CodeGuruReviewer" | "CodePipeline" | "Cognito" | "Comprehend" | "Config" | "DMS" | "DataSync" | "DevOpsGuru" | "DeviceFarm" | "DirectoryService" | "DynamoDB" | "EC2" | "ECR" | "EFS" | "EKS" | "EMR" | "ElastiCache" | "ElasticLoadBalancing" | "FSx" | "FinSpace" | "GameLift" | "Glue" | "HealthLake" | "Inspector" | "IoTThingsGraph" | "KMS" | "Kendra" | "LakeFormation" | "Lambda" | "Lightsail" | "LookoutVision" | "MSK" | "MWAA" | "Macie" | "ManagedBlockchain" | "OpenSearchService" | "Pinpoint" | "QuickSight" | "Redshift" | "Rekognition" | "Route53" | "S3" | "SES" | "SNS" | "SQS" | "SageMaker" | "SecretsManager" | "StepFunctions" | "WAF" | "WorkSpaces" | "budgets" | "codebuild" | "codecommit" | "detective" | "eventbridge" | "forecast" | "greengrass" | "guardduty" | "keyspaces" | "lex" | "neptune" | "personalize" | "polly" | "shield" | "xray" | "codewhisperer" | "appmigrationsvc" | "Translate" | "APIGateway" | "Appflow" | "a2i" | "AuroraMySQL" | "AuroraPostgreSQL" | "Braket" | "EBS" | "CarrierIP" | "Chime" | "ChimeSDK" | "CodeGuruReviewerv2" | "ComprehendMedical" | "DocumentDB" | "ec2-enhancement" | "EC2DedicatedHosts" | "ElasticGraphics" | "ElasticIP" | "ElasticTranscoder" | "filecache" | "frauddetector" | "FSxForLustre" | "FSxForNetAppOntap" | "FSxForOpenZFS" | "VPC" | "KinesisDataFirehose" | "KinesisDataStreams" | "KinesisVideoStreams" | "LocationService" | "lookoutforequipment" | "LookoutForMetrics" | "grafana" | "KinesisDataAnalytics" | "Prometheus" | "memorydb" | "MQ" | "omics" | "qldb" | "RDSCustomForOracle" | "RDSCustomForSQLServer" | "RDSMariaDB" | "RDSMySQL" | "amazonRDSOracle" | "RDSPostgreSQL" | "RDSSQLServer" | "RDSOutposts" | "SageMakerGroundTruth" | "SWF" | "Textract" | "AmazonTimestream" | "Transcribe" | "TranscribeMedical" | "WorkDocs" | "WorkMail" | "apprunner" | "appfabric" | "appSync" | "billingconductor" | "CloudMap" | "CloudHSM" | "cost-explorer" | "datapipeline" | "DataTransfer" | "DeepRacer" | "DirectConnect" | "ElasticDisasterRecovery" | "ElementalMediaTailor" | "ElementalMediaConnect" | "ElementalMediaLive" | "ElementalMediaPackage" | "EntityResolution" | "Fargate" | "faultinjectorsimulator" | "firewallManager" | "healthimaging" | "iot-analytics" | "IoTCore" | "IoTDeviceDefender" | "IoTDeviceManagement" | "iot-events" | "mainframeModernization" | "migration-hub" | "MDC" | "networkfirewall" | "Outposts" | "paymentcryptography" | "certificateManager" | "resiliencehub" | "securityHub" | "servicecatalog" | "simspaceweaver" | "Snowball" | "Snowmobile" | "StorageGateway" | "supplyChain" | "SystemsManager" | "TelcoNetworkBuilder" | "TransferFamily" | "wickr" | "cloudwan" | "geospatialML" | "transitgatewayvpc" | "EC2WinSQL">;
+    /** Pricing manifest service definition */
+    interface Service {
+        /**
+         * Proper full name of the service
+         * @example "Amazon API Gateway"
+         */
+        readonly name: string;
+        /**
+         * Unique code for service definition in pricing manifest
+         * @example "amazonApiGateway"
+         */
+        readonly serviceCode: ServiceCode;
+        /**
+         * Service descriptoin
+         * @example "Amazon API Gateway is a fully managed service that..."
+         */
+        readonly description: string;
+        /**
+         * List of keywords for searching services
+         * @example ["API", "api", "Rest", "websocket", "messages"]
+         */
+        readonly searchKeywords: string[];
+        /**
+         * Type of service definition
+         * @example "AWSService"
+         */
+        readonly type: string;
+        /**
+         * Sub type of service definition
+         * @example "subService"
+         */
+        readonly subType?: "subService" | "subServiceSelector";
+        /**
+         * List of regions where the service is available.
+         * @example ["us-gov-west-1","us-gov-east-1","af-south-1","ap-east-1","ap-south-1","ap-northeast-2","ap-northeast-3",...]
+         */
+        readonly regions: string[];
+        /**
+         * Url link to related product documentation
+         * @example "https://aws.amazon.com/api-gateway/"
+         */
+        readonly linkUrl?: string;
+        /**
+         * @example "true"
+         */
+        readonly isActive: string;
+        /**
+         * @example false
+         */
+        readonly disableConfigure?: boolean;
+        /**
+         * @example "https://d1qsjq9pzbk1k6.cloudfront.net/data/amazonApiGateway/en_US.json"
+         */
+        readonly serviceDefinitionLocation: string;
+        /**
+         * @example false
+         */
+        readonly c2e?: boolean;
+        /**
+         * @example false
+         * @variation MVPSupport
+         */
+        readonly mvpSupport?: boolean;
+        /**
+         * @example ["chimeCostAnalysis", "chimeBusinessCallingAnalysis"]
+         */
+        readonly templates?: string[];
+        /**
+         * @example false
+         */
+        readonly disableRegionSupport?: boolean;
+        /**
+         * Unique slug for given resource.
+         * @example "APIGateway"
+         */
+        readonly slug?: Slug;
+        /**
+         * @example true
+         */
+        readonly bulkImportEnabled?: boolean;
+        /**
+         * @example false
+         */
+        readonly hasDataTransfer?: boolean;
+        /**
+         * List of normalized comparable terms to consider equivalent to this service.
+         *
+         * Used for lookups and matching between systems.
+         * @virtual
+         */
+        readonly comparableTerms: string[];
+        /**
+         * Service code of the parent for `subService` services.
+         * @virtual
+         */
+        readonly parentServiceCode?: ServiceCode;
+    }
+    /** Record of services keyed by service code */
+    type IServiceDict = {
+        [K in ServiceCode]: Service;
+    };
+    /** Record of all services defined in pricing manifest */
+    const Services: IServiceDict;
+    /**
+     * Find pricing service definition associated with a given term.
+     */
+    function findService(term: string): Service | undefined;
+}

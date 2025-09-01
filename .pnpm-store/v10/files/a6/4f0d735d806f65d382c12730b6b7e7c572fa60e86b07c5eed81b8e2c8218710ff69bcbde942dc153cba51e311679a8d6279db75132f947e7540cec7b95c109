@@ -1,0 +1,44 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProjectUtils = void 0;
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+const path = require("path");
+const readPkg = require("read-pkg-up");
+/**
+ * Utility for projen projects
+ * @experimental
+ */
+var ProjectUtils;
+(function (ProjectUtils) {
+    /**
+     * List all parent class names of the given class (includes the given class's name as the last element)
+     * @internal
+     */
+    function listParentClassNames(clazz) {
+        if (!clazz?.name) {
+            return [];
+        }
+        return [...listParentClassNames(Object.getPrototypeOf(clazz)), clazz.name];
+    }
+    /**
+     * Returns whether the given project is an instance of the given project class.
+     * Uses the class name to perform this check, such that the check still passes for
+     * classes imported from mismatching package versions.
+     */
+    function isNamedInstanceOf(instance, clazz) {
+        return new Set(listParentClassNames(instance.constructor)).has(clazz.name);
+    }
+    ProjectUtils.isNamedInstanceOf = isNamedInstanceOf;
+    /**
+     * Get the current PDK version
+     */
+    function getPdkVersion() {
+        const { packageJson } = readPkg.sync({
+            cwd: path.resolve(__dirname),
+        });
+        return packageJson.version;
+    }
+    ProjectUtils.getPdkVersion = getPdkVersion;
+})(ProjectUtils || (exports.ProjectUtils = ProjectUtils = {}));
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHJvamVjdC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbInByb2plY3QudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUE7c0NBQ3NDO0FBQ3RDLDZCQUE2QjtBQUU3Qix1Q0FBdUM7QUFFdkM7OztHQUdHO0FBQ0gsSUFBaUIsWUFBWSxDQXdDNUI7QUF4Q0QsV0FBaUIsWUFBWTtJQUMzQjs7O09BR0c7SUFDSCxTQUFTLG9CQUFvQixDQUFDLEtBRTdCO1FBQ0MsSUFBSSxDQUFDLEtBQUssRUFBRSxJQUFJLEVBQUUsQ0FBQztZQUNqQixPQUFPLEVBQUUsQ0FBQztRQUNaLENBQUM7UUFDRCxPQUFPLENBQUMsR0FBRyxvQkFBb0IsQ0FBQyxNQUFNLENBQUMsY0FBYyxDQUFDLEtBQUssQ0FBQyxDQUFDLEVBQUUsS0FBSyxDQUFDLElBQUksQ0FBQyxDQUFDO0lBQzdFLENBQUM7SUFFRDs7OztPQUlHO0lBQ0gsU0FBZ0IsaUJBQWlCLENBSS9CLFFBQWlCLEVBQ2pCLEtBQXVDO1FBRXZDLE9BQU8sSUFBSSxHQUFHLENBQUMsb0JBQW9CLENBQUMsUUFBUSxDQUFDLFdBQWtCLENBQUMsQ0FBQyxDQUFDLEdBQUcsQ0FDbkUsS0FBSyxDQUFDLElBQUksQ0FDWCxDQUFDO0lBQ0osQ0FBQztJQVZlLDhCQUFpQixvQkFVaEMsQ0FBQTtJQUVEOztPQUVHO0lBQ0gsU0FBZ0IsYUFBYTtRQUMzQixNQUFNLEVBQUUsV0FBVyxFQUFFLEdBQUcsT0FBTyxDQUFDLElBQUksQ0FBQztZQUNuQyxHQUFHLEVBQUUsSUFBSSxDQUFDLE9BQU8sQ0FBQyxTQUFTLENBQUM7U0FDN0IsQ0FBRSxDQUFDO1FBQ0osT0FBTyxXQUFXLENBQUMsT0FBTyxDQUFDO0lBQzdCLENBQUM7SUFMZSwwQkFBYSxnQkFLNUIsQ0FBQTtBQUNILENBQUMsRUF4Q2dCLFlBQVksNEJBQVosWUFBWSxRQXdDNUIiLCJzb3VyY2VzQ29udGVudCI6WyIvKiEgQ29weXJpZ2h0IFtBbWF6b24uY29tXShodHRwOi8vYW1hem9uLmNvbS8pLCBJbmMuIG9yIGl0cyBhZmZpbGlhdGVzLiBBbGwgUmlnaHRzIFJlc2VydmVkLlxuU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEFwYWNoZS0yLjAgKi9cbmltcG9ydCAqIGFzIHBhdGggZnJvbSBcInBhdGhcIjtcbmltcG9ydCB7IENvbXBvbmVudCwgUHJvamVjdCB9IGZyb20gXCJwcm9qZW5cIjtcbmltcG9ydCAqIGFzIHJlYWRQa2cgZnJvbSBcInJlYWQtcGtnLXVwXCI7XG5cbi8qKlxuICogVXRpbGl0eSBmb3IgcHJvamVuIHByb2plY3RzXG4gKiBAZXhwZXJpbWVudGFsXG4gKi9cbmV4cG9ydCBuYW1lc3BhY2UgUHJvamVjdFV0aWxzIHtcbiAgLyoqXG4gICAqIExpc3QgYWxsIHBhcmVudCBjbGFzcyBuYW1lcyBvZiB0aGUgZ2l2ZW4gY2xhc3MgKGluY2x1ZGVzIHRoZSBnaXZlbiBjbGFzcydzIG5hbWUgYXMgdGhlIGxhc3QgZWxlbWVudClcbiAgICogQGludGVybmFsXG4gICAqL1xuICBmdW5jdGlvbiBsaXN0UGFyZW50Q2xhc3NOYW1lcyhjbGF6ej86IHtcbiAgICBuZXcgKC4uLmFyZ3M6IGFueVtdKTogYW55O1xuICB9KTogc3RyaW5nW10ge1xuICAgIGlmICghY2xheno/Lm5hbWUpIHtcbiAgICAgIHJldHVybiBbXTtcbiAgICB9XG4gICAgcmV0dXJuIFsuLi5saXN0UGFyZW50Q2xhc3NOYW1lcyhPYmplY3QuZ2V0UHJvdG90eXBlT2YoY2xhenopKSwgY2xhenoubmFtZV07XG4gIH1cblxuICAvKipcbiAgICogUmV0dXJucyB3aGV0aGVyIHRoZSBnaXZlbiBwcm9qZWN0IGlzIGFuIGluc3RhbmNlIG9mIHRoZSBnaXZlbiBwcm9qZWN0IGNsYXNzLlxuICAgKiBVc2VzIHRoZSBjbGFzcyBuYW1lIHRvIHBlcmZvcm0gdGhpcyBjaGVjaywgc3VjaCB0aGF0IHRoZSBjaGVjayBzdGlsbCBwYXNzZXMgZm9yXG4gICAqIGNsYXNzZXMgaW1wb3J0ZWQgZnJvbSBtaXNtYXRjaGluZyBwYWNrYWdlIHZlcnNpb25zLlxuICAgKi9cbiAgZXhwb3J0IGZ1bmN0aW9uIGlzTmFtZWRJbnN0YW5jZU9mPFxuICAgIFRQYXJlbnQgZXh0ZW5kcyBQcm9qZWN0IHwgQ29tcG9uZW50LFxuICAgIFRDaGlsZCBleHRlbmRzIFRQYXJlbnRcbiAgPihcbiAgICBpbnN0YW5jZTogVFBhcmVudCxcbiAgICBjbGF6ejogeyBuZXcgKC4uLmFyZ3M6IGFueVtdKTogVENoaWxkIH1cbiAgKTogaW5zdGFuY2UgaXMgVENoaWxkIHtcbiAgICByZXR1cm4gbmV3IFNldChsaXN0UGFyZW50Q2xhc3NOYW1lcyhpbnN0YW5jZS5jb25zdHJ1Y3RvciBhcyBhbnkpKS5oYXMoXG4gICAgICBjbGF6ei5uYW1lXG4gICAgKTtcbiAgfVxuXG4gIC8qKlxuICAgKiBHZXQgdGhlIGN1cnJlbnQgUERLIHZlcnNpb25cbiAgICovXG4gIGV4cG9ydCBmdW5jdGlvbiBnZXRQZGtWZXJzaW9uKCkge1xuICAgIGNvbnN0IHsgcGFja2FnZUpzb24gfSA9IHJlYWRQa2cuc3luYyh7XG4gICAgICBjd2Q6IHBhdGgucmVzb2x2ZShfX2Rpcm5hbWUpLFxuICAgIH0pITtcbiAgICByZXR1cm4gcGFja2FnZUpzb24udmVyc2lvbjtcbiAgfVxufVxuIl19

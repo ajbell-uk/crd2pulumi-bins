@@ -1,0 +1,136 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Mismatches = void 0;
+exports.apiElementIdentifier = apiElementIdentifier;
+exports.describeType = describeType;
+exports.describeInterfaceType = describeInterfaceType;
+const reflect = require("jsii-reflect");
+class Mismatches {
+    constructor(opts) {
+        this.mismatches = new Array();
+        this.defaultStability = opts.defaultStability;
+    }
+    report(options) {
+        const fqn = apiElementIdentifier(options.violator);
+        const key = `${options.ruleKey}:${fqn}`;
+        this.mismatches.push({
+            violationKey: key,
+            message: `${describeApiElement(options.violator)} ${fqn}: ${options.message}`,
+            stability: options.violator.docs.stability ?? this.defaultStability,
+        });
+    }
+    *messages() {
+        for (const mis of this.mismatches) {
+            yield mis.message;
+        }
+    }
+    get count() {
+        return this.mismatches.length;
+    }
+    filter(pred) {
+        const ret = new Mismatches({ defaultStability: this.defaultStability });
+        ret.mismatches.push(...this.mismatches.filter(pred));
+        return ret;
+    }
+    withMotivation(motivation) {
+        return {
+            report: (options) => this.report({
+                ...options,
+                message: `${options.message}: ${motivation}`,
+            }),
+            withMotivation: (innerMotivation) => this.withMotivation(`${innerMotivation}: ${motivation}`),
+        };
+    }
+}
+exports.Mismatches = Mismatches;
+function apiElementIdentifier(apiElement) {
+    return dispatch(apiElement, {
+        method(x) {
+            return `${x.parentType.fqn}.${x.name}`;
+        },
+        init(x) {
+            return `${x.parentType.fqn}.${x.name}`;
+        },
+        property(x) {
+            return `${x.parentType.fqn}.${x.name}`;
+        },
+        enumMember(x) {
+            return `${x.enumType.fqn}.${x.name}`;
+        },
+        enumType(x) {
+            return `${x.fqn}`;
+        },
+        klass(x) {
+            return `${x.fqn}`;
+        },
+        iface(x) {
+            return `${x.fqn}`;
+        },
+    });
+}
+function describeApiElement(apiElement) {
+    return dispatch(apiElement, {
+        method() {
+            return 'METHOD';
+        },
+        init() {
+            return 'INITIALIZER';
+        },
+        property() {
+            return 'PROP';
+        },
+        enumMember() {
+            return 'ENUM VALUE';
+        },
+        enumType() {
+            return 'ENUM';
+        },
+        klass() {
+            return 'CLASS';
+        },
+        iface() {
+            return 'IFACE';
+        },
+    });
+}
+function dispatch(apiElement, fns) {
+    if (apiElement instanceof reflect.Method) {
+        return fns.method(apiElement);
+    }
+    if (apiElement instanceof reflect.Property) {
+        return fns.property(apiElement);
+    }
+    if (apiElement instanceof reflect.EnumMember) {
+        return fns.enumMember(apiElement);
+    }
+    if (apiElement instanceof reflect.ClassType) {
+        return fns.klass(apiElement);
+    }
+    if (apiElement instanceof reflect.InterfaceType) {
+        return fns.iface(apiElement);
+    }
+    if (apiElement instanceof reflect.Initializer) {
+        return fns.init(apiElement);
+    }
+    if (apiElement instanceof reflect.EnumType) {
+        return fns.enumType(apiElement);
+    }
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
+    throw new Error(`Unrecognized violator: ${apiElement.toString()}`);
+}
+function describeType(type) {
+    if (type.isClassType()) {
+        return 'CLASS';
+    }
+    if (type.isInterfaceType()) {
+        return 'IFACE';
+    }
+    if (type.isEnumType()) {
+        return 'ENUM';
+    }
+    return 'TYPE';
+}
+function describeInterfaceType(dataType) {
+    return dataType ? 'struct' : 'regular interface';
+}
+//# sourceMappingURL=types.js.map

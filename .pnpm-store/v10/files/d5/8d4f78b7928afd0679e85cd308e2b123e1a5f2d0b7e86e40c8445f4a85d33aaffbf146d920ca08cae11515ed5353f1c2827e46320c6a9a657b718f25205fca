@@ -1,0 +1,35 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { Obj } from "projen/lib/util";
+/**
+ * Utility to deeply clone a value
+ * @param value Value to clone
+ * @returns Cloned value
+ */
+export declare function cloneDeep(value: any): any;
+/** Indicates if value is considered empty */
+export declare function isEmpty(value: any): boolean;
+/** Replace empty value with undefined */
+export declare function asUndefinedIfEmpty(value: any): any | undefined;
+/** Options for deep merge function */
+export interface DeepMergeOptions {
+    /**
+     * Append array values
+     * @default false
+     */
+    readonly append?: boolean;
+    /**
+     * `undefined`s will cause a value to be deleted if destructive is enabled.
+     * @default false
+     */
+    readonly destructive?: boolean;
+}
+/**
+ * Recursively merge objects together into a new object with extends support for appending arrays.
+ *
+ * This is a clone of [projen/lib/util#deepMerge](https://github.com/projen/projen/blob/55ac3657a270285db63e1a6008b3848b36775626/src/util.ts#L218-L281)
+ * with added functionality to support appending arrays.
+ *
+ * @see [projen/lib/util#deepMerge](https://github.com/projen/projen/blob/55ac3657a270285db63e1a6008b3848b36775626/src/util.ts#L218-L281)
+ */
+export declare function deepMerge(objects: Array<Obj<any>>, options?: DeepMergeOptions): Obj<any>;

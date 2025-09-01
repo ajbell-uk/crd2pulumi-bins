@@ -1,0 +1,2760 @@
+export declare namespace CfnSpec {
+    const ServiceNames: {
+        readonly ACMPCA: "ACMPCA";
+        readonly APS: "APS";
+        readonly ASK: "ASK";
+        readonly AccessAnalyzer: "AccessAnalyzer";
+        readonly AmazonMQ: "AmazonMQ";
+        readonly Amplify: "Amplify";
+        readonly AmplifyUIBuilder: "AmplifyUIBuilder";
+        readonly ApiGateway: "ApiGateway";
+        readonly ApiGatewayV2: "ApiGatewayV2";
+        readonly AppConfig: "AppConfig";
+        readonly AppFlow: "AppFlow";
+        readonly AppIntegrations: "AppIntegrations";
+        readonly AppMesh: "AppMesh";
+        readonly AppRunner: "AppRunner";
+        readonly AppStream: "AppStream";
+        readonly AppSync: "AppSync";
+        readonly ApplicationAutoScaling: "ApplicationAutoScaling";
+        readonly ApplicationInsights: "ApplicationInsights";
+        readonly Athena: "Athena";
+        readonly AuditManager: "AuditManager";
+        readonly AutoScaling: "AutoScaling";
+        readonly AutoScalingPlans: "AutoScalingPlans";
+        readonly Backup: "Backup";
+        readonly Batch: "Batch";
+        readonly BillingConductor: "BillingConductor";
+        readonly Budgets: "Budgets";
+        readonly CE: "CE";
+        readonly CUR: "CUR";
+        readonly Cassandra: "Cassandra";
+        readonly CertificateManager: "CertificateManager";
+        readonly Chatbot: "Chatbot";
+        readonly Cloud9: "Cloud9";
+        readonly CloudFormation: "CloudFormation";
+        readonly CloudFront: "CloudFront";
+        readonly CloudTrail: "CloudTrail";
+        readonly CloudWatch: "CloudWatch";
+        readonly CodeArtifact: "CodeArtifact";
+        readonly CodeBuild: "CodeBuild";
+        readonly CodeCommit: "CodeCommit";
+        readonly CodeDeploy: "CodeDeploy";
+        readonly CodeGuruProfiler: "CodeGuruProfiler";
+        readonly CodeGuruReviewer: "CodeGuruReviewer";
+        readonly CodePipeline: "CodePipeline";
+        readonly CodeStar: "CodeStar";
+        readonly CodeStarConnections: "CodeStarConnections";
+        readonly CodeStarNotifications: "CodeStarNotifications";
+        readonly Cognito: "Cognito";
+        readonly Comprehend: "Comprehend";
+        readonly Config: "Config";
+        readonly Connect: "Connect";
+        readonly ConnectCampaigns: "ConnectCampaigns";
+        readonly ControlTower: "ControlTower";
+        readonly CustomerProfiles: "CustomerProfiles";
+        readonly DAX: "DAX";
+        readonly DLM: "DLM";
+        readonly DMS: "DMS";
+        readonly DataBrew: "DataBrew";
+        readonly DataPipeline: "DataPipeline";
+        readonly DataSync: "DataSync";
+        readonly Detective: "Detective";
+        readonly DevOpsGuru: "DevOpsGuru";
+        readonly DeviceFarm: "DeviceFarm";
+        readonly DirectoryService: "DirectoryService";
+        readonly DocDB: "DocDB";
+        readonly DocDBElastic: "DocDBElastic";
+        readonly DynamoDB: "DynamoDB";
+        readonly EC2: "EC2";
+        readonly ECR: "ECR";
+        readonly ECS: "ECS";
+        readonly EFS: "EFS";
+        readonly EKS: "EKS";
+        readonly EMR: "EMR";
+        readonly EMRContainers: "EMRContainers";
+        readonly EMRServerless: "EMRServerless";
+        readonly ElastiCache: "ElastiCache";
+        readonly ElasticBeanstalk: "ElasticBeanstalk";
+        readonly ElasticLoadBalancing: "ElasticLoadBalancing";
+        readonly ElasticLoadBalancingV2: "ElasticLoadBalancingV2";
+        readonly Elasticsearch: "Elasticsearch";
+        readonly EventSchemas: "EventSchemas";
+        readonly Events: "Events";
+        readonly Evidently: "Evidently";
+        readonly FIS: "FIS";
+        readonly FMS: "FMS";
+        readonly FSx: "FSx";
+        readonly FinSpace: "FinSpace";
+        readonly Forecast: "Forecast";
+        readonly FraudDetector: "FraudDetector";
+        readonly GameLift: "GameLift";
+        readonly GlobalAccelerator: "GlobalAccelerator";
+        readonly Glue: "Glue";
+        readonly Grafana: "Grafana";
+        readonly Greengrass: "Greengrass";
+        readonly GreengrassV2: "GreengrassV2";
+        readonly GroundStation: "GroundStation";
+        readonly GuardDuty: "GuardDuty";
+        readonly HealthLake: "HealthLake";
+        readonly IAM: "IAM";
+        readonly IVS: "IVS";
+        readonly IVSChat: "IVSChat";
+        readonly IdentityStore: "IdentityStore";
+        readonly ImageBuilder: "ImageBuilder";
+        readonly Inspector: "Inspector";
+        readonly InspectorV2: "InspectorV2";
+        readonly InternetMonitor: "InternetMonitor";
+        readonly IoT: "IoT";
+        readonly IoT1Click: "IoT1Click";
+        readonly IoTAnalytics: "IoTAnalytics";
+        readonly IoTCoreDeviceAdvisor: "IoTCoreDeviceAdvisor";
+        readonly IoTEvents: "IoTEvents";
+        readonly IoTFleetHub: "IoTFleetHub";
+        readonly IoTFleetWise: "IoTFleetWise";
+        readonly IoTSiteWise: "IoTSiteWise";
+        readonly IoTThingsGraph: "IoTThingsGraph";
+        readonly IoTTwinMaker: "IoTTwinMaker";
+        readonly IoTWireless: "IoTWireless";
+        readonly KMS: "KMS";
+        readonly KafkaConnect: "KafkaConnect";
+        readonly Kendra: "Kendra";
+        readonly KendraRanking: "KendraRanking";
+        readonly Kinesis: "Kinesis";
+        readonly KinesisAnalytics: "KinesisAnalytics";
+        readonly KinesisAnalyticsV2: "KinesisAnalyticsV2";
+        readonly KinesisFirehose: "KinesisFirehose";
+        readonly KinesisVideo: "KinesisVideo";
+        readonly LakeFormation: "LakeFormation";
+        readonly Lambda: "Lambda";
+        readonly Lex: "Lex";
+        readonly LicenseManager: "LicenseManager";
+        readonly Lightsail: "Lightsail";
+        readonly Location: "Location";
+        readonly Logs: "Logs";
+        readonly LookoutEquipment: "LookoutEquipment";
+        readonly LookoutMetrics: "LookoutMetrics";
+        readonly LookoutVision: "LookoutVision";
+        readonly M2: "M2";
+        readonly MSK: "MSK";
+        readonly MWAA: "MWAA";
+        readonly Macie: "Macie";
+        readonly ManagedBlockchain: "ManagedBlockchain";
+        readonly MediaConnect: "MediaConnect";
+        readonly MediaConvert: "MediaConvert";
+        readonly MediaLive: "MediaLive";
+        readonly MediaPackage: "MediaPackage";
+        readonly MediaStore: "MediaStore";
+        readonly MediaTailor: "MediaTailor";
+        readonly MemoryDB: "MemoryDB";
+        readonly Neptune: "Neptune";
+        readonly NetworkFirewall: "NetworkFirewall";
+        readonly NetworkManager: "NetworkManager";
+        readonly NimbleStudio: "NimbleStudio";
+        readonly Oam: "Oam";
+        readonly Omics: "Omics";
+        readonly OpenSearchServerless: "OpenSearchServerless";
+        readonly OpenSearchService: "OpenSearchService";
+        readonly OpsWorks: "OpsWorks";
+        readonly OpsWorksCM: "OpsWorksCM";
+        readonly Organizations: "Organizations";
+        readonly Panorama: "Panorama";
+        readonly Personalize: "Personalize";
+        readonly Pinpoint: "Pinpoint";
+        readonly PinpointEmail: "PinpointEmail";
+        readonly Pipes: "Pipes";
+        readonly QLDB: "QLDB";
+        readonly QuickSight: "QuickSight";
+        readonly RAM: "RAM";
+        readonly RDS: "RDS";
+        readonly RUM: "RUM";
+        readonly Redshift: "Redshift";
+        readonly RedshiftServerless: "RedshiftServerless";
+        readonly RefactorSpaces: "RefactorSpaces";
+        readonly Rekognition: "Rekognition";
+        readonly ResilienceHub: "ResilienceHub";
+        readonly ResourceExplorer2: "ResourceExplorer2";
+        readonly ResourceGroups: "ResourceGroups";
+        readonly RoboMaker: "RoboMaker";
+        readonly RolesAnywhere: "RolesAnywhere";
+        readonly Route53: "Route53";
+        readonly Route53RecoveryControl: "Route53RecoveryControl";
+        readonly Route53RecoveryReadiness: "Route53RecoveryReadiness";
+        readonly Route53Resolver: "Route53Resolver";
+        readonly S3: "S3";
+        readonly S3ObjectLambda: "S3ObjectLambda";
+        readonly S3Outposts: "S3Outposts";
+        readonly SDB: "SDB";
+        readonly SES: "SES";
+        readonly SNS: "SNS";
+        readonly SQS: "SQS";
+        readonly SSM: "SSM";
+        readonly SSMContacts: "SSMContacts";
+        readonly SSMIncidents: "SSMIncidents";
+        readonly SSO: "SSO";
+        readonly SageMaker: "SageMaker";
+        readonly Scheduler: "Scheduler";
+        readonly SecretsManager: "SecretsManager";
+        readonly SecurityHub: "SecurityHub";
+        readonly Serverless: "Serverless";
+        readonly ServiceCatalog: "ServiceCatalog";
+        readonly ServiceCatalogAppRegistry: "ServiceCatalogAppRegistry";
+        readonly ServiceDiscovery: "ServiceDiscovery";
+        readonly Signer: "Signer";
+        readonly SimSpaceWeaver: "SimSpaceWeaver";
+        readonly StepFunctions: "StepFunctions";
+        readonly SupportApp: "SupportApp";
+        readonly Synthetics: "Synthetics";
+        readonly SystemsManagerSAP: "SystemsManagerSAP";
+        readonly Timestream: "Timestream";
+        readonly Transfer: "Transfer";
+        readonly VoiceID: "VoiceID";
+        readonly VpcLattice: "VpcLattice";
+        readonly WAF: "WAF";
+        readonly WAFRegional: "WAFRegional";
+        readonly WAFv2: "WAFv2";
+        readonly Wisdom: "Wisdom";
+        readonly WorkSpaces: "WorkSpaces";
+        readonly XRay: "XRay";
+    };
+    type ServiceName = keyof typeof ServiceNames;
+    const ResourceTypes: readonly [
+        "AWS::ACMPCA::Certificate",
+        "AWS::ACMPCA::CertificateAuthority",
+        "AWS::ACMPCA::CertificateAuthorityActivation",
+        "AWS::ACMPCA::Permission",
+        "AWS::APS::RuleGroupsNamespace",
+        "AWS::APS::Workspace",
+        "AWS::AccessAnalyzer::Analyzer",
+        "AWS::AmazonMQ::Broker",
+        "AWS::AmazonMQ::Configuration",
+        "AWS::AmazonMQ::ConfigurationAssociation",
+        "AWS::Amplify::App",
+        "AWS::Amplify::Branch",
+        "AWS::Amplify::Domain",
+        "AWS::AmplifyUIBuilder::Component",
+        "AWS::AmplifyUIBuilder::Form",
+        "AWS::AmplifyUIBuilder::Theme",
+        "AWS::ApiGateway::Account",
+        "AWS::ApiGateway::ApiKey",
+        "AWS::ApiGateway::Authorizer",
+        "AWS::ApiGateway::BasePathMapping",
+        "AWS::ApiGateway::ClientCertificate",
+        "AWS::ApiGateway::Deployment",
+        "AWS::ApiGateway::DocumentationPart",
+        "AWS::ApiGateway::DocumentationVersion",
+        "AWS::ApiGateway::DomainName",
+        "AWS::ApiGateway::GatewayResponse",
+        "AWS::ApiGateway::Method",
+        "AWS::ApiGateway::Model",
+        "AWS::ApiGateway::RequestValidator",
+        "AWS::ApiGateway::Resource",
+        "AWS::ApiGateway::RestApi",
+        "AWS::ApiGateway::Stage",
+        "AWS::ApiGateway::UsagePlan",
+        "AWS::ApiGateway::UsagePlanKey",
+        "AWS::ApiGateway::VpcLink",
+        "AWS::ApiGatewayV2::Api",
+        "AWS::ApiGatewayV2::ApiGatewayManagedOverrides",
+        "AWS::ApiGatewayV2::ApiMapping",
+        "AWS::ApiGatewayV2::Authorizer",
+        "AWS::ApiGatewayV2::Deployment",
+        "AWS::ApiGatewayV2::DomainName",
+        "AWS::ApiGatewayV2::Integration",
+        "AWS::ApiGatewayV2::IntegrationResponse",
+        "AWS::ApiGatewayV2::Model",
+        "AWS::ApiGatewayV2::Route",
+        "AWS::ApiGatewayV2::RouteResponse",
+        "AWS::ApiGatewayV2::Stage",
+        "AWS::ApiGatewayV2::VpcLink",
+        "AWS::AppConfig::Application",
+        "AWS::AppConfig::ConfigurationProfile",
+        "AWS::AppConfig::Deployment",
+        "AWS::AppConfig::DeploymentStrategy",
+        "AWS::AppConfig::Environment",
+        "AWS::AppConfig::HostedConfigurationVersion",
+        "AWS::AppFlow::Connector",
+        "AWS::AppFlow::ConnectorProfile",
+        "AWS::AppFlow::Flow",
+        "AWS::AppIntegrations::DataIntegration",
+        "AWS::AppIntegrations::EventIntegration",
+        "AWS::AppMesh::GatewayRoute",
+        "AWS::AppMesh::Mesh",
+        "AWS::AppMesh::Route",
+        "AWS::AppMesh::VirtualGateway",
+        "AWS::AppMesh::VirtualNode",
+        "AWS::AppMesh::VirtualRouter",
+        "AWS::AppMesh::VirtualService",
+        "AWS::AppRunner::ObservabilityConfiguration",
+        "AWS::AppRunner::Service",
+        "AWS::AppRunner::VpcConnector",
+        "AWS::AppRunner::VpcIngressConnection",
+        "AWS::AppStream::AppBlock",
+        "AWS::AppStream::Application",
+        "AWS::AppStream::ApplicationEntitlementAssociation",
+        "AWS::AppStream::ApplicationFleetAssociation",
+        "AWS::AppStream::DirectoryConfig",
+        "AWS::AppStream::Entitlement",
+        "AWS::AppStream::Fleet",
+        "AWS::AppStream::ImageBuilder",
+        "AWS::AppStream::Stack",
+        "AWS::AppStream::StackFleetAssociation",
+        "AWS::AppStream::StackUserAssociation",
+        "AWS::AppStream::User",
+        "AWS::AppSync::ApiCache",
+        "AWS::AppSync::ApiKey",
+        "AWS::AppSync::DataSource",
+        "AWS::AppSync::DomainName",
+        "AWS::AppSync::DomainNameApiAssociation",
+        "AWS::AppSync::FunctionConfiguration",
+        "AWS::AppSync::GraphQLApi",
+        "AWS::AppSync::GraphQLSchema",
+        "AWS::AppSync::Resolver",
+        "AWS::ApplicationAutoScaling::ScalableTarget",
+        "AWS::ApplicationAutoScaling::ScalingPolicy",
+        "AWS::ApplicationInsights::Application",
+        "AWS::Athena::DataCatalog",
+        "AWS::Athena::NamedQuery",
+        "AWS::Athena::PreparedStatement",
+        "AWS::Athena::WorkGroup",
+        "AWS::AuditManager::Assessment",
+        "AWS::AutoScaling::AutoScalingGroup",
+        "AWS::AutoScaling::LaunchConfiguration",
+        "AWS::AutoScaling::LifecycleHook",
+        "AWS::AutoScaling::ScalingPolicy",
+        "AWS::AutoScaling::ScheduledAction",
+        "AWS::AutoScaling::WarmPool",
+        "AWS::AutoScalingPlans::ScalingPlan",
+        "AWS::Backup::BackupPlan",
+        "AWS::Backup::BackupSelection",
+        "AWS::Backup::BackupVault",
+        "AWS::Backup::Framework",
+        "AWS::Backup::ReportPlan",
+        "AWS::Batch::ComputeEnvironment",
+        "AWS::Batch::JobDefinition",
+        "AWS::Batch::JobQueue",
+        "AWS::Batch::SchedulingPolicy",
+        "AWS::BillingConductor::BillingGroup",
+        "AWS::BillingConductor::CustomLineItem",
+        "AWS::BillingConductor::PricingPlan",
+        "AWS::BillingConductor::PricingRule",
+        "AWS::Budgets::Budget",
+        "AWS::Budgets::BudgetsAction",
+        "AWS::CE::AnomalyMonitor",
+        "AWS::CE::AnomalySubscription",
+        "AWS::CE::CostCategory",
+        "AWS::CUR::ReportDefinition",
+        "AWS::Cassandra::Keyspace",
+        "AWS::Cassandra::Table",
+        "AWS::CertificateManager::Account",
+        "AWS::CertificateManager::Certificate",
+        "AWS::Chatbot::MicrosoftTeamsChannelConfiguration",
+        "AWS::Chatbot::SlackChannelConfiguration",
+        "AWS::Cloud9::EnvironmentEC2",
+        "AWS::CloudFormation::CustomResource",
+        "AWS::CloudFormation::HookDefaultVersion",
+        "AWS::CloudFormation::HookTypeConfig",
+        "AWS::CloudFormation::HookVersion",
+        "AWS::CloudFormation::Macro",
+        "AWS::CloudFormation::ModuleDefaultVersion",
+        "AWS::CloudFormation::ModuleVersion",
+        "AWS::CloudFormation::PublicTypeVersion",
+        "AWS::CloudFormation::Publisher",
+        "AWS::CloudFormation::ResourceDefaultVersion",
+        "AWS::CloudFormation::ResourceVersion",
+        "AWS::CloudFormation::Stack",
+        "AWS::CloudFormation::StackSet",
+        "AWS::CloudFormation::TypeActivation",
+        "AWS::CloudFormation::WaitCondition",
+        "AWS::CloudFormation::WaitConditionHandle",
+        "AWS::CloudFront::CachePolicy",
+        "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+        "AWS::CloudFront::ContinuousDeploymentPolicy",
+        "AWS::CloudFront::Distribution",
+        "AWS::CloudFront::Function",
+        "AWS::CloudFront::KeyGroup",
+        "AWS::CloudFront::MonitoringSubscription",
+        "AWS::CloudFront::OriginAccessControl",
+        "AWS::CloudFront::OriginRequestPolicy",
+        "AWS::CloudFront::PublicKey",
+        "AWS::CloudFront::RealtimeLogConfig",
+        "AWS::CloudFront::ResponseHeadersPolicy",
+        "AWS::CloudFront::StreamingDistribution",
+        "AWS::CloudTrail::Channel",
+        "AWS::CloudTrail::EventDataStore",
+        "AWS::CloudTrail::ResourcePolicy",
+        "AWS::CloudTrail::Trail",
+        "AWS::CloudWatch::Alarm",
+        "AWS::CloudWatch::AnomalyDetector",
+        "AWS::CloudWatch::CompositeAlarm",
+        "AWS::CloudWatch::Dashboard",
+        "AWS::CloudWatch::InsightRule",
+        "AWS::CloudWatch::MetricStream",
+        "AWS::CodeArtifact::Domain",
+        "AWS::CodeArtifact::Repository",
+        "AWS::CodeBuild::Project",
+        "AWS::CodeBuild::ReportGroup",
+        "AWS::CodeBuild::SourceCredential",
+        "AWS::CodeCommit::Repository",
+        "AWS::CodeDeploy::Application",
+        "AWS::CodeDeploy::DeploymentConfig",
+        "AWS::CodeDeploy::DeploymentGroup",
+        "AWS::CodeGuruProfiler::ProfilingGroup",
+        "AWS::CodeGuruReviewer::RepositoryAssociation",
+        "AWS::CodePipeline::CustomActionType",
+        "AWS::CodePipeline::Pipeline",
+        "AWS::CodePipeline::Webhook",
+        "AWS::CodeStar::GitHubRepository",
+        "AWS::CodeStarConnections::Connection",
+        "AWS::CodeStarNotifications::NotificationRule",
+        "AWS::Cognito::IdentityPool",
+        "AWS::Cognito::IdentityPoolRoleAttachment",
+        "AWS::Cognito::UserPool",
+        "AWS::Cognito::UserPoolClient",
+        "AWS::Cognito::UserPoolDomain",
+        "AWS::Cognito::UserPoolGroup",
+        "AWS::Cognito::UserPoolIdentityProvider",
+        "AWS::Cognito::UserPoolResourceServer",
+        "AWS::Cognito::UserPoolRiskConfigurationAttachment",
+        "AWS::Cognito::UserPoolUICustomizationAttachment",
+        "AWS::Cognito::UserPoolUser",
+        "AWS::Cognito::UserPoolUserToGroupAttachment",
+        "AWS::Comprehend::Flywheel",
+        "AWS::Config::AggregationAuthorization",
+        "AWS::Config::ConfigRule",
+        "AWS::Config::ConfigurationAggregator",
+        "AWS::Config::ConfigurationRecorder",
+        "AWS::Config::ConformancePack",
+        "AWS::Config::DeliveryChannel",
+        "AWS::Config::OrganizationConfigRule",
+        "AWS::Config::OrganizationConformancePack",
+        "AWS::Config::RemediationConfiguration",
+        "AWS::Config::StoredQuery",
+        "AWS::Connect::ApprovedOrigin",
+        "AWS::Connect::ContactFlow",
+        "AWS::Connect::ContactFlowModule",
+        "AWS::Connect::HoursOfOperation",
+        "AWS::Connect::Instance",
+        "AWS::Connect::InstanceStorageConfig",
+        "AWS::Connect::IntegrationAssociation",
+        "AWS::Connect::PhoneNumber",
+        "AWS::Connect::QuickConnect",
+        "AWS::Connect::Rule",
+        "AWS::Connect::SecurityKey",
+        "AWS::Connect::TaskTemplate",
+        "AWS::Connect::User",
+        "AWS::Connect::UserHierarchyGroup",
+        "AWS::ConnectCampaigns::Campaign",
+        "AWS::ControlTower::EnabledControl",
+        "AWS::CustomerProfiles::Domain",
+        "AWS::CustomerProfiles::Integration",
+        "AWS::CustomerProfiles::ObjectType",
+        "AWS::DAX::Cluster",
+        "AWS::DAX::ParameterGroup",
+        "AWS::DAX::SubnetGroup",
+        "AWS::DLM::LifecyclePolicy",
+        "AWS::DMS::Certificate",
+        "AWS::DMS::Endpoint",
+        "AWS::DMS::EventSubscription",
+        "AWS::DMS::ReplicationInstance",
+        "AWS::DMS::ReplicationSubnetGroup",
+        "AWS::DMS::ReplicationTask",
+        "AWS::DataBrew::Dataset",
+        "AWS::DataBrew::Job",
+        "AWS::DataBrew::Project",
+        "AWS::DataBrew::Recipe",
+        "AWS::DataBrew::Ruleset",
+        "AWS::DataBrew::Schedule",
+        "AWS::DataPipeline::Pipeline",
+        "AWS::DataSync::Agent",
+        "AWS::DataSync::LocationEFS",
+        "AWS::DataSync::LocationFSxLustre",
+        "AWS::DataSync::LocationFSxONTAP",
+        "AWS::DataSync::LocationFSxOpenZFS",
+        "AWS::DataSync::LocationFSxWindows",
+        "AWS::DataSync::LocationHDFS",
+        "AWS::DataSync::LocationNFS",
+        "AWS::DataSync::LocationObjectStorage",
+        "AWS::DataSync::LocationS3",
+        "AWS::DataSync::LocationSMB",
+        "AWS::DataSync::Task",
+        "AWS::Detective::Graph",
+        "AWS::Detective::MemberInvitation",
+        "AWS::DevOpsGuru::NotificationChannel",
+        "AWS::DevOpsGuru::ResourceCollection",
+        "AWS::DeviceFarm::DevicePool",
+        "AWS::DeviceFarm::InstanceProfile",
+        "AWS::DeviceFarm::NetworkProfile",
+        "AWS::DeviceFarm::Project",
+        "AWS::DeviceFarm::TestGridProject",
+        "AWS::DeviceFarm::VPCEConfiguration",
+        "AWS::DirectoryService::MicrosoftAD",
+        "AWS::DirectoryService::SimpleAD",
+        "AWS::DocDB::DBCluster",
+        "AWS::DocDB::DBClusterParameterGroup",
+        "AWS::DocDB::DBInstance",
+        "AWS::DocDB::DBSubnetGroup",
+        "AWS::DocDBElastic::Cluster",
+        "AWS::DynamoDB::GlobalTable",
+        "AWS::DynamoDB::Table",
+        "AWS::EC2::CapacityReservation",
+        "AWS::EC2::CapacityReservationFleet",
+        "AWS::EC2::CarrierGateway",
+        "AWS::EC2::ClientVpnAuthorizationRule",
+        "AWS::EC2::ClientVpnEndpoint",
+        "AWS::EC2::ClientVpnRoute",
+        "AWS::EC2::ClientVpnTargetNetworkAssociation",
+        "AWS::EC2::CustomerGateway",
+        "AWS::EC2::DHCPOptions",
+        "AWS::EC2::EC2Fleet",
+        "AWS::EC2::EIP",
+        "AWS::EC2::EIPAssociation",
+        "AWS::EC2::EgressOnlyInternetGateway",
+        "AWS::EC2::EnclaveCertificateIamRoleAssociation",
+        "AWS::EC2::FlowLog",
+        "AWS::EC2::GatewayRouteTableAssociation",
+        "AWS::EC2::Host",
+        "AWS::EC2::IPAM",
+        "AWS::EC2::IPAMAllocation",
+        "AWS::EC2::IPAMPool",
+        "AWS::EC2::IPAMPoolCidr",
+        "AWS::EC2::IPAMResourceDiscovery",
+        "AWS::EC2::IPAMResourceDiscoveryAssociation",
+        "AWS::EC2::IPAMScope",
+        "AWS::EC2::Instance",
+        "AWS::EC2::InternetGateway",
+        "AWS::EC2::KeyPair",
+        "AWS::EC2::LaunchTemplate",
+        "AWS::EC2::LocalGatewayRoute",
+        "AWS::EC2::LocalGatewayRouteTable",
+        "AWS::EC2::LocalGatewayRouteTableVPCAssociation",
+        "AWS::EC2::LocalGatewayRouteTableVirtualInterfaceGroupAssociation",
+        "AWS::EC2::NatGateway",
+        "AWS::EC2::NetworkAcl",
+        "AWS::EC2::NetworkAclEntry",
+        "AWS::EC2::NetworkInsightsAccessScope",
+        "AWS::EC2::NetworkInsightsAccessScopeAnalysis",
+        "AWS::EC2::NetworkInsightsAnalysis",
+        "AWS::EC2::NetworkInsightsPath",
+        "AWS::EC2::NetworkInterface",
+        "AWS::EC2::NetworkInterfaceAttachment",
+        "AWS::EC2::NetworkInterfacePermission",
+        "AWS::EC2::NetworkPerformanceMetricSubscription",
+        "AWS::EC2::PlacementGroup",
+        "AWS::EC2::PrefixList",
+        "AWS::EC2::Route",
+        "AWS::EC2::RouteTable",
+        "AWS::EC2::SecurityGroup",
+        "AWS::EC2::SecurityGroupEgress",
+        "AWS::EC2::SecurityGroupIngress",
+        "AWS::EC2::SpotFleet",
+        "AWS::EC2::Subnet",
+        "AWS::EC2::SubnetCidrBlock",
+        "AWS::EC2::SubnetNetworkAclAssociation",
+        "AWS::EC2::SubnetRouteTableAssociation",
+        "AWS::EC2::TrafficMirrorFilter",
+        "AWS::EC2::TrafficMirrorFilterRule",
+        "AWS::EC2::TrafficMirrorSession",
+        "AWS::EC2::TrafficMirrorTarget",
+        "AWS::EC2::TransitGateway",
+        "AWS::EC2::TransitGatewayAttachment",
+        "AWS::EC2::TransitGatewayConnect",
+        "AWS::EC2::TransitGatewayMulticastDomain",
+        "AWS::EC2::TransitGatewayMulticastDomainAssociation",
+        "AWS::EC2::TransitGatewayMulticastGroupMember",
+        "AWS::EC2::TransitGatewayMulticastGroupSource",
+        "AWS::EC2::TransitGatewayPeeringAttachment",
+        "AWS::EC2::TransitGatewayRoute",
+        "AWS::EC2::TransitGatewayRouteTable",
+        "AWS::EC2::TransitGatewayRouteTableAssociation",
+        "AWS::EC2::TransitGatewayRouteTablePropagation",
+        "AWS::EC2::TransitGatewayVpcAttachment",
+        "AWS::EC2::VPC",
+        "AWS::EC2::VPCCidrBlock",
+        "AWS::EC2::VPCDHCPOptionsAssociation",
+        "AWS::EC2::VPCEndpoint",
+        "AWS::EC2::VPCEndpointConnectionNotification",
+        "AWS::EC2::VPCEndpointService",
+        "AWS::EC2::VPCEndpointServicePermissions",
+        "AWS::EC2::VPCGatewayAttachment",
+        "AWS::EC2::VPCPeeringConnection",
+        "AWS::EC2::VPNConnection",
+        "AWS::EC2::VPNConnectionRoute",
+        "AWS::EC2::VPNGateway",
+        "AWS::EC2::VPNGatewayRoutePropagation",
+        "AWS::EC2::Volume",
+        "AWS::EC2::VolumeAttachment",
+        "AWS::ECR::PublicRepository",
+        "AWS::ECR::PullThroughCacheRule",
+        "AWS::ECR::RegistryPolicy",
+        "AWS::ECR::ReplicationConfiguration",
+        "AWS::ECR::Repository",
+        "AWS::ECS::CapacityProvider",
+        "AWS::ECS::Cluster",
+        "AWS::ECS::ClusterCapacityProviderAssociations",
+        "AWS::ECS::PrimaryTaskSet",
+        "AWS::ECS::Service",
+        "AWS::ECS::TaskDefinition",
+        "AWS::ECS::TaskSet",
+        "AWS::EFS::AccessPoint",
+        "AWS::EFS::FileSystem",
+        "AWS::EFS::MountTarget",
+        "AWS::EKS::Addon",
+        "AWS::EKS::Cluster",
+        "AWS::EKS::FargateProfile",
+        "AWS::EKS::IdentityProviderConfig",
+        "AWS::EKS::Nodegroup",
+        "AWS::EMR::Cluster",
+        "AWS::EMR::InstanceFleetConfig",
+        "AWS::EMR::InstanceGroupConfig",
+        "AWS::EMR::SecurityConfiguration",
+        "AWS::EMR::Step",
+        "AWS::EMR::Studio",
+        "AWS::EMR::StudioSessionMapping",
+        "AWS::EMRContainers::VirtualCluster",
+        "AWS::EMRServerless::Application",
+        "AWS::ElastiCache::CacheCluster",
+        "AWS::ElastiCache::GlobalReplicationGroup",
+        "AWS::ElastiCache::ParameterGroup",
+        "AWS::ElastiCache::ReplicationGroup",
+        "AWS::ElastiCache::SecurityGroup",
+        "AWS::ElastiCache::SecurityGroupIngress",
+        "AWS::ElastiCache::SubnetGroup",
+        "AWS::ElastiCache::User",
+        "AWS::ElastiCache::UserGroup",
+        "AWS::ElasticBeanstalk::Application",
+        "AWS::ElasticBeanstalk::ApplicationVersion",
+        "AWS::ElasticBeanstalk::ConfigurationTemplate",
+        "AWS::ElasticBeanstalk::Environment",
+        "AWS::ElasticLoadBalancing::LoadBalancer",
+        "AWS::ElasticLoadBalancingV2::Listener",
+        "AWS::ElasticLoadBalancingV2::ListenerCertificate",
+        "AWS::ElasticLoadBalancingV2::ListenerRule",
+        "AWS::ElasticLoadBalancingV2::LoadBalancer",
+        "AWS::ElasticLoadBalancingV2::TargetGroup",
+        "AWS::Elasticsearch::Domain",
+        "AWS::EventSchemas::Discoverer",
+        "AWS::EventSchemas::Registry",
+        "AWS::EventSchemas::RegistryPolicy",
+        "AWS::EventSchemas::Schema",
+        "AWS::Events::ApiDestination",
+        "AWS::Events::Archive",
+        "AWS::Events::Connection",
+        "AWS::Events::Endpoint",
+        "AWS::Events::EventBus",
+        "AWS::Events::EventBusPolicy",
+        "AWS::Events::Rule",
+        "AWS::Evidently::Experiment",
+        "AWS::Evidently::Feature",
+        "AWS::Evidently::Launch",
+        "AWS::Evidently::Project",
+        "AWS::Evidently::Segment",
+        "AWS::FIS::ExperimentTemplate",
+        "AWS::FMS::NotificationChannel",
+        "AWS::FMS::Policy",
+        "AWS::FMS::ResourceSet",
+        "AWS::FSx::DataRepositoryAssociation",
+        "AWS::FSx::FileSystem",
+        "AWS::FSx::Snapshot",
+        "AWS::FSx::StorageVirtualMachine",
+        "AWS::FSx::Volume",
+        "AWS::FinSpace::Environment",
+        "AWS::Forecast::Dataset",
+        "AWS::Forecast::DatasetGroup",
+        "AWS::FraudDetector::Detector",
+        "AWS::FraudDetector::EntityType",
+        "AWS::FraudDetector::EventType",
+        "AWS::FraudDetector::Label",
+        "AWS::FraudDetector::Outcome",
+        "AWS::FraudDetector::Variable",
+        "AWS::GameLift::Alias",
+        "AWS::GameLift::Build",
+        "AWS::GameLift::Fleet",
+        "AWS::GameLift::GameServerGroup",
+        "AWS::GameLift::GameSessionQueue",
+        "AWS::GameLift::Location",
+        "AWS::GameLift::MatchmakingConfiguration",
+        "AWS::GameLift::MatchmakingRuleSet",
+        "AWS::GameLift::Script",
+        "AWS::GlobalAccelerator::Accelerator",
+        "AWS::GlobalAccelerator::EndpointGroup",
+        "AWS::GlobalAccelerator::Listener",
+        "AWS::Glue::Classifier",
+        "AWS::Glue::Connection",
+        "AWS::Glue::Crawler",
+        "AWS::Glue::DataCatalogEncryptionSettings",
+        "AWS::Glue::Database",
+        "AWS::Glue::DevEndpoint",
+        "AWS::Glue::Job",
+        "AWS::Glue::MLTransform",
+        "AWS::Glue::Partition",
+        "AWS::Glue::Registry",
+        "AWS::Glue::Schema",
+        "AWS::Glue::SchemaVersion",
+        "AWS::Glue::SchemaVersionMetadata",
+        "AWS::Glue::SecurityConfiguration",
+        "AWS::Glue::Table",
+        "AWS::Glue::Trigger",
+        "AWS::Glue::Workflow",
+        "AWS::Grafana::Workspace",
+        "AWS::Greengrass::ConnectorDefinition",
+        "AWS::Greengrass::ConnectorDefinitionVersion",
+        "AWS::Greengrass::CoreDefinition",
+        "AWS::Greengrass::CoreDefinitionVersion",
+        "AWS::Greengrass::DeviceDefinition",
+        "AWS::Greengrass::DeviceDefinitionVersion",
+        "AWS::Greengrass::FunctionDefinition",
+        "AWS::Greengrass::FunctionDefinitionVersion",
+        "AWS::Greengrass::Group",
+        "AWS::Greengrass::GroupVersion",
+        "AWS::Greengrass::LoggerDefinition",
+        "AWS::Greengrass::LoggerDefinitionVersion",
+        "AWS::Greengrass::ResourceDefinition",
+        "AWS::Greengrass::ResourceDefinitionVersion",
+        "AWS::Greengrass::SubscriptionDefinition",
+        "AWS::Greengrass::SubscriptionDefinitionVersion",
+        "AWS::GreengrassV2::ComponentVersion",
+        "AWS::GreengrassV2::Deployment",
+        "AWS::GroundStation::Config",
+        "AWS::GroundStation::DataflowEndpointGroup",
+        "AWS::GroundStation::MissionProfile",
+        "AWS::GuardDuty::Detector",
+        "AWS::GuardDuty::Filter",
+        "AWS::GuardDuty::IPSet",
+        "AWS::GuardDuty::Master",
+        "AWS::GuardDuty::Member",
+        "AWS::GuardDuty::ThreatIntelSet",
+        "AWS::HealthLake::FHIRDatastore",
+        "AWS::IAM::AccessKey",
+        "AWS::IAM::Group",
+        "AWS::IAM::InstanceProfile",
+        "AWS::IAM::ManagedPolicy",
+        "AWS::IAM::OIDCProvider",
+        "AWS::IAM::Policy",
+        "AWS::IAM::Role",
+        "AWS::IAM::SAMLProvider",
+        "AWS::IAM::ServerCertificate",
+        "AWS::IAM::ServiceLinkedRole",
+        "AWS::IAM::User",
+        "AWS::IAM::UserToGroupAddition",
+        "AWS::IAM::VirtualMFADevice",
+        "AWS::IVS::Channel",
+        "AWS::IVS::PlaybackKeyPair",
+        "AWS::IVS::RecordingConfiguration",
+        "AWS::IVS::StreamKey",
+        "AWS::IVSChat::LoggingConfiguration",
+        "AWS::IVSChat::Room",
+        "AWS::IdentityStore::Group",
+        "AWS::IdentityStore::GroupMembership",
+        "AWS::ImageBuilder::Component",
+        "AWS::ImageBuilder::ContainerRecipe",
+        "AWS::ImageBuilder::DistributionConfiguration",
+        "AWS::ImageBuilder::Image",
+        "AWS::ImageBuilder::ImagePipeline",
+        "AWS::ImageBuilder::ImageRecipe",
+        "AWS::ImageBuilder::InfrastructureConfiguration",
+        "AWS::Inspector::AssessmentTarget",
+        "AWS::Inspector::AssessmentTemplate",
+        "AWS::Inspector::ResourceGroup",
+        "AWS::InspectorV2::Filter",
+        "AWS::InternetMonitor::Monitor",
+        "AWS::IoT1Click::Device",
+        "AWS::IoT1Click::Placement",
+        "AWS::IoT1Click::Project",
+        "AWS::IoT::AccountAuditConfiguration",
+        "AWS::IoT::Authorizer",
+        "AWS::IoT::CACertificate",
+        "AWS::IoT::Certificate",
+        "AWS::IoT::CustomMetric",
+        "AWS::IoT::Dimension",
+        "AWS::IoT::DomainConfiguration",
+        "AWS::IoT::FleetMetric",
+        "AWS::IoT::JobTemplate",
+        "AWS::IoT::Logging",
+        "AWS::IoT::MitigationAction",
+        "AWS::IoT::Policy",
+        "AWS::IoT::PolicyPrincipalAttachment",
+        "AWS::IoT::ProvisioningTemplate",
+        "AWS::IoT::ResourceSpecificLogging",
+        "AWS::IoT::RoleAlias",
+        "AWS::IoT::ScheduledAudit",
+        "AWS::IoT::SecurityProfile",
+        "AWS::IoT::Thing",
+        "AWS::IoT::ThingPrincipalAttachment",
+        "AWS::IoT::TopicRule",
+        "AWS::IoT::TopicRuleDestination",
+        "AWS::IoTAnalytics::Channel",
+        "AWS::IoTAnalytics::Dataset",
+        "AWS::IoTAnalytics::Datastore",
+        "AWS::IoTAnalytics::Pipeline",
+        "AWS::IoTCoreDeviceAdvisor::SuiteDefinition",
+        "AWS::IoTEvents::AlarmModel",
+        "AWS::IoTEvents::DetectorModel",
+        "AWS::IoTEvents::Input",
+        "AWS::IoTFleetHub::Application",
+        "AWS::IoTFleetWise::Campaign",
+        "AWS::IoTFleetWise::DecoderManifest",
+        "AWS::IoTFleetWise::Fleet",
+        "AWS::IoTFleetWise::ModelManifest",
+        "AWS::IoTFleetWise::SignalCatalog",
+        "AWS::IoTFleetWise::Vehicle",
+        "AWS::IoTSiteWise::AccessPolicy",
+        "AWS::IoTSiteWise::Asset",
+        "AWS::IoTSiteWise::AssetModel",
+        "AWS::IoTSiteWise::Dashboard",
+        "AWS::IoTSiteWise::Gateway",
+        "AWS::IoTSiteWise::Portal",
+        "AWS::IoTSiteWise::Project",
+        "AWS::IoTThingsGraph::FlowTemplate",
+        "AWS::IoTTwinMaker::ComponentType",
+        "AWS::IoTTwinMaker::Entity",
+        "AWS::IoTTwinMaker::Scene",
+        "AWS::IoTTwinMaker::SyncJob",
+        "AWS::IoTTwinMaker::Workspace",
+        "AWS::IoTWireless::Destination",
+        "AWS::IoTWireless::DeviceProfile",
+        "AWS::IoTWireless::FuotaTask",
+        "AWS::IoTWireless::MulticastGroup",
+        "AWS::IoTWireless::NetworkAnalyzerConfiguration",
+        "AWS::IoTWireless::PartnerAccount",
+        "AWS::IoTWireless::ServiceProfile",
+        "AWS::IoTWireless::TaskDefinition",
+        "AWS::IoTWireless::WirelessDevice",
+        "AWS::IoTWireless::WirelessGateway",
+        "AWS::KMS::Alias",
+        "AWS::KMS::Key",
+        "AWS::KMS::ReplicaKey",
+        "AWS::KafkaConnect::Connector",
+        "AWS::Kendra::DataSource",
+        "AWS::Kendra::Faq",
+        "AWS::Kendra::Index",
+        "AWS::KendraRanking::ExecutionPlan",
+        "AWS::Kinesis::Stream",
+        "AWS::Kinesis::StreamConsumer",
+        "AWS::KinesisAnalytics::Application",
+        "AWS::KinesisAnalytics::ApplicationOutput",
+        "AWS::KinesisAnalytics::ApplicationReferenceDataSource",
+        "AWS::KinesisAnalyticsV2::Application",
+        "AWS::KinesisAnalyticsV2::ApplicationCloudWatchLoggingOption",
+        "AWS::KinesisAnalyticsV2::ApplicationOutput",
+        "AWS::KinesisAnalyticsV2::ApplicationReferenceDataSource",
+        "AWS::KinesisFirehose::DeliveryStream",
+        "AWS::KinesisVideo::SignalingChannel",
+        "AWS::KinesisVideo::Stream",
+        "AWS::LakeFormation::DataCellsFilter",
+        "AWS::LakeFormation::DataLakeSettings",
+        "AWS::LakeFormation::Permissions",
+        "AWS::LakeFormation::PrincipalPermissions",
+        "AWS::LakeFormation::Resource",
+        "AWS::LakeFormation::Tag",
+        "AWS::LakeFormation::TagAssociation",
+        "AWS::Lambda::Alias",
+        "AWS::Lambda::CodeSigningConfig",
+        "AWS::Lambda::EventInvokeConfig",
+        "AWS::Lambda::EventSourceMapping",
+        "AWS::Lambda::Function",
+        "AWS::Lambda::LayerVersion",
+        "AWS::Lambda::LayerVersionPermission",
+        "AWS::Lambda::Permission",
+        "AWS::Lambda::Url",
+        "AWS::Lambda::Version",
+        "AWS::Lex::Bot",
+        "AWS::Lex::BotAlias",
+        "AWS::Lex::BotVersion",
+        "AWS::Lex::ResourcePolicy",
+        "AWS::LicenseManager::Grant",
+        "AWS::LicenseManager::License",
+        "AWS::Lightsail::Alarm",
+        "AWS::Lightsail::Bucket",
+        "AWS::Lightsail::Certificate",
+        "AWS::Lightsail::Container",
+        "AWS::Lightsail::Database",
+        "AWS::Lightsail::Disk",
+        "AWS::Lightsail::Distribution",
+        "AWS::Lightsail::Instance",
+        "AWS::Lightsail::LoadBalancer",
+        "AWS::Lightsail::LoadBalancerTlsCertificate",
+        "AWS::Lightsail::StaticIp",
+        "AWS::Location::GeofenceCollection",
+        "AWS::Location::Map",
+        "AWS::Location::PlaceIndex",
+        "AWS::Location::RouteCalculator",
+        "AWS::Location::Tracker",
+        "AWS::Location::TrackerConsumer",
+        "AWS::Logs::Destination",
+        "AWS::Logs::LogGroup",
+        "AWS::Logs::LogStream",
+        "AWS::Logs::MetricFilter",
+        "AWS::Logs::QueryDefinition",
+        "AWS::Logs::ResourcePolicy",
+        "AWS::Logs::SubscriptionFilter",
+        "AWS::LookoutEquipment::InferenceScheduler",
+        "AWS::LookoutMetrics::Alert",
+        "AWS::LookoutMetrics::AnomalyDetector",
+        "AWS::LookoutVision::Project",
+        "AWS::M2::Application",
+        "AWS::M2::Environment",
+        "AWS::MSK::BatchScramSecret",
+        "AWS::MSK::Cluster",
+        "AWS::MSK::Configuration",
+        "AWS::MSK::ServerlessCluster",
+        "AWS::MWAA::Environment",
+        "AWS::Macie::AllowList",
+        "AWS::Macie::CustomDataIdentifier",
+        "AWS::Macie::FindingsFilter",
+        "AWS::Macie::Session",
+        "AWS::ManagedBlockchain::Accessor",
+        "AWS::ManagedBlockchain::Member",
+        "AWS::ManagedBlockchain::Node",
+        "AWS::MediaConnect::Flow",
+        "AWS::MediaConnect::FlowEntitlement",
+        "AWS::MediaConnect::FlowOutput",
+        "AWS::MediaConnect::FlowSource",
+        "AWS::MediaConnect::FlowVpcInterface",
+        "AWS::MediaConvert::JobTemplate",
+        "AWS::MediaConvert::Preset",
+        "AWS::MediaConvert::Queue",
+        "AWS::MediaLive::Channel",
+        "AWS::MediaLive::Input",
+        "AWS::MediaLive::InputSecurityGroup",
+        "AWS::MediaPackage::Asset",
+        "AWS::MediaPackage::Channel",
+        "AWS::MediaPackage::OriginEndpoint",
+        "AWS::MediaPackage::PackagingConfiguration",
+        "AWS::MediaPackage::PackagingGroup",
+        "AWS::MediaStore::Container",
+        "AWS::MediaTailor::PlaybackConfiguration",
+        "AWS::MemoryDB::ACL",
+        "AWS::MemoryDB::Cluster",
+        "AWS::MemoryDB::ParameterGroup",
+        "AWS::MemoryDB::SubnetGroup",
+        "AWS::MemoryDB::User",
+        "AWS::Neptune::DBCluster",
+        "AWS::Neptune::DBClusterParameterGroup",
+        "AWS::Neptune::DBInstance",
+        "AWS::Neptune::DBParameterGroup",
+        "AWS::Neptune::DBSubnetGroup",
+        "AWS::NetworkFirewall::Firewall",
+        "AWS::NetworkFirewall::FirewallPolicy",
+        "AWS::NetworkFirewall::LoggingConfiguration",
+        "AWS::NetworkFirewall::RuleGroup",
+        "AWS::NetworkManager::ConnectAttachment",
+        "AWS::NetworkManager::ConnectPeer",
+        "AWS::NetworkManager::CoreNetwork",
+        "AWS::NetworkManager::CustomerGatewayAssociation",
+        "AWS::NetworkManager::Device",
+        "AWS::NetworkManager::GlobalNetwork",
+        "AWS::NetworkManager::Link",
+        "AWS::NetworkManager::LinkAssociation",
+        "AWS::NetworkManager::Site",
+        "AWS::NetworkManager::SiteToSiteVpnAttachment",
+        "AWS::NetworkManager::TransitGatewayPeering",
+        "AWS::NetworkManager::TransitGatewayRegistration",
+        "AWS::NetworkManager::TransitGatewayRouteTableAttachment",
+        "AWS::NetworkManager::VpcAttachment",
+        "AWS::NimbleStudio::LaunchProfile",
+        "AWS::NimbleStudio::StreamingImage",
+        "AWS::NimbleStudio::Studio",
+        "AWS::NimbleStudio::StudioComponent",
+        "AWS::Oam::Link",
+        "AWS::Oam::Sink",
+        "AWS::Omics::AnnotationStore",
+        "AWS::Omics::ReferenceStore",
+        "AWS::Omics::RunGroup",
+        "AWS::Omics::SequenceStore",
+        "AWS::Omics::VariantStore",
+        "AWS::Omics::Workflow",
+        "AWS::OpenSearchServerless::AccessPolicy",
+        "AWS::OpenSearchServerless::Collection",
+        "AWS::OpenSearchServerless::SecurityConfig",
+        "AWS::OpenSearchServerless::SecurityPolicy",
+        "AWS::OpenSearchServerless::VpcEndpoint",
+        "AWS::OpenSearchService::Domain",
+        "AWS::OpsWorks::App",
+        "AWS::OpsWorks::ElasticLoadBalancerAttachment",
+        "AWS::OpsWorks::Instance",
+        "AWS::OpsWorks::Layer",
+        "AWS::OpsWorks::Stack",
+        "AWS::OpsWorks::UserProfile",
+        "AWS::OpsWorks::Volume",
+        "AWS::OpsWorksCM::Server",
+        "AWS::Organizations::Account",
+        "AWS::Organizations::OrganizationalUnit",
+        "AWS::Organizations::Policy",
+        "AWS::Organizations::ResourcePolicy",
+        "AWS::Panorama::ApplicationInstance",
+        "AWS::Panorama::Package",
+        "AWS::Panorama::PackageVersion",
+        "AWS::Personalize::Dataset",
+        "AWS::Personalize::DatasetGroup",
+        "AWS::Personalize::Schema",
+        "AWS::Personalize::Solution",
+        "AWS::Pinpoint::ADMChannel",
+        "AWS::Pinpoint::APNSChannel",
+        "AWS::Pinpoint::APNSSandboxChannel",
+        "AWS::Pinpoint::APNSVoipChannel",
+        "AWS::Pinpoint::APNSVoipSandboxChannel",
+        "AWS::Pinpoint::App",
+        "AWS::Pinpoint::ApplicationSettings",
+        "AWS::Pinpoint::BaiduChannel",
+        "AWS::Pinpoint::Campaign",
+        "AWS::Pinpoint::EmailChannel",
+        "AWS::Pinpoint::EmailTemplate",
+        "AWS::Pinpoint::EventStream",
+        "AWS::Pinpoint::GCMChannel",
+        "AWS::Pinpoint::InAppTemplate",
+        "AWS::Pinpoint::PushTemplate",
+        "AWS::Pinpoint::SMSChannel",
+        "AWS::Pinpoint::Segment",
+        "AWS::Pinpoint::SmsTemplate",
+        "AWS::Pinpoint::VoiceChannel",
+        "AWS::PinpointEmail::ConfigurationSet",
+        "AWS::PinpointEmail::ConfigurationSetEventDestination",
+        "AWS::PinpointEmail::DedicatedIpPool",
+        "AWS::PinpointEmail::Identity",
+        "AWS::Pipes::Pipe",
+        "AWS::QLDB::Ledger",
+        "AWS::QLDB::Stream",
+        "AWS::QuickSight::Analysis",
+        "AWS::QuickSight::Dashboard",
+        "AWS::QuickSight::DataSet",
+        "AWS::QuickSight::DataSource",
+        "AWS::QuickSight::Template",
+        "AWS::QuickSight::Theme",
+        "AWS::RAM::ResourceShare",
+        "AWS::RDS::DBCluster",
+        "AWS::RDS::DBClusterParameterGroup",
+        "AWS::RDS::DBInstance",
+        "AWS::RDS::DBParameterGroup",
+        "AWS::RDS::DBProxy",
+        "AWS::RDS::DBProxyEndpoint",
+        "AWS::RDS::DBProxyTargetGroup",
+        "AWS::RDS::DBSecurityGroup",
+        "AWS::RDS::DBSecurityGroupIngress",
+        "AWS::RDS::DBSubnetGroup",
+        "AWS::RDS::EventSubscription",
+        "AWS::RDS::GlobalCluster",
+        "AWS::RDS::OptionGroup",
+        "AWS::RUM::AppMonitor",
+        "AWS::Redshift::Cluster",
+        "AWS::Redshift::ClusterParameterGroup",
+        "AWS::Redshift::ClusterSecurityGroup",
+        "AWS::Redshift::ClusterSecurityGroupIngress",
+        "AWS::Redshift::ClusterSubnetGroup",
+        "AWS::Redshift::EndpointAccess",
+        "AWS::Redshift::EndpointAuthorization",
+        "AWS::Redshift::EventSubscription",
+        "AWS::Redshift::ScheduledAction",
+        "AWS::RedshiftServerless::Namespace",
+        "AWS::RedshiftServerless::Workgroup",
+        "AWS::RefactorSpaces::Application",
+        "AWS::RefactorSpaces::Environment",
+        "AWS::RefactorSpaces::Route",
+        "AWS::RefactorSpaces::Service",
+        "AWS::Rekognition::Collection",
+        "AWS::Rekognition::Project",
+        "AWS::Rekognition::StreamProcessor",
+        "AWS::ResilienceHub::App",
+        "AWS::ResilienceHub::ResiliencyPolicy",
+        "AWS::ResourceExplorer2::DefaultViewAssociation",
+        "AWS::ResourceExplorer2::Index",
+        "AWS::ResourceExplorer2::View",
+        "AWS::ResourceGroups::Group",
+        "AWS::RoboMaker::Fleet",
+        "AWS::RoboMaker::Robot",
+        "AWS::RoboMaker::RobotApplication",
+        "AWS::RoboMaker::RobotApplicationVersion",
+        "AWS::RoboMaker::SimulationApplication",
+        "AWS::RoboMaker::SimulationApplicationVersion",
+        "AWS::RolesAnywhere::CRL",
+        "AWS::RolesAnywhere::Profile",
+        "AWS::RolesAnywhere::TrustAnchor",
+        "AWS::Route53::CidrCollection",
+        "AWS::Route53::DNSSEC",
+        "AWS::Route53::HealthCheck",
+        "AWS::Route53::HostedZone",
+        "AWS::Route53::KeySigningKey",
+        "AWS::Route53::RecordSet",
+        "AWS::Route53::RecordSetGroup",
+        "AWS::Route53RecoveryControl::Cluster",
+        "AWS::Route53RecoveryControl::ControlPanel",
+        "AWS::Route53RecoveryControl::RoutingControl",
+        "AWS::Route53RecoveryControl::SafetyRule",
+        "AWS::Route53RecoveryReadiness::Cell",
+        "AWS::Route53RecoveryReadiness::ReadinessCheck",
+        "AWS::Route53RecoveryReadiness::RecoveryGroup",
+        "AWS::Route53RecoveryReadiness::ResourceSet",
+        "AWS::Route53Resolver::FirewallDomainList",
+        "AWS::Route53Resolver::FirewallRuleGroup",
+        "AWS::Route53Resolver::FirewallRuleGroupAssociation",
+        "AWS::Route53Resolver::ResolverConfig",
+        "AWS::Route53Resolver::ResolverDNSSECConfig",
+        "AWS::Route53Resolver::ResolverEndpoint",
+        "AWS::Route53Resolver::ResolverQueryLoggingConfig",
+        "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation",
+        "AWS::Route53Resolver::ResolverRule",
+        "AWS::Route53Resolver::ResolverRuleAssociation",
+        "AWS::S3::AccessPoint",
+        "AWS::S3::Bucket",
+        "AWS::S3::BucketPolicy",
+        "AWS::S3::MultiRegionAccessPoint",
+        "AWS::S3::MultiRegionAccessPointPolicy",
+        "AWS::S3::StorageLens",
+        "AWS::S3ObjectLambda::AccessPoint",
+        "AWS::S3ObjectLambda::AccessPointPolicy",
+        "AWS::S3Outposts::AccessPoint",
+        "AWS::S3Outposts::Bucket",
+        "AWS::S3Outposts::BucketPolicy",
+        "AWS::S3Outposts::Endpoint",
+        "AWS::SDB::Domain",
+        "AWS::SES::ConfigurationSet",
+        "AWS::SES::ConfigurationSetEventDestination",
+        "AWS::SES::ContactList",
+        "AWS::SES::DedicatedIpPool",
+        "AWS::SES::EmailIdentity",
+        "AWS::SES::ReceiptFilter",
+        "AWS::SES::ReceiptRule",
+        "AWS::SES::ReceiptRuleSet",
+        "AWS::SES::Template",
+        "AWS::SES::VdmAttributes",
+        "AWS::SNS::Subscription",
+        "AWS::SNS::Topic",
+        "AWS::SNS::TopicPolicy",
+        "AWS::SQS::Queue",
+        "AWS::SQS::QueuePolicy",
+        "AWS::SSM::Association",
+        "AWS::SSM::Document",
+        "AWS::SSM::MaintenanceWindow",
+        "AWS::SSM::MaintenanceWindowTarget",
+        "AWS::SSM::MaintenanceWindowTask",
+        "AWS::SSM::Parameter",
+        "AWS::SSM::PatchBaseline",
+        "AWS::SSM::ResourceDataSync",
+        "AWS::SSM::ResourcePolicy",
+        "AWS::SSMContacts::Contact",
+        "AWS::SSMContacts::ContactChannel",
+        "AWS::SSMIncidents::ReplicationSet",
+        "AWS::SSMIncidents::ResponsePlan",
+        "AWS::SSO::Assignment",
+        "AWS::SSO::InstanceAccessControlAttributeConfiguration",
+        "AWS::SSO::PermissionSet",
+        "AWS::SageMaker::App",
+        "AWS::SageMaker::AppImageConfig",
+        "AWS::SageMaker::CodeRepository",
+        "AWS::SageMaker::DataQualityJobDefinition",
+        "AWS::SageMaker::Device",
+        "AWS::SageMaker::DeviceFleet",
+        "AWS::SageMaker::Domain",
+        "AWS::SageMaker::Endpoint",
+        "AWS::SageMaker::EndpointConfig",
+        "AWS::SageMaker::FeatureGroup",
+        "AWS::SageMaker::Image",
+        "AWS::SageMaker::ImageVersion",
+        "AWS::SageMaker::InferenceExperiment",
+        "AWS::SageMaker::Model",
+        "AWS::SageMaker::ModelBiasJobDefinition",
+        "AWS::SageMaker::ModelCard",
+        "AWS::SageMaker::ModelExplainabilityJobDefinition",
+        "AWS::SageMaker::ModelPackage",
+        "AWS::SageMaker::ModelPackageGroup",
+        "AWS::SageMaker::ModelQualityJobDefinition",
+        "AWS::SageMaker::MonitoringSchedule",
+        "AWS::SageMaker::NotebookInstance",
+        "AWS::SageMaker::NotebookInstanceLifecycleConfig",
+        "AWS::SageMaker::Pipeline",
+        "AWS::SageMaker::Project",
+        "AWS::SageMaker::Space",
+        "AWS::SageMaker::UserProfile",
+        "AWS::SageMaker::Workteam",
+        "AWS::Scheduler::Schedule",
+        "AWS::Scheduler::ScheduleGroup",
+        "AWS::SecretsManager::ResourcePolicy",
+        "AWS::SecretsManager::RotationSchedule",
+        "AWS::SecretsManager::Secret",
+        "AWS::SecretsManager::SecretTargetAttachment",
+        "AWS::SecurityHub::Hub",
+        "AWS::Serverless::Api",
+        "AWS::Serverless::Application",
+        "AWS::Serverless::Function",
+        "AWS::Serverless::HttpApi",
+        "AWS::Serverless::LayerVersion",
+        "AWS::Serverless::SimpleTable",
+        "AWS::Serverless::StateMachine",
+        "AWS::ServiceCatalog::AcceptedPortfolioShare",
+        "AWS::ServiceCatalog::CloudFormationProduct",
+        "AWS::ServiceCatalog::CloudFormationProvisionedProduct",
+        "AWS::ServiceCatalog::LaunchNotificationConstraint",
+        "AWS::ServiceCatalog::LaunchRoleConstraint",
+        "AWS::ServiceCatalog::LaunchTemplateConstraint",
+        "AWS::ServiceCatalog::Portfolio",
+        "AWS::ServiceCatalog::PortfolioPrincipalAssociation",
+        "AWS::ServiceCatalog::PortfolioProductAssociation",
+        "AWS::ServiceCatalog::PortfolioShare",
+        "AWS::ServiceCatalog::ResourceUpdateConstraint",
+        "AWS::ServiceCatalog::ServiceAction",
+        "AWS::ServiceCatalog::ServiceActionAssociation",
+        "AWS::ServiceCatalog::StackSetConstraint",
+        "AWS::ServiceCatalog::TagOption",
+        "AWS::ServiceCatalog::TagOptionAssociation",
+        "AWS::ServiceCatalogAppRegistry::Application",
+        "AWS::ServiceCatalogAppRegistry::AttributeGroup",
+        "AWS::ServiceCatalogAppRegistry::AttributeGroupAssociation",
+        "AWS::ServiceCatalogAppRegistry::ResourceAssociation",
+        "AWS::ServiceDiscovery::HttpNamespace",
+        "AWS::ServiceDiscovery::Instance",
+        "AWS::ServiceDiscovery::PrivateDnsNamespace",
+        "AWS::ServiceDiscovery::PublicDnsNamespace",
+        "AWS::ServiceDiscovery::Service",
+        "AWS::Signer::ProfilePermission",
+        "AWS::Signer::SigningProfile",
+        "AWS::SimSpaceWeaver::Simulation",
+        "AWS::StepFunctions::Activity",
+        "AWS::StepFunctions::StateMachine",
+        "AWS::SupportApp::AccountAlias",
+        "AWS::SupportApp::SlackChannelConfiguration",
+        "AWS::SupportApp::SlackWorkspaceConfiguration",
+        "AWS::Synthetics::Canary",
+        "AWS::Synthetics::Group",
+        "AWS::SystemsManagerSAP::Application",
+        "AWS::Timestream::Database",
+        "AWS::Timestream::ScheduledQuery",
+        "AWS::Timestream::Table",
+        "AWS::Transfer::Agreement",
+        "AWS::Transfer::Certificate",
+        "AWS::Transfer::Connector",
+        "AWS::Transfer::Profile",
+        "AWS::Transfer::Server",
+        "AWS::Transfer::User",
+        "AWS::Transfer::Workflow",
+        "AWS::VoiceID::Domain",
+        "AWS::VpcLattice::AccessLogSubscription",
+        "AWS::VpcLattice::AuthPolicy",
+        "AWS::VpcLattice::Listener",
+        "AWS::VpcLattice::ResourcePolicy",
+        "AWS::VpcLattice::Rule",
+        "AWS::VpcLattice::Service",
+        "AWS::VpcLattice::ServiceNetwork",
+        "AWS::VpcLattice::ServiceNetworkServiceAssociation",
+        "AWS::VpcLattice::ServiceNetworkVpcAssociation",
+        "AWS::VpcLattice::TargetGroup",
+        "AWS::WAF::ByteMatchSet",
+        "AWS::WAF::IPSet",
+        "AWS::WAF::Rule",
+        "AWS::WAF::SizeConstraintSet",
+        "AWS::WAF::SqlInjectionMatchSet",
+        "AWS::WAF::WebACL",
+        "AWS::WAF::XssMatchSet",
+        "AWS::WAFRegional::ByteMatchSet",
+        "AWS::WAFRegional::GeoMatchSet",
+        "AWS::WAFRegional::IPSet",
+        "AWS::WAFRegional::RateBasedRule",
+        "AWS::WAFRegional::RegexPatternSet",
+        "AWS::WAFRegional::Rule",
+        "AWS::WAFRegional::SizeConstraintSet",
+        "AWS::WAFRegional::SqlInjectionMatchSet",
+        "AWS::WAFRegional::WebACL",
+        "AWS::WAFRegional::WebACLAssociation",
+        "AWS::WAFRegional::XssMatchSet",
+        "AWS::WAFv2::IPSet",
+        "AWS::WAFv2::LoggingConfiguration",
+        "AWS::WAFv2::RegexPatternSet",
+        "AWS::WAFv2::RuleGroup",
+        "AWS::WAFv2::WebACL",
+        "AWS::WAFv2::WebACLAssociation",
+        "AWS::Wisdom::Assistant",
+        "AWS::Wisdom::AssistantAssociation",
+        "AWS::Wisdom::KnowledgeBase",
+        "AWS::WorkSpaces::ConnectionAlias",
+        "AWS::WorkSpaces::Workspace",
+        "AWS::XRay::Group",
+        "AWS::XRay::ResourcePolicy",
+        "AWS::XRay::SamplingRule",
+        "Alexa::ASK::Skill"
+    ];
+    type ResourceType = (typeof ResourceTypes)[number];
+    const ServiceResourceDictionary: {
+        readonly ACMPCA: {
+            readonly Certificate: "AWS::ACMPCA::Certificate";
+            readonly CertificateAuthority: "AWS::ACMPCA::CertificateAuthority";
+            readonly CertificateAuthorityActivation: "AWS::ACMPCA::CertificateAuthorityActivation";
+            readonly Permission: "AWS::ACMPCA::Permission";
+        };
+        readonly APS: {
+            readonly RuleGroupsNamespace: "AWS::APS::RuleGroupsNamespace";
+            readonly Workspace: "AWS::APS::Workspace";
+        };
+        readonly AccessAnalyzer: {
+            readonly Analyzer: "AWS::AccessAnalyzer::Analyzer";
+        };
+        readonly AmazonMQ: {
+            readonly Broker: "AWS::AmazonMQ::Broker";
+            readonly Configuration: "AWS::AmazonMQ::Configuration";
+            readonly ConfigurationAssociation: "AWS::AmazonMQ::ConfigurationAssociation";
+        };
+        readonly Amplify: {
+            readonly App: "AWS::Amplify::App";
+            readonly Branch: "AWS::Amplify::Branch";
+            readonly Domain: "AWS::Amplify::Domain";
+        };
+        readonly AmplifyUIBuilder: {
+            readonly Component: "AWS::AmplifyUIBuilder::Component";
+            readonly Form: "AWS::AmplifyUIBuilder::Form";
+            readonly Theme: "AWS::AmplifyUIBuilder::Theme";
+        };
+        readonly ApiGateway: {
+            readonly Account: "AWS::ApiGateway::Account";
+            readonly ApiKey: "AWS::ApiGateway::ApiKey";
+            readonly Authorizer: "AWS::ApiGateway::Authorizer";
+            readonly BasePathMapping: "AWS::ApiGateway::BasePathMapping";
+            readonly ClientCertificate: "AWS::ApiGateway::ClientCertificate";
+            readonly Deployment: "AWS::ApiGateway::Deployment";
+            readonly DocumentationPart: "AWS::ApiGateway::DocumentationPart";
+            readonly DocumentationVersion: "AWS::ApiGateway::DocumentationVersion";
+            readonly DomainName: "AWS::ApiGateway::DomainName";
+            readonly GatewayResponse: "AWS::ApiGateway::GatewayResponse";
+            readonly Method: "AWS::ApiGateway::Method";
+            readonly Model: "AWS::ApiGateway::Model";
+            readonly RequestValidator: "AWS::ApiGateway::RequestValidator";
+            readonly Resource: "AWS::ApiGateway::Resource";
+            readonly RestApi: "AWS::ApiGateway::RestApi";
+            readonly Stage: "AWS::ApiGateway::Stage";
+            readonly UsagePlan: "AWS::ApiGateway::UsagePlan";
+            readonly UsagePlanKey: "AWS::ApiGateway::UsagePlanKey";
+            readonly VpcLink: "AWS::ApiGateway::VpcLink";
+        };
+        readonly ApiGatewayV2: {
+            readonly Api: "AWS::ApiGatewayV2::Api";
+            readonly ApiGatewayManagedOverrides: "AWS::ApiGatewayV2::ApiGatewayManagedOverrides";
+            readonly ApiMapping: "AWS::ApiGatewayV2::ApiMapping";
+            readonly Authorizer: "AWS::ApiGatewayV2::Authorizer";
+            readonly Deployment: "AWS::ApiGatewayV2::Deployment";
+            readonly DomainName: "AWS::ApiGatewayV2::DomainName";
+            readonly Integration: "AWS::ApiGatewayV2::Integration";
+            readonly IntegrationResponse: "AWS::ApiGatewayV2::IntegrationResponse";
+            readonly Model: "AWS::ApiGatewayV2::Model";
+            readonly Route: "AWS::ApiGatewayV2::Route";
+            readonly RouteResponse: "AWS::ApiGatewayV2::RouteResponse";
+            readonly Stage: "AWS::ApiGatewayV2::Stage";
+            readonly VpcLink: "AWS::ApiGatewayV2::VpcLink";
+        };
+        readonly AppConfig: {
+            readonly Application: "AWS::AppConfig::Application";
+            readonly ConfigurationProfile: "AWS::AppConfig::ConfigurationProfile";
+            readonly Deployment: "AWS::AppConfig::Deployment";
+            readonly DeploymentStrategy: "AWS::AppConfig::DeploymentStrategy";
+            readonly Environment: "AWS::AppConfig::Environment";
+            readonly HostedConfigurationVersion: "AWS::AppConfig::HostedConfigurationVersion";
+        };
+        readonly AppFlow: {
+            readonly Connector: "AWS::AppFlow::Connector";
+            readonly ConnectorProfile: "AWS::AppFlow::ConnectorProfile";
+            readonly Flow: "AWS::AppFlow::Flow";
+        };
+        readonly AppIntegrations: {
+            readonly DataIntegration: "AWS::AppIntegrations::DataIntegration";
+            readonly EventIntegration: "AWS::AppIntegrations::EventIntegration";
+        };
+        readonly AppMesh: {
+            readonly GatewayRoute: "AWS::AppMesh::GatewayRoute";
+            readonly Mesh: "AWS::AppMesh::Mesh";
+            readonly Route: "AWS::AppMesh::Route";
+            readonly VirtualGateway: "AWS::AppMesh::VirtualGateway";
+            readonly VirtualNode: "AWS::AppMesh::VirtualNode";
+            readonly VirtualRouter: "AWS::AppMesh::VirtualRouter";
+            readonly VirtualService: "AWS::AppMesh::VirtualService";
+        };
+        readonly AppRunner: {
+            readonly ObservabilityConfiguration: "AWS::AppRunner::ObservabilityConfiguration";
+            readonly Service: "AWS::AppRunner::Service";
+            readonly VpcConnector: "AWS::AppRunner::VpcConnector";
+            readonly VpcIngressConnection: "AWS::AppRunner::VpcIngressConnection";
+        };
+        readonly AppStream: {
+            readonly AppBlock: "AWS::AppStream::AppBlock";
+            readonly Application: "AWS::AppStream::Application";
+            readonly ApplicationEntitlementAssociation: "AWS::AppStream::ApplicationEntitlementAssociation";
+            readonly ApplicationFleetAssociation: "AWS::AppStream::ApplicationFleetAssociation";
+            readonly DirectoryConfig: "AWS::AppStream::DirectoryConfig";
+            readonly Entitlement: "AWS::AppStream::Entitlement";
+            readonly Fleet: "AWS::AppStream::Fleet";
+            readonly ImageBuilder: "AWS::AppStream::ImageBuilder";
+            readonly Stack: "AWS::AppStream::Stack";
+            readonly StackFleetAssociation: "AWS::AppStream::StackFleetAssociation";
+            readonly StackUserAssociation: "AWS::AppStream::StackUserAssociation";
+            readonly User: "AWS::AppStream::User";
+        };
+        readonly AppSync: {
+            readonly ApiCache: "AWS::AppSync::ApiCache";
+            readonly ApiKey: "AWS::AppSync::ApiKey";
+            readonly DataSource: "AWS::AppSync::DataSource";
+            readonly DomainName: "AWS::AppSync::DomainName";
+            readonly DomainNameApiAssociation: "AWS::AppSync::DomainNameApiAssociation";
+            readonly FunctionConfiguration: "AWS::AppSync::FunctionConfiguration";
+            readonly GraphQLApi: "AWS::AppSync::GraphQLApi";
+            readonly GraphQLSchema: "AWS::AppSync::GraphQLSchema";
+            readonly Resolver: "AWS::AppSync::Resolver";
+        };
+        readonly ApplicationAutoScaling: {
+            readonly ScalableTarget: "AWS::ApplicationAutoScaling::ScalableTarget";
+            readonly ScalingPolicy: "AWS::ApplicationAutoScaling::ScalingPolicy";
+        };
+        readonly ApplicationInsights: {
+            readonly Application: "AWS::ApplicationInsights::Application";
+        };
+        readonly Athena: {
+            readonly DataCatalog: "AWS::Athena::DataCatalog";
+            readonly NamedQuery: "AWS::Athena::NamedQuery";
+            readonly PreparedStatement: "AWS::Athena::PreparedStatement";
+            readonly WorkGroup: "AWS::Athena::WorkGroup";
+        };
+        readonly AuditManager: {
+            readonly Assessment: "AWS::AuditManager::Assessment";
+        };
+        readonly AutoScaling: {
+            readonly AutoScalingGroup: "AWS::AutoScaling::AutoScalingGroup";
+            readonly LaunchConfiguration: "AWS::AutoScaling::LaunchConfiguration";
+            readonly LifecycleHook: "AWS::AutoScaling::LifecycleHook";
+            readonly ScalingPolicy: "AWS::AutoScaling::ScalingPolicy";
+            readonly ScheduledAction: "AWS::AutoScaling::ScheduledAction";
+            readonly WarmPool: "AWS::AutoScaling::WarmPool";
+        };
+        readonly AutoScalingPlans: {
+            readonly ScalingPlan: "AWS::AutoScalingPlans::ScalingPlan";
+        };
+        readonly Backup: {
+            readonly BackupPlan: "AWS::Backup::BackupPlan";
+            readonly BackupSelection: "AWS::Backup::BackupSelection";
+            readonly BackupVault: "AWS::Backup::BackupVault";
+            readonly Framework: "AWS::Backup::Framework";
+            readonly ReportPlan: "AWS::Backup::ReportPlan";
+        };
+        readonly Batch: {
+            readonly ComputeEnvironment: "AWS::Batch::ComputeEnvironment";
+            readonly JobDefinition: "AWS::Batch::JobDefinition";
+            readonly JobQueue: "AWS::Batch::JobQueue";
+            readonly SchedulingPolicy: "AWS::Batch::SchedulingPolicy";
+        };
+        readonly BillingConductor: {
+            readonly BillingGroup: "AWS::BillingConductor::BillingGroup";
+            readonly CustomLineItem: "AWS::BillingConductor::CustomLineItem";
+            readonly PricingPlan: "AWS::BillingConductor::PricingPlan";
+            readonly PricingRule: "AWS::BillingConductor::PricingRule";
+        };
+        readonly Budgets: {
+            readonly Budget: "AWS::Budgets::Budget";
+            readonly BudgetsAction: "AWS::Budgets::BudgetsAction";
+        };
+        readonly CE: {
+            readonly AnomalyMonitor: "AWS::CE::AnomalyMonitor";
+            readonly AnomalySubscription: "AWS::CE::AnomalySubscription";
+            readonly CostCategory: "AWS::CE::CostCategory";
+        };
+        readonly CUR: {
+            readonly ReportDefinition: "AWS::CUR::ReportDefinition";
+        };
+        readonly Cassandra: {
+            readonly Keyspace: "AWS::Cassandra::Keyspace";
+            readonly Table: "AWS::Cassandra::Table";
+        };
+        readonly CertificateManager: {
+            readonly Account: "AWS::CertificateManager::Account";
+            readonly Certificate: "AWS::CertificateManager::Certificate";
+        };
+        readonly Chatbot: {
+            readonly MicrosoftTeamsChannelConfiguration: "AWS::Chatbot::MicrosoftTeamsChannelConfiguration";
+            readonly SlackChannelConfiguration: "AWS::Chatbot::SlackChannelConfiguration";
+        };
+        readonly Cloud9: {
+            readonly EnvironmentEC2: "AWS::Cloud9::EnvironmentEC2";
+        };
+        readonly CloudFormation: {
+            readonly CustomResource: "AWS::CloudFormation::CustomResource";
+            readonly HookDefaultVersion: "AWS::CloudFormation::HookDefaultVersion";
+            readonly HookTypeConfig: "AWS::CloudFormation::HookTypeConfig";
+            readonly HookVersion: "AWS::CloudFormation::HookVersion";
+            readonly Macro: "AWS::CloudFormation::Macro";
+            readonly ModuleDefaultVersion: "AWS::CloudFormation::ModuleDefaultVersion";
+            readonly ModuleVersion: "AWS::CloudFormation::ModuleVersion";
+            readonly PublicTypeVersion: "AWS::CloudFormation::PublicTypeVersion";
+            readonly Publisher: "AWS::CloudFormation::Publisher";
+            readonly ResourceDefaultVersion: "AWS::CloudFormation::ResourceDefaultVersion";
+            readonly ResourceVersion: "AWS::CloudFormation::ResourceVersion";
+            readonly Stack: "AWS::CloudFormation::Stack";
+            readonly StackSet: "AWS::CloudFormation::StackSet";
+            readonly TypeActivation: "AWS::CloudFormation::TypeActivation";
+            readonly WaitCondition: "AWS::CloudFormation::WaitCondition";
+            readonly WaitConditionHandle: "AWS::CloudFormation::WaitConditionHandle";
+        };
+        readonly CloudFront: {
+            readonly CachePolicy: "AWS::CloudFront::CachePolicy";
+            readonly CloudFrontOriginAccessIdentity: "AWS::CloudFront::CloudFrontOriginAccessIdentity";
+            readonly ContinuousDeploymentPolicy: "AWS::CloudFront::ContinuousDeploymentPolicy";
+            readonly Distribution: "AWS::CloudFront::Distribution";
+            readonly Function: "AWS::CloudFront::Function";
+            readonly KeyGroup: "AWS::CloudFront::KeyGroup";
+            readonly MonitoringSubscription: "AWS::CloudFront::MonitoringSubscription";
+            readonly OriginAccessControl: "AWS::CloudFront::OriginAccessControl";
+            readonly OriginRequestPolicy: "AWS::CloudFront::OriginRequestPolicy";
+            readonly PublicKey: "AWS::CloudFront::PublicKey";
+            readonly RealtimeLogConfig: "AWS::CloudFront::RealtimeLogConfig";
+            readonly ResponseHeadersPolicy: "AWS::CloudFront::ResponseHeadersPolicy";
+            readonly StreamingDistribution: "AWS::CloudFront::StreamingDistribution";
+        };
+        readonly CloudTrail: {
+            readonly Channel: "AWS::CloudTrail::Channel";
+            readonly EventDataStore: "AWS::CloudTrail::EventDataStore";
+            readonly ResourcePolicy: "AWS::CloudTrail::ResourcePolicy";
+            readonly Trail: "AWS::CloudTrail::Trail";
+        };
+        readonly CloudWatch: {
+            readonly Alarm: "AWS::CloudWatch::Alarm";
+            readonly AnomalyDetector: "AWS::CloudWatch::AnomalyDetector";
+            readonly CompositeAlarm: "AWS::CloudWatch::CompositeAlarm";
+            readonly Dashboard: "AWS::CloudWatch::Dashboard";
+            readonly InsightRule: "AWS::CloudWatch::InsightRule";
+            readonly MetricStream: "AWS::CloudWatch::MetricStream";
+        };
+        readonly CodeArtifact: {
+            readonly Domain: "AWS::CodeArtifact::Domain";
+            readonly Repository: "AWS::CodeArtifact::Repository";
+        };
+        readonly CodeBuild: {
+            readonly Project: "AWS::CodeBuild::Project";
+            readonly ReportGroup: "AWS::CodeBuild::ReportGroup";
+            readonly SourceCredential: "AWS::CodeBuild::SourceCredential";
+        };
+        readonly CodeCommit: {
+            readonly Repository: "AWS::CodeCommit::Repository";
+        };
+        readonly CodeDeploy: {
+            readonly Application: "AWS::CodeDeploy::Application";
+            readonly DeploymentConfig: "AWS::CodeDeploy::DeploymentConfig";
+            readonly DeploymentGroup: "AWS::CodeDeploy::DeploymentGroup";
+        };
+        readonly CodeGuruProfiler: {
+            readonly ProfilingGroup: "AWS::CodeGuruProfiler::ProfilingGroup";
+        };
+        readonly CodeGuruReviewer: {
+            readonly RepositoryAssociation: "AWS::CodeGuruReviewer::RepositoryAssociation";
+        };
+        readonly CodePipeline: {
+            readonly CustomActionType: "AWS::CodePipeline::CustomActionType";
+            readonly Pipeline: "AWS::CodePipeline::Pipeline";
+            readonly Webhook: "AWS::CodePipeline::Webhook";
+        };
+        readonly CodeStar: {
+            readonly GitHubRepository: "AWS::CodeStar::GitHubRepository";
+        };
+        readonly CodeStarConnections: {
+            readonly Connection: "AWS::CodeStarConnections::Connection";
+        };
+        readonly CodeStarNotifications: {
+            readonly NotificationRule: "AWS::CodeStarNotifications::NotificationRule";
+        };
+        readonly Cognito: {
+            readonly IdentityPool: "AWS::Cognito::IdentityPool";
+            readonly IdentityPoolRoleAttachment: "AWS::Cognito::IdentityPoolRoleAttachment";
+            readonly UserPool: "AWS::Cognito::UserPool";
+            readonly UserPoolClient: "AWS::Cognito::UserPoolClient";
+            readonly UserPoolDomain: "AWS::Cognito::UserPoolDomain";
+            readonly UserPoolGroup: "AWS::Cognito::UserPoolGroup";
+            readonly UserPoolIdentityProvider: "AWS::Cognito::UserPoolIdentityProvider";
+            readonly UserPoolResourceServer: "AWS::Cognito::UserPoolResourceServer";
+            readonly UserPoolRiskConfigurationAttachment: "AWS::Cognito::UserPoolRiskConfigurationAttachment";
+            readonly UserPoolUICustomizationAttachment: "AWS::Cognito::UserPoolUICustomizationAttachment";
+            readonly UserPoolUser: "AWS::Cognito::UserPoolUser";
+            readonly UserPoolUserToGroupAttachment: "AWS::Cognito::UserPoolUserToGroupAttachment";
+        };
+        readonly Comprehend: {
+            readonly Flywheel: "AWS::Comprehend::Flywheel";
+        };
+        readonly Config: {
+            readonly AggregationAuthorization: "AWS::Config::AggregationAuthorization";
+            readonly ConfigRule: "AWS::Config::ConfigRule";
+            readonly ConfigurationAggregator: "AWS::Config::ConfigurationAggregator";
+            readonly ConfigurationRecorder: "AWS::Config::ConfigurationRecorder";
+            readonly ConformancePack: "AWS::Config::ConformancePack";
+            readonly DeliveryChannel: "AWS::Config::DeliveryChannel";
+            readonly OrganizationConfigRule: "AWS::Config::OrganizationConfigRule";
+            readonly OrganizationConformancePack: "AWS::Config::OrganizationConformancePack";
+            readonly RemediationConfiguration: "AWS::Config::RemediationConfiguration";
+            readonly StoredQuery: "AWS::Config::StoredQuery";
+        };
+        readonly Connect: {
+            readonly ApprovedOrigin: "AWS::Connect::ApprovedOrigin";
+            readonly ContactFlow: "AWS::Connect::ContactFlow";
+            readonly ContactFlowModule: "AWS::Connect::ContactFlowModule";
+            readonly HoursOfOperation: "AWS::Connect::HoursOfOperation";
+            readonly Instance: "AWS::Connect::Instance";
+            readonly InstanceStorageConfig: "AWS::Connect::InstanceStorageConfig";
+            readonly IntegrationAssociation: "AWS::Connect::IntegrationAssociation";
+            readonly PhoneNumber: "AWS::Connect::PhoneNumber";
+            readonly QuickConnect: "AWS::Connect::QuickConnect";
+            readonly Rule: "AWS::Connect::Rule";
+            readonly SecurityKey: "AWS::Connect::SecurityKey";
+            readonly TaskTemplate: "AWS::Connect::TaskTemplate";
+            readonly User: "AWS::Connect::User";
+            readonly UserHierarchyGroup: "AWS::Connect::UserHierarchyGroup";
+        };
+        readonly ConnectCampaigns: {
+            readonly Campaign: "AWS::ConnectCampaigns::Campaign";
+        };
+        readonly ControlTower: {
+            readonly EnabledControl: "AWS::ControlTower::EnabledControl";
+        };
+        readonly CustomerProfiles: {
+            readonly Domain: "AWS::CustomerProfiles::Domain";
+            readonly Integration: "AWS::CustomerProfiles::Integration";
+            readonly ObjectType: "AWS::CustomerProfiles::ObjectType";
+        };
+        readonly DAX: {
+            readonly Cluster: "AWS::DAX::Cluster";
+            readonly ParameterGroup: "AWS::DAX::ParameterGroup";
+            readonly SubnetGroup: "AWS::DAX::SubnetGroup";
+        };
+        readonly DLM: {
+            readonly LifecyclePolicy: "AWS::DLM::LifecyclePolicy";
+        };
+        readonly DMS: {
+            readonly Certificate: "AWS::DMS::Certificate";
+            readonly Endpoint: "AWS::DMS::Endpoint";
+            readonly EventSubscription: "AWS::DMS::EventSubscription";
+            readonly ReplicationInstance: "AWS::DMS::ReplicationInstance";
+            readonly ReplicationSubnetGroup: "AWS::DMS::ReplicationSubnetGroup";
+            readonly ReplicationTask: "AWS::DMS::ReplicationTask";
+        };
+        readonly DataBrew: {
+            readonly Dataset: "AWS::DataBrew::Dataset";
+            readonly Job: "AWS::DataBrew::Job";
+            readonly Project: "AWS::DataBrew::Project";
+            readonly Recipe: "AWS::DataBrew::Recipe";
+            readonly Ruleset: "AWS::DataBrew::Ruleset";
+            readonly Schedule: "AWS::DataBrew::Schedule";
+        };
+        readonly DataPipeline: {
+            readonly Pipeline: "AWS::DataPipeline::Pipeline";
+        };
+        readonly DataSync: {
+            readonly Agent: "AWS::DataSync::Agent";
+            readonly LocationEFS: "AWS::DataSync::LocationEFS";
+            readonly LocationFSxLustre: "AWS::DataSync::LocationFSxLustre";
+            readonly LocationFSxONTAP: "AWS::DataSync::LocationFSxONTAP";
+            readonly LocationFSxOpenZFS: "AWS::DataSync::LocationFSxOpenZFS";
+            readonly LocationFSxWindows: "AWS::DataSync::LocationFSxWindows";
+            readonly LocationHDFS: "AWS::DataSync::LocationHDFS";
+            readonly LocationNFS: "AWS::DataSync::LocationNFS";
+            readonly LocationObjectStorage: "AWS::DataSync::LocationObjectStorage";
+            readonly LocationS3: "AWS::DataSync::LocationS3";
+            readonly LocationSMB: "AWS::DataSync::LocationSMB";
+            readonly Task: "AWS::DataSync::Task";
+        };
+        readonly Detective: {
+            readonly Graph: "AWS::Detective::Graph";
+            readonly MemberInvitation: "AWS::Detective::MemberInvitation";
+        };
+        readonly DevOpsGuru: {
+            readonly NotificationChannel: "AWS::DevOpsGuru::NotificationChannel";
+            readonly ResourceCollection: "AWS::DevOpsGuru::ResourceCollection";
+        };
+        readonly DeviceFarm: {
+            readonly DevicePool: "AWS::DeviceFarm::DevicePool";
+            readonly InstanceProfile: "AWS::DeviceFarm::InstanceProfile";
+            readonly NetworkProfile: "AWS::DeviceFarm::NetworkProfile";
+            readonly Project: "AWS::DeviceFarm::Project";
+            readonly TestGridProject: "AWS::DeviceFarm::TestGridProject";
+            readonly VPCEConfiguration: "AWS::DeviceFarm::VPCEConfiguration";
+        };
+        readonly DirectoryService: {
+            readonly MicrosoftAD: "AWS::DirectoryService::MicrosoftAD";
+            readonly SimpleAD: "AWS::DirectoryService::SimpleAD";
+        };
+        readonly DocDB: {
+            readonly DBCluster: "AWS::DocDB::DBCluster";
+            readonly DBClusterParameterGroup: "AWS::DocDB::DBClusterParameterGroup";
+            readonly DBInstance: "AWS::DocDB::DBInstance";
+            readonly DBSubnetGroup: "AWS::DocDB::DBSubnetGroup";
+        };
+        readonly DocDBElastic: {
+            readonly Cluster: "AWS::DocDBElastic::Cluster";
+        };
+        readonly DynamoDB: {
+            readonly GlobalTable: "AWS::DynamoDB::GlobalTable";
+            readonly Table: "AWS::DynamoDB::Table";
+        };
+        readonly EC2: {
+            readonly CapacityReservation: "AWS::EC2::CapacityReservation";
+            readonly CapacityReservationFleet: "AWS::EC2::CapacityReservationFleet";
+            readonly CarrierGateway: "AWS::EC2::CarrierGateway";
+            readonly ClientVpnAuthorizationRule: "AWS::EC2::ClientVpnAuthorizationRule";
+            readonly ClientVpnEndpoint: "AWS::EC2::ClientVpnEndpoint";
+            readonly ClientVpnRoute: "AWS::EC2::ClientVpnRoute";
+            readonly ClientVpnTargetNetworkAssociation: "AWS::EC2::ClientVpnTargetNetworkAssociation";
+            readonly CustomerGateway: "AWS::EC2::CustomerGateway";
+            readonly DHCPOptions: "AWS::EC2::DHCPOptions";
+            readonly EC2Fleet: "AWS::EC2::EC2Fleet";
+            readonly EIP: "AWS::EC2::EIP";
+            readonly EIPAssociation: "AWS::EC2::EIPAssociation";
+            readonly EgressOnlyInternetGateway: "AWS::EC2::EgressOnlyInternetGateway";
+            readonly EnclaveCertificateIamRoleAssociation: "AWS::EC2::EnclaveCertificateIamRoleAssociation";
+            readonly FlowLog: "AWS::EC2::FlowLog";
+            readonly GatewayRouteTableAssociation: "AWS::EC2::GatewayRouteTableAssociation";
+            readonly Host: "AWS::EC2::Host";
+            readonly IPAM: "AWS::EC2::IPAM";
+            readonly IPAMAllocation: "AWS::EC2::IPAMAllocation";
+            readonly IPAMPool: "AWS::EC2::IPAMPool";
+            readonly IPAMPoolCidr: "AWS::EC2::IPAMPoolCidr";
+            readonly IPAMResourceDiscovery: "AWS::EC2::IPAMResourceDiscovery";
+            readonly IPAMResourceDiscoveryAssociation: "AWS::EC2::IPAMResourceDiscoveryAssociation";
+            readonly IPAMScope: "AWS::EC2::IPAMScope";
+            readonly Instance: "AWS::EC2::Instance";
+            readonly InternetGateway: "AWS::EC2::InternetGateway";
+            readonly KeyPair: "AWS::EC2::KeyPair";
+            readonly LaunchTemplate: "AWS::EC2::LaunchTemplate";
+            readonly LocalGatewayRoute: "AWS::EC2::LocalGatewayRoute";
+            readonly LocalGatewayRouteTable: "AWS::EC2::LocalGatewayRouteTable";
+            readonly LocalGatewayRouteTableVPCAssociation: "AWS::EC2::LocalGatewayRouteTableVPCAssociation";
+            readonly LocalGatewayRouteTableVirtualInterfaceGroupAssociation: "AWS::EC2::LocalGatewayRouteTableVirtualInterfaceGroupAssociation";
+            readonly NatGateway: "AWS::EC2::NatGateway";
+            readonly NetworkAcl: "AWS::EC2::NetworkAcl";
+            readonly NetworkAclEntry: "AWS::EC2::NetworkAclEntry";
+            readonly NetworkInsightsAccessScope: "AWS::EC2::NetworkInsightsAccessScope";
+            readonly NetworkInsightsAccessScopeAnalysis: "AWS::EC2::NetworkInsightsAccessScopeAnalysis";
+            readonly NetworkInsightsAnalysis: "AWS::EC2::NetworkInsightsAnalysis";
+            readonly NetworkInsightsPath: "AWS::EC2::NetworkInsightsPath";
+            readonly NetworkInterface: "AWS::EC2::NetworkInterface";
+            readonly NetworkInterfaceAttachment: "AWS::EC2::NetworkInterfaceAttachment";
+            readonly NetworkInterfacePermission: "AWS::EC2::NetworkInterfacePermission";
+            readonly NetworkPerformanceMetricSubscription: "AWS::EC2::NetworkPerformanceMetricSubscription";
+            readonly PlacementGroup: "AWS::EC2::PlacementGroup";
+            readonly PrefixList: "AWS::EC2::PrefixList";
+            readonly Route: "AWS::EC2::Route";
+            readonly RouteTable: "AWS::EC2::RouteTable";
+            readonly SecurityGroup: "AWS::EC2::SecurityGroup";
+            readonly SecurityGroupEgress: "AWS::EC2::SecurityGroupEgress";
+            readonly SecurityGroupIngress: "AWS::EC2::SecurityGroupIngress";
+            readonly SpotFleet: "AWS::EC2::SpotFleet";
+            readonly Subnet: "AWS::EC2::Subnet";
+            readonly SubnetCidrBlock: "AWS::EC2::SubnetCidrBlock";
+            readonly SubnetNetworkAclAssociation: "AWS::EC2::SubnetNetworkAclAssociation";
+            readonly SubnetRouteTableAssociation: "AWS::EC2::SubnetRouteTableAssociation";
+            readonly TrafficMirrorFilter: "AWS::EC2::TrafficMirrorFilter";
+            readonly TrafficMirrorFilterRule: "AWS::EC2::TrafficMirrorFilterRule";
+            readonly TrafficMirrorSession: "AWS::EC2::TrafficMirrorSession";
+            readonly TrafficMirrorTarget: "AWS::EC2::TrafficMirrorTarget";
+            readonly TransitGateway: "AWS::EC2::TransitGateway";
+            readonly TransitGatewayAttachment: "AWS::EC2::TransitGatewayAttachment";
+            readonly TransitGatewayConnect: "AWS::EC2::TransitGatewayConnect";
+            readonly TransitGatewayMulticastDomain: "AWS::EC2::TransitGatewayMulticastDomain";
+            readonly TransitGatewayMulticastDomainAssociation: "AWS::EC2::TransitGatewayMulticastDomainAssociation";
+            readonly TransitGatewayMulticastGroupMember: "AWS::EC2::TransitGatewayMulticastGroupMember";
+            readonly TransitGatewayMulticastGroupSource: "AWS::EC2::TransitGatewayMulticastGroupSource";
+            readonly TransitGatewayPeeringAttachment: "AWS::EC2::TransitGatewayPeeringAttachment";
+            readonly TransitGatewayRoute: "AWS::EC2::TransitGatewayRoute";
+            readonly TransitGatewayRouteTable: "AWS::EC2::TransitGatewayRouteTable";
+            readonly TransitGatewayRouteTableAssociation: "AWS::EC2::TransitGatewayRouteTableAssociation";
+            readonly TransitGatewayRouteTablePropagation: "AWS::EC2::TransitGatewayRouteTablePropagation";
+            readonly TransitGatewayVpcAttachment: "AWS::EC2::TransitGatewayVpcAttachment";
+            readonly VPC: "AWS::EC2::VPC";
+            readonly VPCCidrBlock: "AWS::EC2::VPCCidrBlock";
+            readonly VPCDHCPOptionsAssociation: "AWS::EC2::VPCDHCPOptionsAssociation";
+            readonly VPCEndpoint: "AWS::EC2::VPCEndpoint";
+            readonly VPCEndpointConnectionNotification: "AWS::EC2::VPCEndpointConnectionNotification";
+            readonly VPCEndpointService: "AWS::EC2::VPCEndpointService";
+            readonly VPCEndpointServicePermissions: "AWS::EC2::VPCEndpointServicePermissions";
+            readonly VPCGatewayAttachment: "AWS::EC2::VPCGatewayAttachment";
+            readonly VPCPeeringConnection: "AWS::EC2::VPCPeeringConnection";
+            readonly VPNConnection: "AWS::EC2::VPNConnection";
+            readonly VPNConnectionRoute: "AWS::EC2::VPNConnectionRoute";
+            readonly VPNGateway: "AWS::EC2::VPNGateway";
+            readonly VPNGatewayRoutePropagation: "AWS::EC2::VPNGatewayRoutePropagation";
+            readonly Volume: "AWS::EC2::Volume";
+            readonly VolumeAttachment: "AWS::EC2::VolumeAttachment";
+        };
+        readonly ECR: {
+            readonly PublicRepository: "AWS::ECR::PublicRepository";
+            readonly PullThroughCacheRule: "AWS::ECR::PullThroughCacheRule";
+            readonly RegistryPolicy: "AWS::ECR::RegistryPolicy";
+            readonly ReplicationConfiguration: "AWS::ECR::ReplicationConfiguration";
+            readonly Repository: "AWS::ECR::Repository";
+        };
+        readonly ECS: {
+            readonly CapacityProvider: "AWS::ECS::CapacityProvider";
+            readonly Cluster: "AWS::ECS::Cluster";
+            readonly ClusterCapacityProviderAssociations: "AWS::ECS::ClusterCapacityProviderAssociations";
+            readonly PrimaryTaskSet: "AWS::ECS::PrimaryTaskSet";
+            readonly Service: "AWS::ECS::Service";
+            readonly TaskDefinition: "AWS::ECS::TaskDefinition";
+            readonly TaskSet: "AWS::ECS::TaskSet";
+        };
+        readonly EFS: {
+            readonly AccessPoint: "AWS::EFS::AccessPoint";
+            readonly FileSystem: "AWS::EFS::FileSystem";
+            readonly MountTarget: "AWS::EFS::MountTarget";
+        };
+        readonly EKS: {
+            readonly Addon: "AWS::EKS::Addon";
+            readonly Cluster: "AWS::EKS::Cluster";
+            readonly FargateProfile: "AWS::EKS::FargateProfile";
+            readonly IdentityProviderConfig: "AWS::EKS::IdentityProviderConfig";
+            readonly Nodegroup: "AWS::EKS::Nodegroup";
+        };
+        readonly EMR: {
+            readonly Cluster: "AWS::EMR::Cluster";
+            readonly InstanceFleetConfig: "AWS::EMR::InstanceFleetConfig";
+            readonly InstanceGroupConfig: "AWS::EMR::InstanceGroupConfig";
+            readonly SecurityConfiguration: "AWS::EMR::SecurityConfiguration";
+            readonly Step: "AWS::EMR::Step";
+            readonly Studio: "AWS::EMR::Studio";
+            readonly StudioSessionMapping: "AWS::EMR::StudioSessionMapping";
+        };
+        readonly EMRContainers: {
+            readonly VirtualCluster: "AWS::EMRContainers::VirtualCluster";
+        };
+        readonly EMRServerless: {
+            readonly Application: "AWS::EMRServerless::Application";
+        };
+        readonly ElastiCache: {
+            readonly CacheCluster: "AWS::ElastiCache::CacheCluster";
+            readonly GlobalReplicationGroup: "AWS::ElastiCache::GlobalReplicationGroup";
+            readonly ParameterGroup: "AWS::ElastiCache::ParameterGroup";
+            readonly ReplicationGroup: "AWS::ElastiCache::ReplicationGroup";
+            readonly SecurityGroup: "AWS::ElastiCache::SecurityGroup";
+            readonly SecurityGroupIngress: "AWS::ElastiCache::SecurityGroupIngress";
+            readonly SubnetGroup: "AWS::ElastiCache::SubnetGroup";
+            readonly User: "AWS::ElastiCache::User";
+            readonly UserGroup: "AWS::ElastiCache::UserGroup";
+        };
+        readonly ElasticBeanstalk: {
+            readonly Application: "AWS::ElasticBeanstalk::Application";
+            readonly ApplicationVersion: "AWS::ElasticBeanstalk::ApplicationVersion";
+            readonly ConfigurationTemplate: "AWS::ElasticBeanstalk::ConfigurationTemplate";
+            readonly Environment: "AWS::ElasticBeanstalk::Environment";
+        };
+        readonly ElasticLoadBalancing: {
+            readonly LoadBalancer: "AWS::ElasticLoadBalancing::LoadBalancer";
+        };
+        readonly ElasticLoadBalancingV2: {
+            readonly Listener: "AWS::ElasticLoadBalancingV2::Listener";
+            readonly ListenerCertificate: "AWS::ElasticLoadBalancingV2::ListenerCertificate";
+            readonly ListenerRule: "AWS::ElasticLoadBalancingV2::ListenerRule";
+            readonly LoadBalancer: "AWS::ElasticLoadBalancingV2::LoadBalancer";
+            readonly TargetGroup: "AWS::ElasticLoadBalancingV2::TargetGroup";
+        };
+        readonly Elasticsearch: {
+            readonly Domain: "AWS::Elasticsearch::Domain";
+        };
+        readonly EventSchemas: {
+            readonly Discoverer: "AWS::EventSchemas::Discoverer";
+            readonly Registry: "AWS::EventSchemas::Registry";
+            readonly RegistryPolicy: "AWS::EventSchemas::RegistryPolicy";
+            readonly Schema: "AWS::EventSchemas::Schema";
+        };
+        readonly Events: {
+            readonly ApiDestination: "AWS::Events::ApiDestination";
+            readonly Archive: "AWS::Events::Archive";
+            readonly Connection: "AWS::Events::Connection";
+            readonly Endpoint: "AWS::Events::Endpoint";
+            readonly EventBus: "AWS::Events::EventBus";
+            readonly EventBusPolicy: "AWS::Events::EventBusPolicy";
+            readonly Rule: "AWS::Events::Rule";
+        };
+        readonly Evidently: {
+            readonly Experiment: "AWS::Evidently::Experiment";
+            readonly Feature: "AWS::Evidently::Feature";
+            readonly Launch: "AWS::Evidently::Launch";
+            readonly Project: "AWS::Evidently::Project";
+            readonly Segment: "AWS::Evidently::Segment";
+        };
+        readonly FIS: {
+            readonly ExperimentTemplate: "AWS::FIS::ExperimentTemplate";
+        };
+        readonly FMS: {
+            readonly NotificationChannel: "AWS::FMS::NotificationChannel";
+            readonly Policy: "AWS::FMS::Policy";
+            readonly ResourceSet: "AWS::FMS::ResourceSet";
+        };
+        readonly FSx: {
+            readonly DataRepositoryAssociation: "AWS::FSx::DataRepositoryAssociation";
+            readonly FileSystem: "AWS::FSx::FileSystem";
+            readonly Snapshot: "AWS::FSx::Snapshot";
+            readonly StorageVirtualMachine: "AWS::FSx::StorageVirtualMachine";
+            readonly Volume: "AWS::FSx::Volume";
+        };
+        readonly FinSpace: {
+            readonly Environment: "AWS::FinSpace::Environment";
+        };
+        readonly Forecast: {
+            readonly Dataset: "AWS::Forecast::Dataset";
+            readonly DatasetGroup: "AWS::Forecast::DatasetGroup";
+        };
+        readonly FraudDetector: {
+            readonly Detector: "AWS::FraudDetector::Detector";
+            readonly EntityType: "AWS::FraudDetector::EntityType";
+            readonly EventType: "AWS::FraudDetector::EventType";
+            readonly Label: "AWS::FraudDetector::Label";
+            readonly Outcome: "AWS::FraudDetector::Outcome";
+            readonly Variable: "AWS::FraudDetector::Variable";
+        };
+        readonly GameLift: {
+            readonly Alias: "AWS::GameLift::Alias";
+            readonly Build: "AWS::GameLift::Build";
+            readonly Fleet: "AWS::GameLift::Fleet";
+            readonly GameServerGroup: "AWS::GameLift::GameServerGroup";
+            readonly GameSessionQueue: "AWS::GameLift::GameSessionQueue";
+            readonly Location: "AWS::GameLift::Location";
+            readonly MatchmakingConfiguration: "AWS::GameLift::MatchmakingConfiguration";
+            readonly MatchmakingRuleSet: "AWS::GameLift::MatchmakingRuleSet";
+            readonly Script: "AWS::GameLift::Script";
+        };
+        readonly GlobalAccelerator: {
+            readonly Accelerator: "AWS::GlobalAccelerator::Accelerator";
+            readonly EndpointGroup: "AWS::GlobalAccelerator::EndpointGroup";
+            readonly Listener: "AWS::GlobalAccelerator::Listener";
+        };
+        readonly Glue: {
+            readonly Classifier: "AWS::Glue::Classifier";
+            readonly Connection: "AWS::Glue::Connection";
+            readonly Crawler: "AWS::Glue::Crawler";
+            readonly DataCatalogEncryptionSettings: "AWS::Glue::DataCatalogEncryptionSettings";
+            readonly Database: "AWS::Glue::Database";
+            readonly DevEndpoint: "AWS::Glue::DevEndpoint";
+            readonly Job: "AWS::Glue::Job";
+            readonly MLTransform: "AWS::Glue::MLTransform";
+            readonly Partition: "AWS::Glue::Partition";
+            readonly Registry: "AWS::Glue::Registry";
+            readonly Schema: "AWS::Glue::Schema";
+            readonly SchemaVersion: "AWS::Glue::SchemaVersion";
+            readonly SchemaVersionMetadata: "AWS::Glue::SchemaVersionMetadata";
+            readonly SecurityConfiguration: "AWS::Glue::SecurityConfiguration";
+            readonly Table: "AWS::Glue::Table";
+            readonly Trigger: "AWS::Glue::Trigger";
+            readonly Workflow: "AWS::Glue::Workflow";
+        };
+        readonly Grafana: {
+            readonly Workspace: "AWS::Grafana::Workspace";
+        };
+        readonly Greengrass: {
+            readonly ConnectorDefinition: "AWS::Greengrass::ConnectorDefinition";
+            readonly ConnectorDefinitionVersion: "AWS::Greengrass::ConnectorDefinitionVersion";
+            readonly CoreDefinition: "AWS::Greengrass::CoreDefinition";
+            readonly CoreDefinitionVersion: "AWS::Greengrass::CoreDefinitionVersion";
+            readonly DeviceDefinition: "AWS::Greengrass::DeviceDefinition";
+            readonly DeviceDefinitionVersion: "AWS::Greengrass::DeviceDefinitionVersion";
+            readonly FunctionDefinition: "AWS::Greengrass::FunctionDefinition";
+            readonly FunctionDefinitionVersion: "AWS::Greengrass::FunctionDefinitionVersion";
+            readonly Group: "AWS::Greengrass::Group";
+            readonly GroupVersion: "AWS::Greengrass::GroupVersion";
+            readonly LoggerDefinition: "AWS::Greengrass::LoggerDefinition";
+            readonly LoggerDefinitionVersion: "AWS::Greengrass::LoggerDefinitionVersion";
+            readonly ResourceDefinition: "AWS::Greengrass::ResourceDefinition";
+            readonly ResourceDefinitionVersion: "AWS::Greengrass::ResourceDefinitionVersion";
+            readonly SubscriptionDefinition: "AWS::Greengrass::SubscriptionDefinition";
+            readonly SubscriptionDefinitionVersion: "AWS::Greengrass::SubscriptionDefinitionVersion";
+        };
+        readonly GreengrassV2: {
+            readonly ComponentVersion: "AWS::GreengrassV2::ComponentVersion";
+            readonly Deployment: "AWS::GreengrassV2::Deployment";
+        };
+        readonly GroundStation: {
+            readonly Config: "AWS::GroundStation::Config";
+            readonly DataflowEndpointGroup: "AWS::GroundStation::DataflowEndpointGroup";
+            readonly MissionProfile: "AWS::GroundStation::MissionProfile";
+        };
+        readonly GuardDuty: {
+            readonly Detector: "AWS::GuardDuty::Detector";
+            readonly Filter: "AWS::GuardDuty::Filter";
+            readonly IPSet: "AWS::GuardDuty::IPSet";
+            readonly Master: "AWS::GuardDuty::Master";
+            readonly Member: "AWS::GuardDuty::Member";
+            readonly ThreatIntelSet: "AWS::GuardDuty::ThreatIntelSet";
+        };
+        readonly HealthLake: {
+            readonly FHIRDatastore: "AWS::HealthLake::FHIRDatastore";
+        };
+        readonly IAM: {
+            readonly AccessKey: "AWS::IAM::AccessKey";
+            readonly Group: "AWS::IAM::Group";
+            readonly InstanceProfile: "AWS::IAM::InstanceProfile";
+            readonly ManagedPolicy: "AWS::IAM::ManagedPolicy";
+            readonly OIDCProvider: "AWS::IAM::OIDCProvider";
+            readonly Policy: "AWS::IAM::Policy";
+            readonly Role: "AWS::IAM::Role";
+            readonly SAMLProvider: "AWS::IAM::SAMLProvider";
+            readonly ServerCertificate: "AWS::IAM::ServerCertificate";
+            readonly ServiceLinkedRole: "AWS::IAM::ServiceLinkedRole";
+            readonly User: "AWS::IAM::User";
+            readonly UserToGroupAddition: "AWS::IAM::UserToGroupAddition";
+            readonly VirtualMFADevice: "AWS::IAM::VirtualMFADevice";
+        };
+        readonly IVS: {
+            readonly Channel: "AWS::IVS::Channel";
+            readonly PlaybackKeyPair: "AWS::IVS::PlaybackKeyPair";
+            readonly RecordingConfiguration: "AWS::IVS::RecordingConfiguration";
+            readonly StreamKey: "AWS::IVS::StreamKey";
+        };
+        readonly IVSChat: {
+            readonly LoggingConfiguration: "AWS::IVSChat::LoggingConfiguration";
+            readonly Room: "AWS::IVSChat::Room";
+        };
+        readonly IdentityStore: {
+            readonly Group: "AWS::IdentityStore::Group";
+            readonly GroupMembership: "AWS::IdentityStore::GroupMembership";
+        };
+        readonly ImageBuilder: {
+            readonly Component: "AWS::ImageBuilder::Component";
+            readonly ContainerRecipe: "AWS::ImageBuilder::ContainerRecipe";
+            readonly DistributionConfiguration: "AWS::ImageBuilder::DistributionConfiguration";
+            readonly Image: "AWS::ImageBuilder::Image";
+            readonly ImagePipeline: "AWS::ImageBuilder::ImagePipeline";
+            readonly ImageRecipe: "AWS::ImageBuilder::ImageRecipe";
+            readonly InfrastructureConfiguration: "AWS::ImageBuilder::InfrastructureConfiguration";
+        };
+        readonly Inspector: {
+            readonly AssessmentTarget: "AWS::Inspector::AssessmentTarget";
+            readonly AssessmentTemplate: "AWS::Inspector::AssessmentTemplate";
+            readonly ResourceGroup: "AWS::Inspector::ResourceGroup";
+        };
+        readonly InspectorV2: {
+            readonly Filter: "AWS::InspectorV2::Filter";
+        };
+        readonly InternetMonitor: {
+            readonly Monitor: "AWS::InternetMonitor::Monitor";
+        };
+        readonly IoT1Click: {
+            readonly Device: "AWS::IoT1Click::Device";
+            readonly Placement: "AWS::IoT1Click::Placement";
+            readonly Project: "AWS::IoT1Click::Project";
+        };
+        readonly IoT: {
+            readonly AccountAuditConfiguration: "AWS::IoT::AccountAuditConfiguration";
+            readonly Authorizer: "AWS::IoT::Authorizer";
+            readonly CACertificate: "AWS::IoT::CACertificate";
+            readonly Certificate: "AWS::IoT::Certificate";
+            readonly CustomMetric: "AWS::IoT::CustomMetric";
+            readonly Dimension: "AWS::IoT::Dimension";
+            readonly DomainConfiguration: "AWS::IoT::DomainConfiguration";
+            readonly FleetMetric: "AWS::IoT::FleetMetric";
+            readonly JobTemplate: "AWS::IoT::JobTemplate";
+            readonly Logging: "AWS::IoT::Logging";
+            readonly MitigationAction: "AWS::IoT::MitigationAction";
+            readonly Policy: "AWS::IoT::Policy";
+            readonly PolicyPrincipalAttachment: "AWS::IoT::PolicyPrincipalAttachment";
+            readonly ProvisioningTemplate: "AWS::IoT::ProvisioningTemplate";
+            readonly ResourceSpecificLogging: "AWS::IoT::ResourceSpecificLogging";
+            readonly RoleAlias: "AWS::IoT::RoleAlias";
+            readonly ScheduledAudit: "AWS::IoT::ScheduledAudit";
+            readonly SecurityProfile: "AWS::IoT::SecurityProfile";
+            readonly Thing: "AWS::IoT::Thing";
+            readonly ThingPrincipalAttachment: "AWS::IoT::ThingPrincipalAttachment";
+            readonly TopicRule: "AWS::IoT::TopicRule";
+            readonly TopicRuleDestination: "AWS::IoT::TopicRuleDestination";
+        };
+        readonly IoTAnalytics: {
+            readonly Channel: "AWS::IoTAnalytics::Channel";
+            readonly Dataset: "AWS::IoTAnalytics::Dataset";
+            readonly Datastore: "AWS::IoTAnalytics::Datastore";
+            readonly Pipeline: "AWS::IoTAnalytics::Pipeline";
+        };
+        readonly IoTCoreDeviceAdvisor: {
+            readonly SuiteDefinition: "AWS::IoTCoreDeviceAdvisor::SuiteDefinition";
+        };
+        readonly IoTEvents: {
+            readonly AlarmModel: "AWS::IoTEvents::AlarmModel";
+            readonly DetectorModel: "AWS::IoTEvents::DetectorModel";
+            readonly Input: "AWS::IoTEvents::Input";
+        };
+        readonly IoTFleetHub: {
+            readonly Application: "AWS::IoTFleetHub::Application";
+        };
+        readonly IoTFleetWise: {
+            readonly Campaign: "AWS::IoTFleetWise::Campaign";
+            readonly DecoderManifest: "AWS::IoTFleetWise::DecoderManifest";
+            readonly Fleet: "AWS::IoTFleetWise::Fleet";
+            readonly ModelManifest: "AWS::IoTFleetWise::ModelManifest";
+            readonly SignalCatalog: "AWS::IoTFleetWise::SignalCatalog";
+            readonly Vehicle: "AWS::IoTFleetWise::Vehicle";
+        };
+        readonly IoTSiteWise: {
+            readonly AccessPolicy: "AWS::IoTSiteWise::AccessPolicy";
+            readonly Asset: "AWS::IoTSiteWise::Asset";
+            readonly AssetModel: "AWS::IoTSiteWise::AssetModel";
+            readonly Dashboard: "AWS::IoTSiteWise::Dashboard";
+            readonly Gateway: "AWS::IoTSiteWise::Gateway";
+            readonly Portal: "AWS::IoTSiteWise::Portal";
+            readonly Project: "AWS::IoTSiteWise::Project";
+        };
+        readonly IoTThingsGraph: {
+            readonly FlowTemplate: "AWS::IoTThingsGraph::FlowTemplate";
+        };
+        readonly IoTTwinMaker: {
+            readonly ComponentType: "AWS::IoTTwinMaker::ComponentType";
+            readonly Entity: "AWS::IoTTwinMaker::Entity";
+            readonly Scene: "AWS::IoTTwinMaker::Scene";
+            readonly SyncJob: "AWS::IoTTwinMaker::SyncJob";
+            readonly Workspace: "AWS::IoTTwinMaker::Workspace";
+        };
+        readonly IoTWireless: {
+            readonly Destination: "AWS::IoTWireless::Destination";
+            readonly DeviceProfile: "AWS::IoTWireless::DeviceProfile";
+            readonly FuotaTask: "AWS::IoTWireless::FuotaTask";
+            readonly MulticastGroup: "AWS::IoTWireless::MulticastGroup";
+            readonly NetworkAnalyzerConfiguration: "AWS::IoTWireless::NetworkAnalyzerConfiguration";
+            readonly PartnerAccount: "AWS::IoTWireless::PartnerAccount";
+            readonly ServiceProfile: "AWS::IoTWireless::ServiceProfile";
+            readonly TaskDefinition: "AWS::IoTWireless::TaskDefinition";
+            readonly WirelessDevice: "AWS::IoTWireless::WirelessDevice";
+            readonly WirelessGateway: "AWS::IoTWireless::WirelessGateway";
+        };
+        readonly KMS: {
+            readonly Alias: "AWS::KMS::Alias";
+            readonly Key: "AWS::KMS::Key";
+            readonly ReplicaKey: "AWS::KMS::ReplicaKey";
+        };
+        readonly KafkaConnect: {
+            readonly Connector: "AWS::KafkaConnect::Connector";
+        };
+        readonly Kendra: {
+            readonly DataSource: "AWS::Kendra::DataSource";
+            readonly Faq: "AWS::Kendra::Faq";
+            readonly Index: "AWS::Kendra::Index";
+        };
+        readonly KendraRanking: {
+            readonly ExecutionPlan: "AWS::KendraRanking::ExecutionPlan";
+        };
+        readonly Kinesis: {
+            readonly Stream: "AWS::Kinesis::Stream";
+            readonly StreamConsumer: "AWS::Kinesis::StreamConsumer";
+        };
+        readonly KinesisAnalytics: {
+            readonly Application: "AWS::KinesisAnalytics::Application";
+            readonly ApplicationOutput: "AWS::KinesisAnalytics::ApplicationOutput";
+            readonly ApplicationReferenceDataSource: "AWS::KinesisAnalytics::ApplicationReferenceDataSource";
+        };
+        readonly KinesisAnalyticsV2: {
+            readonly Application: "AWS::KinesisAnalyticsV2::Application";
+            readonly ApplicationCloudWatchLoggingOption: "AWS::KinesisAnalyticsV2::ApplicationCloudWatchLoggingOption";
+            readonly ApplicationOutput: "AWS::KinesisAnalyticsV2::ApplicationOutput";
+            readonly ApplicationReferenceDataSource: "AWS::KinesisAnalyticsV2::ApplicationReferenceDataSource";
+        };
+        readonly KinesisFirehose: {
+            readonly DeliveryStream: "AWS::KinesisFirehose::DeliveryStream";
+        };
+        readonly KinesisVideo: {
+            readonly SignalingChannel: "AWS::KinesisVideo::SignalingChannel";
+            readonly Stream: "AWS::KinesisVideo::Stream";
+        };
+        readonly LakeFormation: {
+            readonly DataCellsFilter: "AWS::LakeFormation::DataCellsFilter";
+            readonly DataLakeSettings: "AWS::LakeFormation::DataLakeSettings";
+            readonly Permissions: "AWS::LakeFormation::Permissions";
+            readonly PrincipalPermissions: "AWS::LakeFormation::PrincipalPermissions";
+            readonly Resource: "AWS::LakeFormation::Resource";
+            readonly Tag: "AWS::LakeFormation::Tag";
+            readonly TagAssociation: "AWS::LakeFormation::TagAssociation";
+        };
+        readonly Lambda: {
+            readonly Alias: "AWS::Lambda::Alias";
+            readonly CodeSigningConfig: "AWS::Lambda::CodeSigningConfig";
+            readonly EventInvokeConfig: "AWS::Lambda::EventInvokeConfig";
+            readonly EventSourceMapping: "AWS::Lambda::EventSourceMapping";
+            readonly Function: "AWS::Lambda::Function";
+            readonly LayerVersion: "AWS::Lambda::LayerVersion";
+            readonly LayerVersionPermission: "AWS::Lambda::LayerVersionPermission";
+            readonly Permission: "AWS::Lambda::Permission";
+            readonly Url: "AWS::Lambda::Url";
+            readonly Version: "AWS::Lambda::Version";
+        };
+        readonly Lex: {
+            readonly Bot: "AWS::Lex::Bot";
+            readonly BotAlias: "AWS::Lex::BotAlias";
+            readonly BotVersion: "AWS::Lex::BotVersion";
+            readonly ResourcePolicy: "AWS::Lex::ResourcePolicy";
+        };
+        readonly LicenseManager: {
+            readonly Grant: "AWS::LicenseManager::Grant";
+            readonly License: "AWS::LicenseManager::License";
+        };
+        readonly Lightsail: {
+            readonly Alarm: "AWS::Lightsail::Alarm";
+            readonly Bucket: "AWS::Lightsail::Bucket";
+            readonly Certificate: "AWS::Lightsail::Certificate";
+            readonly Container: "AWS::Lightsail::Container";
+            readonly Database: "AWS::Lightsail::Database";
+            readonly Disk: "AWS::Lightsail::Disk";
+            readonly Distribution: "AWS::Lightsail::Distribution";
+            readonly Instance: "AWS::Lightsail::Instance";
+            readonly LoadBalancer: "AWS::Lightsail::LoadBalancer";
+            readonly LoadBalancerTlsCertificate: "AWS::Lightsail::LoadBalancerTlsCertificate";
+            readonly StaticIp: "AWS::Lightsail::StaticIp";
+        };
+        readonly Location: {
+            readonly GeofenceCollection: "AWS::Location::GeofenceCollection";
+            readonly Map: "AWS::Location::Map";
+            readonly PlaceIndex: "AWS::Location::PlaceIndex";
+            readonly RouteCalculator: "AWS::Location::RouteCalculator";
+            readonly Tracker: "AWS::Location::Tracker";
+            readonly TrackerConsumer: "AWS::Location::TrackerConsumer";
+        };
+        readonly Logs: {
+            readonly Destination: "AWS::Logs::Destination";
+            readonly LogGroup: "AWS::Logs::LogGroup";
+            readonly LogStream: "AWS::Logs::LogStream";
+            readonly MetricFilter: "AWS::Logs::MetricFilter";
+            readonly QueryDefinition: "AWS::Logs::QueryDefinition";
+            readonly ResourcePolicy: "AWS::Logs::ResourcePolicy";
+            readonly SubscriptionFilter: "AWS::Logs::SubscriptionFilter";
+        };
+        readonly LookoutEquipment: {
+            readonly InferenceScheduler: "AWS::LookoutEquipment::InferenceScheduler";
+        };
+        readonly LookoutMetrics: {
+            readonly Alert: "AWS::LookoutMetrics::Alert";
+            readonly AnomalyDetector: "AWS::LookoutMetrics::AnomalyDetector";
+        };
+        readonly LookoutVision: {
+            readonly Project: "AWS::LookoutVision::Project";
+        };
+        readonly M2: {
+            readonly Application: "AWS::M2::Application";
+            readonly Environment: "AWS::M2::Environment";
+        };
+        readonly MSK: {
+            readonly BatchScramSecret: "AWS::MSK::BatchScramSecret";
+            readonly Cluster: "AWS::MSK::Cluster";
+            readonly Configuration: "AWS::MSK::Configuration";
+            readonly ServerlessCluster: "AWS::MSK::ServerlessCluster";
+        };
+        readonly MWAA: {
+            readonly Environment: "AWS::MWAA::Environment";
+        };
+        readonly Macie: {
+            readonly AllowList: "AWS::Macie::AllowList";
+            readonly CustomDataIdentifier: "AWS::Macie::CustomDataIdentifier";
+            readonly FindingsFilter: "AWS::Macie::FindingsFilter";
+            readonly Session: "AWS::Macie::Session";
+        };
+        readonly ManagedBlockchain: {
+            readonly Accessor: "AWS::ManagedBlockchain::Accessor";
+            readonly Member: "AWS::ManagedBlockchain::Member";
+            readonly Node: "AWS::ManagedBlockchain::Node";
+        };
+        readonly MediaConnect: {
+            readonly Flow: "AWS::MediaConnect::Flow";
+            readonly FlowEntitlement: "AWS::MediaConnect::FlowEntitlement";
+            readonly FlowOutput: "AWS::MediaConnect::FlowOutput";
+            readonly FlowSource: "AWS::MediaConnect::FlowSource";
+            readonly FlowVpcInterface: "AWS::MediaConnect::FlowVpcInterface";
+        };
+        readonly MediaConvert: {
+            readonly JobTemplate: "AWS::MediaConvert::JobTemplate";
+            readonly Preset: "AWS::MediaConvert::Preset";
+            readonly Queue: "AWS::MediaConvert::Queue";
+        };
+        readonly MediaLive: {
+            readonly Channel: "AWS::MediaLive::Channel";
+            readonly Input: "AWS::MediaLive::Input";
+            readonly InputSecurityGroup: "AWS::MediaLive::InputSecurityGroup";
+        };
+        readonly MediaPackage: {
+            readonly Asset: "AWS::MediaPackage::Asset";
+            readonly Channel: "AWS::MediaPackage::Channel";
+            readonly OriginEndpoint: "AWS::MediaPackage::OriginEndpoint";
+            readonly PackagingConfiguration: "AWS::MediaPackage::PackagingConfiguration";
+            readonly PackagingGroup: "AWS::MediaPackage::PackagingGroup";
+        };
+        readonly MediaStore: {
+            readonly Container: "AWS::MediaStore::Container";
+        };
+        readonly MediaTailor: {
+            readonly PlaybackConfiguration: "AWS::MediaTailor::PlaybackConfiguration";
+        };
+        readonly MemoryDB: {
+            readonly ACL: "AWS::MemoryDB::ACL";
+            readonly Cluster: "AWS::MemoryDB::Cluster";
+            readonly ParameterGroup: "AWS::MemoryDB::ParameterGroup";
+            readonly SubnetGroup: "AWS::MemoryDB::SubnetGroup";
+            readonly User: "AWS::MemoryDB::User";
+        };
+        readonly Neptune: {
+            readonly DBCluster: "AWS::Neptune::DBCluster";
+            readonly DBClusterParameterGroup: "AWS::Neptune::DBClusterParameterGroup";
+            readonly DBInstance: "AWS::Neptune::DBInstance";
+            readonly DBParameterGroup: "AWS::Neptune::DBParameterGroup";
+            readonly DBSubnetGroup: "AWS::Neptune::DBSubnetGroup";
+        };
+        readonly NetworkFirewall: {
+            readonly Firewall: "AWS::NetworkFirewall::Firewall";
+            readonly FirewallPolicy: "AWS::NetworkFirewall::FirewallPolicy";
+            readonly LoggingConfiguration: "AWS::NetworkFirewall::LoggingConfiguration";
+            readonly RuleGroup: "AWS::NetworkFirewall::RuleGroup";
+        };
+        readonly NetworkManager: {
+            readonly ConnectAttachment: "AWS::NetworkManager::ConnectAttachment";
+            readonly ConnectPeer: "AWS::NetworkManager::ConnectPeer";
+            readonly CoreNetwork: "AWS::NetworkManager::CoreNetwork";
+            readonly CustomerGatewayAssociation: "AWS::NetworkManager::CustomerGatewayAssociation";
+            readonly Device: "AWS::NetworkManager::Device";
+            readonly GlobalNetwork: "AWS::NetworkManager::GlobalNetwork";
+            readonly Link: "AWS::NetworkManager::Link";
+            readonly LinkAssociation: "AWS::NetworkManager::LinkAssociation";
+            readonly Site: "AWS::NetworkManager::Site";
+            readonly SiteToSiteVpnAttachment: "AWS::NetworkManager::SiteToSiteVpnAttachment";
+            readonly TransitGatewayPeering: "AWS::NetworkManager::TransitGatewayPeering";
+            readonly TransitGatewayRegistration: "AWS::NetworkManager::TransitGatewayRegistration";
+            readonly TransitGatewayRouteTableAttachment: "AWS::NetworkManager::TransitGatewayRouteTableAttachment";
+            readonly VpcAttachment: "AWS::NetworkManager::VpcAttachment";
+        };
+        readonly NimbleStudio: {
+            readonly LaunchProfile: "AWS::NimbleStudio::LaunchProfile";
+            readonly StreamingImage: "AWS::NimbleStudio::StreamingImage";
+            readonly Studio: "AWS::NimbleStudio::Studio";
+            readonly StudioComponent: "AWS::NimbleStudio::StudioComponent";
+        };
+        readonly Oam: {
+            readonly Link: "AWS::Oam::Link";
+            readonly Sink: "AWS::Oam::Sink";
+        };
+        readonly Omics: {
+            readonly AnnotationStore: "AWS::Omics::AnnotationStore";
+            readonly ReferenceStore: "AWS::Omics::ReferenceStore";
+            readonly RunGroup: "AWS::Omics::RunGroup";
+            readonly SequenceStore: "AWS::Omics::SequenceStore";
+            readonly VariantStore: "AWS::Omics::VariantStore";
+            readonly Workflow: "AWS::Omics::Workflow";
+        };
+        readonly OpenSearchServerless: {
+            readonly AccessPolicy: "AWS::OpenSearchServerless::AccessPolicy";
+            readonly Collection: "AWS::OpenSearchServerless::Collection";
+            readonly SecurityConfig: "AWS::OpenSearchServerless::SecurityConfig";
+            readonly SecurityPolicy: "AWS::OpenSearchServerless::SecurityPolicy";
+            readonly VpcEndpoint: "AWS::OpenSearchServerless::VpcEndpoint";
+        };
+        readonly OpenSearchService: {
+            readonly Domain: "AWS::OpenSearchService::Domain";
+        };
+        readonly OpsWorks: {
+            readonly App: "AWS::OpsWorks::App";
+            readonly ElasticLoadBalancerAttachment: "AWS::OpsWorks::ElasticLoadBalancerAttachment";
+            readonly Instance: "AWS::OpsWorks::Instance";
+            readonly Layer: "AWS::OpsWorks::Layer";
+            readonly Stack: "AWS::OpsWorks::Stack";
+            readonly UserProfile: "AWS::OpsWorks::UserProfile";
+            readonly Volume: "AWS::OpsWorks::Volume";
+        };
+        readonly OpsWorksCM: {
+            readonly Server: "AWS::OpsWorksCM::Server";
+        };
+        readonly Organizations: {
+            readonly Account: "AWS::Organizations::Account";
+            readonly OrganizationalUnit: "AWS::Organizations::OrganizationalUnit";
+            readonly Policy: "AWS::Organizations::Policy";
+            readonly ResourcePolicy: "AWS::Organizations::ResourcePolicy";
+        };
+        readonly Panorama: {
+            readonly ApplicationInstance: "AWS::Panorama::ApplicationInstance";
+            readonly Package: "AWS::Panorama::Package";
+            readonly PackageVersion: "AWS::Panorama::PackageVersion";
+        };
+        readonly Personalize: {
+            readonly Dataset: "AWS::Personalize::Dataset";
+            readonly DatasetGroup: "AWS::Personalize::DatasetGroup";
+            readonly Schema: "AWS::Personalize::Schema";
+            readonly Solution: "AWS::Personalize::Solution";
+        };
+        readonly Pinpoint: {
+            readonly ADMChannel: "AWS::Pinpoint::ADMChannel";
+            readonly APNSChannel: "AWS::Pinpoint::APNSChannel";
+            readonly APNSSandboxChannel: "AWS::Pinpoint::APNSSandboxChannel";
+            readonly APNSVoipChannel: "AWS::Pinpoint::APNSVoipChannel";
+            readonly APNSVoipSandboxChannel: "AWS::Pinpoint::APNSVoipSandboxChannel";
+            readonly App: "AWS::Pinpoint::App";
+            readonly ApplicationSettings: "AWS::Pinpoint::ApplicationSettings";
+            readonly BaiduChannel: "AWS::Pinpoint::BaiduChannel";
+            readonly Campaign: "AWS::Pinpoint::Campaign";
+            readonly EmailChannel: "AWS::Pinpoint::EmailChannel";
+            readonly EmailTemplate: "AWS::Pinpoint::EmailTemplate";
+            readonly EventStream: "AWS::Pinpoint::EventStream";
+            readonly GCMChannel: "AWS::Pinpoint::GCMChannel";
+            readonly InAppTemplate: "AWS::Pinpoint::InAppTemplate";
+            readonly PushTemplate: "AWS::Pinpoint::PushTemplate";
+            readonly SMSChannel: "AWS::Pinpoint::SMSChannel";
+            readonly Segment: "AWS::Pinpoint::Segment";
+            readonly SmsTemplate: "AWS::Pinpoint::SmsTemplate";
+            readonly VoiceChannel: "AWS::Pinpoint::VoiceChannel";
+        };
+        readonly PinpointEmail: {
+            readonly ConfigurationSet: "AWS::PinpointEmail::ConfigurationSet";
+            readonly ConfigurationSetEventDestination: "AWS::PinpointEmail::ConfigurationSetEventDestination";
+            readonly DedicatedIpPool: "AWS::PinpointEmail::DedicatedIpPool";
+            readonly Identity: "AWS::PinpointEmail::Identity";
+        };
+        readonly Pipes: {
+            readonly Pipe: "AWS::Pipes::Pipe";
+        };
+        readonly QLDB: {
+            readonly Ledger: "AWS::QLDB::Ledger";
+            readonly Stream: "AWS::QLDB::Stream";
+        };
+        readonly QuickSight: {
+            readonly Analysis: "AWS::QuickSight::Analysis";
+            readonly Dashboard: "AWS::QuickSight::Dashboard";
+            readonly DataSet: "AWS::QuickSight::DataSet";
+            readonly DataSource: "AWS::QuickSight::DataSource";
+            readonly Template: "AWS::QuickSight::Template";
+            readonly Theme: "AWS::QuickSight::Theme";
+        };
+        readonly RAM: {
+            readonly ResourceShare: "AWS::RAM::ResourceShare";
+        };
+        readonly RDS: {
+            readonly DBCluster: "AWS::RDS::DBCluster";
+            readonly DBClusterParameterGroup: "AWS::RDS::DBClusterParameterGroup";
+            readonly DBInstance: "AWS::RDS::DBInstance";
+            readonly DBParameterGroup: "AWS::RDS::DBParameterGroup";
+            readonly DBProxy: "AWS::RDS::DBProxy";
+            readonly DBProxyEndpoint: "AWS::RDS::DBProxyEndpoint";
+            readonly DBProxyTargetGroup: "AWS::RDS::DBProxyTargetGroup";
+            readonly DBSecurityGroup: "AWS::RDS::DBSecurityGroup";
+            readonly DBSecurityGroupIngress: "AWS::RDS::DBSecurityGroupIngress";
+            readonly DBSubnetGroup: "AWS::RDS::DBSubnetGroup";
+            readonly EventSubscription: "AWS::RDS::EventSubscription";
+            readonly GlobalCluster: "AWS::RDS::GlobalCluster";
+            readonly OptionGroup: "AWS::RDS::OptionGroup";
+        };
+        readonly RUM: {
+            readonly AppMonitor: "AWS::RUM::AppMonitor";
+        };
+        readonly Redshift: {
+            readonly Cluster: "AWS::Redshift::Cluster";
+            readonly ClusterParameterGroup: "AWS::Redshift::ClusterParameterGroup";
+            readonly ClusterSecurityGroup: "AWS::Redshift::ClusterSecurityGroup";
+            readonly ClusterSecurityGroupIngress: "AWS::Redshift::ClusterSecurityGroupIngress";
+            readonly ClusterSubnetGroup: "AWS::Redshift::ClusterSubnetGroup";
+            readonly EndpointAccess: "AWS::Redshift::EndpointAccess";
+            readonly EndpointAuthorization: "AWS::Redshift::EndpointAuthorization";
+            readonly EventSubscription: "AWS::Redshift::EventSubscription";
+            readonly ScheduledAction: "AWS::Redshift::ScheduledAction";
+        };
+        readonly RedshiftServerless: {
+            readonly Namespace: "AWS::RedshiftServerless::Namespace";
+            readonly Workgroup: "AWS::RedshiftServerless::Workgroup";
+        };
+        readonly RefactorSpaces: {
+            readonly Application: "AWS::RefactorSpaces::Application";
+            readonly Environment: "AWS::RefactorSpaces::Environment";
+            readonly Route: "AWS::RefactorSpaces::Route";
+            readonly Service: "AWS::RefactorSpaces::Service";
+        };
+        readonly Rekognition: {
+            readonly Collection: "AWS::Rekognition::Collection";
+            readonly Project: "AWS::Rekognition::Project";
+            readonly StreamProcessor: "AWS::Rekognition::StreamProcessor";
+        };
+        readonly ResilienceHub: {
+            readonly App: "AWS::ResilienceHub::App";
+            readonly ResiliencyPolicy: "AWS::ResilienceHub::ResiliencyPolicy";
+        };
+        readonly ResourceExplorer2: {
+            readonly DefaultViewAssociation: "AWS::ResourceExplorer2::DefaultViewAssociation";
+            readonly Index: "AWS::ResourceExplorer2::Index";
+            readonly View: "AWS::ResourceExplorer2::View";
+        };
+        readonly ResourceGroups: {
+            readonly Group: "AWS::ResourceGroups::Group";
+        };
+        readonly RoboMaker: {
+            readonly Fleet: "AWS::RoboMaker::Fleet";
+            readonly Robot: "AWS::RoboMaker::Robot";
+            readonly RobotApplication: "AWS::RoboMaker::RobotApplication";
+            readonly RobotApplicationVersion: "AWS::RoboMaker::RobotApplicationVersion";
+            readonly SimulationApplication: "AWS::RoboMaker::SimulationApplication";
+            readonly SimulationApplicationVersion: "AWS::RoboMaker::SimulationApplicationVersion";
+        };
+        readonly RolesAnywhere: {
+            readonly CRL: "AWS::RolesAnywhere::CRL";
+            readonly Profile: "AWS::RolesAnywhere::Profile";
+            readonly TrustAnchor: "AWS::RolesAnywhere::TrustAnchor";
+        };
+        readonly Route53: {
+            readonly CidrCollection: "AWS::Route53::CidrCollection";
+            readonly DNSSEC: "AWS::Route53::DNSSEC";
+            readonly HealthCheck: "AWS::Route53::HealthCheck";
+            readonly HostedZone: "AWS::Route53::HostedZone";
+            readonly KeySigningKey: "AWS::Route53::KeySigningKey";
+            readonly RecordSet: "AWS::Route53::RecordSet";
+            readonly RecordSetGroup: "AWS::Route53::RecordSetGroup";
+        };
+        readonly Route53RecoveryControl: {
+            readonly Cluster: "AWS::Route53RecoveryControl::Cluster";
+            readonly ControlPanel: "AWS::Route53RecoveryControl::ControlPanel";
+            readonly RoutingControl: "AWS::Route53RecoveryControl::RoutingControl";
+            readonly SafetyRule: "AWS::Route53RecoveryControl::SafetyRule";
+        };
+        readonly Route53RecoveryReadiness: {
+            readonly Cell: "AWS::Route53RecoveryReadiness::Cell";
+            readonly ReadinessCheck: "AWS::Route53RecoveryReadiness::ReadinessCheck";
+            readonly RecoveryGroup: "AWS::Route53RecoveryReadiness::RecoveryGroup";
+            readonly ResourceSet: "AWS::Route53RecoveryReadiness::ResourceSet";
+        };
+        readonly Route53Resolver: {
+            readonly FirewallDomainList: "AWS::Route53Resolver::FirewallDomainList";
+            readonly FirewallRuleGroup: "AWS::Route53Resolver::FirewallRuleGroup";
+            readonly FirewallRuleGroupAssociation: "AWS::Route53Resolver::FirewallRuleGroupAssociation";
+            readonly ResolverConfig: "AWS::Route53Resolver::ResolverConfig";
+            readonly ResolverDNSSECConfig: "AWS::Route53Resolver::ResolverDNSSECConfig";
+            readonly ResolverEndpoint: "AWS::Route53Resolver::ResolverEndpoint";
+            readonly ResolverQueryLoggingConfig: "AWS::Route53Resolver::ResolverQueryLoggingConfig";
+            readonly ResolverQueryLoggingConfigAssociation: "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation";
+            readonly ResolverRule: "AWS::Route53Resolver::ResolverRule";
+            readonly ResolverRuleAssociation: "AWS::Route53Resolver::ResolverRuleAssociation";
+        };
+        readonly S3: {
+            readonly AccessPoint: "AWS::S3::AccessPoint";
+            readonly Bucket: "AWS::S3::Bucket";
+            readonly BucketPolicy: "AWS::S3::BucketPolicy";
+            readonly MultiRegionAccessPoint: "AWS::S3::MultiRegionAccessPoint";
+            readonly MultiRegionAccessPointPolicy: "AWS::S3::MultiRegionAccessPointPolicy";
+            readonly StorageLens: "AWS::S3::StorageLens";
+        };
+        readonly S3ObjectLambda: {
+            readonly AccessPoint: "AWS::S3ObjectLambda::AccessPoint";
+            readonly AccessPointPolicy: "AWS::S3ObjectLambda::AccessPointPolicy";
+        };
+        readonly S3Outposts: {
+            readonly AccessPoint: "AWS::S3Outposts::AccessPoint";
+            readonly Bucket: "AWS::S3Outposts::Bucket";
+            readonly BucketPolicy: "AWS::S3Outposts::BucketPolicy";
+            readonly Endpoint: "AWS::S3Outposts::Endpoint";
+        };
+        readonly SDB: {
+            readonly Domain: "AWS::SDB::Domain";
+        };
+        readonly SES: {
+            readonly ConfigurationSet: "AWS::SES::ConfigurationSet";
+            readonly ConfigurationSetEventDestination: "AWS::SES::ConfigurationSetEventDestination";
+            readonly ContactList: "AWS::SES::ContactList";
+            readonly DedicatedIpPool: "AWS::SES::DedicatedIpPool";
+            readonly EmailIdentity: "AWS::SES::EmailIdentity";
+            readonly ReceiptFilter: "AWS::SES::ReceiptFilter";
+            readonly ReceiptRule: "AWS::SES::ReceiptRule";
+            readonly ReceiptRuleSet: "AWS::SES::ReceiptRuleSet";
+            readonly Template: "AWS::SES::Template";
+            readonly VdmAttributes: "AWS::SES::VdmAttributes";
+        };
+        readonly SNS: {
+            readonly Subscription: "AWS::SNS::Subscription";
+            readonly Topic: "AWS::SNS::Topic";
+            readonly TopicPolicy: "AWS::SNS::TopicPolicy";
+        };
+        readonly SQS: {
+            readonly Queue: "AWS::SQS::Queue";
+            readonly QueuePolicy: "AWS::SQS::QueuePolicy";
+        };
+        readonly SSM: {
+            readonly Association: "AWS::SSM::Association";
+            readonly Document: "AWS::SSM::Document";
+            readonly MaintenanceWindow: "AWS::SSM::MaintenanceWindow";
+            readonly MaintenanceWindowTarget: "AWS::SSM::MaintenanceWindowTarget";
+            readonly MaintenanceWindowTask: "AWS::SSM::MaintenanceWindowTask";
+            readonly Parameter: "AWS::SSM::Parameter";
+            readonly PatchBaseline: "AWS::SSM::PatchBaseline";
+            readonly ResourceDataSync: "AWS::SSM::ResourceDataSync";
+            readonly ResourcePolicy: "AWS::SSM::ResourcePolicy";
+        };
+        readonly SSMContacts: {
+            readonly Contact: "AWS::SSMContacts::Contact";
+            readonly ContactChannel: "AWS::SSMContacts::ContactChannel";
+        };
+        readonly SSMIncidents: {
+            readonly ReplicationSet: "AWS::SSMIncidents::ReplicationSet";
+            readonly ResponsePlan: "AWS::SSMIncidents::ResponsePlan";
+        };
+        readonly SSO: {
+            readonly Assignment: "AWS::SSO::Assignment";
+            readonly InstanceAccessControlAttributeConfiguration: "AWS::SSO::InstanceAccessControlAttributeConfiguration";
+            readonly PermissionSet: "AWS::SSO::PermissionSet";
+        };
+        readonly SageMaker: {
+            readonly App: "AWS::SageMaker::App";
+            readonly AppImageConfig: "AWS::SageMaker::AppImageConfig";
+            readonly CodeRepository: "AWS::SageMaker::CodeRepository";
+            readonly DataQualityJobDefinition: "AWS::SageMaker::DataQualityJobDefinition";
+            readonly Device: "AWS::SageMaker::Device";
+            readonly DeviceFleet: "AWS::SageMaker::DeviceFleet";
+            readonly Domain: "AWS::SageMaker::Domain";
+            readonly Endpoint: "AWS::SageMaker::Endpoint";
+            readonly EndpointConfig: "AWS::SageMaker::EndpointConfig";
+            readonly FeatureGroup: "AWS::SageMaker::FeatureGroup";
+            readonly Image: "AWS::SageMaker::Image";
+            readonly ImageVersion: "AWS::SageMaker::ImageVersion";
+            readonly InferenceExperiment: "AWS::SageMaker::InferenceExperiment";
+            readonly Model: "AWS::SageMaker::Model";
+            readonly ModelBiasJobDefinition: "AWS::SageMaker::ModelBiasJobDefinition";
+            readonly ModelCard: "AWS::SageMaker::ModelCard";
+            readonly ModelExplainabilityJobDefinition: "AWS::SageMaker::ModelExplainabilityJobDefinition";
+            readonly ModelPackage: "AWS::SageMaker::ModelPackage";
+            readonly ModelPackageGroup: "AWS::SageMaker::ModelPackageGroup";
+            readonly ModelQualityJobDefinition: "AWS::SageMaker::ModelQualityJobDefinition";
+            readonly MonitoringSchedule: "AWS::SageMaker::MonitoringSchedule";
+            readonly NotebookInstance: "AWS::SageMaker::NotebookInstance";
+            readonly NotebookInstanceLifecycleConfig: "AWS::SageMaker::NotebookInstanceLifecycleConfig";
+            readonly Pipeline: "AWS::SageMaker::Pipeline";
+            readonly Project: "AWS::SageMaker::Project";
+            readonly Space: "AWS::SageMaker::Space";
+            readonly UserProfile: "AWS::SageMaker::UserProfile";
+            readonly Workteam: "AWS::SageMaker::Workteam";
+        };
+        readonly Scheduler: {
+            readonly Schedule: "AWS::Scheduler::Schedule";
+            readonly ScheduleGroup: "AWS::Scheduler::ScheduleGroup";
+        };
+        readonly SecretsManager: {
+            readonly ResourcePolicy: "AWS::SecretsManager::ResourcePolicy";
+            readonly RotationSchedule: "AWS::SecretsManager::RotationSchedule";
+            readonly Secret: "AWS::SecretsManager::Secret";
+            readonly SecretTargetAttachment: "AWS::SecretsManager::SecretTargetAttachment";
+        };
+        readonly SecurityHub: {
+            readonly Hub: "AWS::SecurityHub::Hub";
+        };
+        readonly Serverless: {
+            readonly Api: "AWS::Serverless::Api";
+            readonly Application: "AWS::Serverless::Application";
+            readonly Function: "AWS::Serverless::Function";
+            readonly HttpApi: "AWS::Serverless::HttpApi";
+            readonly LayerVersion: "AWS::Serverless::LayerVersion";
+            readonly SimpleTable: "AWS::Serverless::SimpleTable";
+            readonly StateMachine: "AWS::Serverless::StateMachine";
+        };
+        readonly ServiceCatalog: {
+            readonly AcceptedPortfolioShare: "AWS::ServiceCatalog::AcceptedPortfolioShare";
+            readonly CloudFormationProduct: "AWS::ServiceCatalog::CloudFormationProduct";
+            readonly CloudFormationProvisionedProduct: "AWS::ServiceCatalog::CloudFormationProvisionedProduct";
+            readonly LaunchNotificationConstraint: "AWS::ServiceCatalog::LaunchNotificationConstraint";
+            readonly LaunchRoleConstraint: "AWS::ServiceCatalog::LaunchRoleConstraint";
+            readonly LaunchTemplateConstraint: "AWS::ServiceCatalog::LaunchTemplateConstraint";
+            readonly Portfolio: "AWS::ServiceCatalog::Portfolio";
+            readonly PortfolioPrincipalAssociation: "AWS::ServiceCatalog::PortfolioPrincipalAssociation";
+            readonly PortfolioProductAssociation: "AWS::ServiceCatalog::PortfolioProductAssociation";
+            readonly PortfolioShare: "AWS::ServiceCatalog::PortfolioShare";
+            readonly ResourceUpdateConstraint: "AWS::ServiceCatalog::ResourceUpdateConstraint";
+            readonly ServiceAction: "AWS::ServiceCatalog::ServiceAction";
+            readonly ServiceActionAssociation: "AWS::ServiceCatalog::ServiceActionAssociation";
+            readonly StackSetConstraint: "AWS::ServiceCatalog::StackSetConstraint";
+            readonly TagOption: "AWS::ServiceCatalog::TagOption";
+            readonly TagOptionAssociation: "AWS::ServiceCatalog::TagOptionAssociation";
+        };
+        readonly ServiceCatalogAppRegistry: {
+            readonly Application: "AWS::ServiceCatalogAppRegistry::Application";
+            readonly AttributeGroup: "AWS::ServiceCatalogAppRegistry::AttributeGroup";
+            readonly AttributeGroupAssociation: "AWS::ServiceCatalogAppRegistry::AttributeGroupAssociation";
+            readonly ResourceAssociation: "AWS::ServiceCatalogAppRegistry::ResourceAssociation";
+        };
+        readonly ServiceDiscovery: {
+            readonly HttpNamespace: "AWS::ServiceDiscovery::HttpNamespace";
+            readonly Instance: "AWS::ServiceDiscovery::Instance";
+            readonly PrivateDnsNamespace: "AWS::ServiceDiscovery::PrivateDnsNamespace";
+            readonly PublicDnsNamespace: "AWS::ServiceDiscovery::PublicDnsNamespace";
+            readonly Service: "AWS::ServiceDiscovery::Service";
+        };
+        readonly Signer: {
+            readonly ProfilePermission: "AWS::Signer::ProfilePermission";
+            readonly SigningProfile: "AWS::Signer::SigningProfile";
+        };
+        readonly SimSpaceWeaver: {
+            readonly Simulation: "AWS::SimSpaceWeaver::Simulation";
+        };
+        readonly StepFunctions: {
+            readonly Activity: "AWS::StepFunctions::Activity";
+            readonly StateMachine: "AWS::StepFunctions::StateMachine";
+        };
+        readonly SupportApp: {
+            readonly AccountAlias: "AWS::SupportApp::AccountAlias";
+            readonly SlackChannelConfiguration: "AWS::SupportApp::SlackChannelConfiguration";
+            readonly SlackWorkspaceConfiguration: "AWS::SupportApp::SlackWorkspaceConfiguration";
+        };
+        readonly Synthetics: {
+            readonly Canary: "AWS::Synthetics::Canary";
+            readonly Group: "AWS::Synthetics::Group";
+        };
+        readonly SystemsManagerSAP: {
+            readonly Application: "AWS::SystemsManagerSAP::Application";
+        };
+        readonly Timestream: {
+            readonly Database: "AWS::Timestream::Database";
+            readonly ScheduledQuery: "AWS::Timestream::ScheduledQuery";
+            readonly Table: "AWS::Timestream::Table";
+        };
+        readonly Transfer: {
+            readonly Agreement: "AWS::Transfer::Agreement";
+            readonly Certificate: "AWS::Transfer::Certificate";
+            readonly Connector: "AWS::Transfer::Connector";
+            readonly Profile: "AWS::Transfer::Profile";
+            readonly Server: "AWS::Transfer::Server";
+            readonly User: "AWS::Transfer::User";
+            readonly Workflow: "AWS::Transfer::Workflow";
+        };
+        readonly VoiceID: {
+            readonly Domain: "AWS::VoiceID::Domain";
+        };
+        readonly VpcLattice: {
+            readonly AccessLogSubscription: "AWS::VpcLattice::AccessLogSubscription";
+            readonly AuthPolicy: "AWS::VpcLattice::AuthPolicy";
+            readonly Listener: "AWS::VpcLattice::Listener";
+            readonly ResourcePolicy: "AWS::VpcLattice::ResourcePolicy";
+            readonly Rule: "AWS::VpcLattice::Rule";
+            readonly Service: "AWS::VpcLattice::Service";
+            readonly ServiceNetwork: "AWS::VpcLattice::ServiceNetwork";
+            readonly ServiceNetworkServiceAssociation: "AWS::VpcLattice::ServiceNetworkServiceAssociation";
+            readonly ServiceNetworkVpcAssociation: "AWS::VpcLattice::ServiceNetworkVpcAssociation";
+            readonly TargetGroup: "AWS::VpcLattice::TargetGroup";
+        };
+        readonly WAF: {
+            readonly ByteMatchSet: "AWS::WAF::ByteMatchSet";
+            readonly IPSet: "AWS::WAF::IPSet";
+            readonly Rule: "AWS::WAF::Rule";
+            readonly SizeConstraintSet: "AWS::WAF::SizeConstraintSet";
+            readonly SqlInjectionMatchSet: "AWS::WAF::SqlInjectionMatchSet";
+            readonly WebACL: "AWS::WAF::WebACL";
+            readonly XssMatchSet: "AWS::WAF::XssMatchSet";
+        };
+        readonly WAFRegional: {
+            readonly ByteMatchSet: "AWS::WAFRegional::ByteMatchSet";
+            readonly GeoMatchSet: "AWS::WAFRegional::GeoMatchSet";
+            readonly IPSet: "AWS::WAFRegional::IPSet";
+            readonly RateBasedRule: "AWS::WAFRegional::RateBasedRule";
+            readonly RegexPatternSet: "AWS::WAFRegional::RegexPatternSet";
+            readonly Rule: "AWS::WAFRegional::Rule";
+            readonly SizeConstraintSet: "AWS::WAFRegional::SizeConstraintSet";
+            readonly SqlInjectionMatchSet: "AWS::WAFRegional::SqlInjectionMatchSet";
+            readonly WebACL: "AWS::WAFRegional::WebACL";
+            readonly WebACLAssociation: "AWS::WAFRegional::WebACLAssociation";
+            readonly XssMatchSet: "AWS::WAFRegional::XssMatchSet";
+        };
+        readonly WAFv2: {
+            readonly IPSet: "AWS::WAFv2::IPSet";
+            readonly LoggingConfiguration: "AWS::WAFv2::LoggingConfiguration";
+            readonly RegexPatternSet: "AWS::WAFv2::RegexPatternSet";
+            readonly RuleGroup: "AWS::WAFv2::RuleGroup";
+            readonly WebACL: "AWS::WAFv2::WebACL";
+            readonly WebACLAssociation: "AWS::WAFv2::WebACLAssociation";
+        };
+        readonly Wisdom: {
+            readonly Assistant: "AWS::Wisdom::Assistant";
+            readonly AssistantAssociation: "AWS::Wisdom::AssistantAssociation";
+            readonly KnowledgeBase: "AWS::Wisdom::KnowledgeBase";
+        };
+        readonly WorkSpaces: {
+            readonly ConnectionAlias: "AWS::WorkSpaces::ConnectionAlias";
+            readonly Workspace: "AWS::WorkSpaces::Workspace";
+        };
+        readonly XRay: {
+            readonly Group: "AWS::XRay::Group";
+            readonly ResourcePolicy: "AWS::XRay::ResourcePolicy";
+            readonly SamplingRule: "AWS::XRay::SamplingRule";
+        };
+        readonly ASK: {
+            readonly Skill: "Alexa::ASK::Skill";
+        };
+    };
+}

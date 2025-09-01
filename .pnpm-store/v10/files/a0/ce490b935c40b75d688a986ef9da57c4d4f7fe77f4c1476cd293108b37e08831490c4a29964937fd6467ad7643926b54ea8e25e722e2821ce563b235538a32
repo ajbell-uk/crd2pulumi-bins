@@ -1,0 +1,28 @@
+import { Task } from "projen";
+import { PythonProject, PythonProjectOptions } from "projen/lib/python";
+import { CodeGenerationSourceOptions, GeneratedProjectOptions } from "../../../types";
+import { CodegenOptions } from "../../components/utils";
+import { GeneratedHandlersProjects } from "../../generate";
+import { GeneratedPythonRuntimeBaseProject } from "../../runtime/generated-python-runtime-base-project";
+export interface GeneratedPythonInfrastructureBaseOptions extends PythonProjectOptions, GeneratedProjectOptions {
+}
+export interface GeneratedPythonCdkInfrastructureBaseProjectOptions extends GeneratedPythonInfrastructureBaseOptions, CodeGenerationSourceOptions {
+    /**
+     * The generated python types
+     */
+    readonly generatedPythonTypes: GeneratedPythonRuntimeBaseProject;
+    /**
+     * Generated handlers projects
+     */
+    readonly generatedHandlers: GeneratedHandlersProjects;
+}
+export declare abstract class GeneratedPythonCdkInfrastructureBaseProject extends PythonProject {
+    /**
+     * Options configured for the project
+     */
+    protected readonly options: GeneratedPythonCdkInfrastructureBaseProjectOptions;
+    protected readonly generateTask: Task;
+    constructor(options: GeneratedPythonCdkInfrastructureBaseProjectOptions);
+    buildGenerateCommandArgs: () => string;
+    protected abstract buildCodegenOptions(): CodegenOptions;
+}

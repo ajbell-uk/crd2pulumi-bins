@@ -1,0 +1,178 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { AuthorizationType } from "aws-cdk-lib/aws-apigateway";
+import { IUserPool } from "aws-cdk-lib/aws-cognito";
+import { IFunction } from "aws-cdk-lib/aws-lambda";
+/**
+ * Properties for an authorizer
+ */
+export interface AuthorizerProps {
+    /**
+     * The unique identifier for the authorizer
+     */
+    readonly authorizerId: string;
+    /**
+     * The type of the authorizer
+     */
+    readonly authorizationType: AuthorizationType;
+    /**
+     * Scopes for the authorizer, if any
+     */
+    readonly authorizationScopes?: string[];
+}
+/**
+ * An authorizer for authorizing API requests
+ */
+export declare abstract class Authorizer {
+    /**
+     * The unique identifier for the authorizer
+     */
+    readonly authorizerId: string;
+    /**
+     * The type of the authorizer
+     */
+    readonly authorizationType: AuthorizationType;
+    /**
+     * Scopes for the authorizer, if any
+     */
+    readonly authorizationScopes?: string[];
+    constructor(props: AuthorizerProps);
+}
+/**
+ * Properties used to configure a cognito authorizer
+ */
+export interface CognitoAuthorizerProps {
+    /**
+     * Unique identifier for this authorizer
+     */
+    readonly authorizerId: string;
+    /**
+     * The Cognito user pools associated with this authorizer
+     */
+    readonly userPools: IUserPool[];
+    /**
+     * A list of authorization scopes configured on the method. When used as the default authorizer, these scopes will be
+     * applied to all methods without an authorizer at the integration level.
+     * @see https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-method.html#cfn-apigateway-method-authorizationscopes
+     * @default []
+     */
+    readonly authorizationScopes?: string[];
+}
+/**
+ * An authorizer that uses Cognito identity or access tokens.
+ */
+export declare class CognitoAuthorizer extends Authorizer {
+    /**
+     * The Cognito user pools associated with this authorizer
+     */
+    readonly userPools: IUserPool[];
+    constructor(props: CognitoAuthorizerProps);
+    /**
+     * Returns this authorizer with scopes applied, intended for usage in individual operations where scopes may differ
+     * on a per-operation basis
+     * @see https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-method.html#cfn-apigateway-method-authorizationscopes
+     * @param authorizationScopes the scopes to apply
+     */
+    withScopes(...authorizationScopes: string[]): CognitoAuthorizer;
+}
+/**
+ * The type of custom authorizer
+ * @see https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-authorizer.html#cfn-apigateway-authorizer-type
+ */
+export declare enum CustomAuthorizerType {
+    /**
+     * A custom authorizer that uses a Lambda function.
+     */
+    TOKEN = "token",
+    /**
+     * An authorizer that uses a Lambda function using incoming request parameters.
+     */
+    REQUEST = "request"
+}
+/**
+ * Properties used to configure a custom authorizer
+ */
+export interface CustomAuthorizerProps {
+    /**
+     * Unique identifier for this authorizer
+     */
+    readonly authorizerId: string;
+    /**
+     * The lambda function used to authorize requests
+     */
+    readonly function: IFunction;
+    /**
+     * The type of custom authorizer
+     * @see https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-authorizer.html#cfn-apigateway-authorizer-type
+     * @default CustomAuthorizerType.TOKEN
+     */
+    readonly type?: CustomAuthorizerType;
+    /**
+     * The source of the identity in an incoming request
+     * @see https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-authorizer.html#cfn-apigateway-authorizer-identitysource
+     * @default "method.request.header.Authorization"
+     */
+    readonly identitySource?: string;
+    /**
+     * The number of seconds during which the authorizer result is cached
+     * @default 300
+     */
+    readonly authorizerResultTtlInSeconds?: number;
+}
+/**
+ * An authorizer that uses a lambda function to authorize requests
+ */
+export declare class CustomAuthorizer extends Authorizer {
+    /**
+     * The lambda function used to authorize requests
+     */
+    readonly function: IFunction;
+    /**
+     * The type of custom authorizer
+     * @see https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-authorizer.html#cfn-apigateway-authorizer-type
+     */
+    readonly type: CustomAuthorizerType;
+    /**
+     * The source of the identity in an incoming request
+     * @see https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-authorizer.html#cfn-apigateway-authorizer-identitysource
+     */
+    readonly identitySource: string;
+    /**
+     * The number of seconds during which the authorizer result is cached
+     */
+    readonly authorizerResultTtlInSeconds: number;
+    constructor(props: CustomAuthorizerProps);
+}
+/**
+ * No authorizer
+ */
+export declare class NoneAuthorizer extends Authorizer {
+    constructor();
+}
+/**
+ * An IAM authorizer
+ */
+export declare class IamAuthorizer extends Authorizer {
+    constructor();
+}
+/**
+ * Class used to construct authorizers for use in the OpenApiGatewayLambdaApi construct
+ */
+export declare class Authorizers {
+    /**
+     * An IAM authorizer which uses AWS signature version 4 to authorize requests
+     */
+    static iam(): IamAuthorizer;
+    /**
+     * No authorizer
+     */
+    static none(): NoneAuthorizer;
+    /**
+     * A Cognito User Pools authorizer
+     */
+    static cognito(props: CognitoAuthorizerProps): CognitoAuthorizer;
+    /**
+     * A custom authorizer
+     */
+    static custom(props: CustomAuthorizerProps): CustomAuthorizer;
+}

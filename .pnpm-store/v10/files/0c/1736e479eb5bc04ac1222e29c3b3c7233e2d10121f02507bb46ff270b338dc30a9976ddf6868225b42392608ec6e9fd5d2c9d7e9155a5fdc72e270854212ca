@@ -1,0 +1,28 @@
+import { Project, FileBase, IResolver } from "projen";
+import { Language } from "../../../languages";
+/**
+ * Options for the aws-pdk/prelude.smithy file
+ */
+export interface SmithyAwsPdkPreludeOptions {
+    /**
+     * Path to the generated model directory in which to add the prelude
+     */
+    readonly generatedModelDir: string;
+    /**
+     * Namespace for the smithy service
+     */
+    readonly serviceNamespace: string;
+    /**
+     * Languages selected for handlers
+     */
+    readonly handlerLanguages?: Language[];
+}
+/**
+ * Synthesize the aws-pdk/prelude.smithy file
+ */
+export declare class SmithyAwsPdkPrelude extends FileBase {
+    static buildHandlerTraitValidators: (namespace: string, trait: string, handlerLanguages?: Language[]) => string;
+    private readonly options;
+    constructor(project: Project, options: SmithyAwsPdkPreludeOptions);
+    synthesizeContent(_: IResolver): string | undefined;
+}

@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Properties = void 0;
+const property_1 = require("./property");
+class Properties {
+    constructor(transpile, properties) {
+        this.properties = properties
+            .filter((p) => !p.protected && !p.const)
+            .map((p) => new property_1.Property(transpile, p));
+    }
+    toJson() {
+        return this.properties.map((p) => p.toJson());
+    }
+}
+exports.Properties = Properties;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHJvcGVydGllcy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9kb2NnZW4vdmlldy9wcm9wZXJ0aWVzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUNBLHlDQUFzQztBQUl0QyxNQUFhLFVBQVU7SUFFckIsWUFBWSxTQUFvQixFQUFFLFVBQThCO1FBQzlELElBQUksQ0FBQyxVQUFVLEdBQUcsVUFBVTthQUN6QixNQUFNLENBQUMsQ0FBQyxDQUFDLEVBQUUsRUFBRSxDQUFDLENBQUMsQ0FBQyxDQUFDLFNBQVMsSUFBSSxDQUFDLENBQUMsQ0FBQyxLQUFLLENBQUM7YUFDdkMsR0FBRyxDQUFDLENBQUMsQ0FBQyxFQUFFLEVBQUUsQ0FBQyxJQUFJLG1CQUFRLENBQUMsU0FBUyxFQUFFLENBQUMsQ0FBQyxDQUFDLENBQUM7SUFDNUMsQ0FBQztJQUVNLE1BQU07UUFDWCxPQUFPLElBQUksQ0FBQyxVQUFVLENBQUMsR0FBRyxDQUFDLENBQUMsQ0FBQyxFQUFFLEVBQUUsQ0FBQyxDQUFDLENBQUMsTUFBTSxFQUFFLENBQUMsQ0FBQztJQUNoRCxDQUFDO0NBQ0Y7QUFYRCxnQ0FXQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIHJlZmxlY3QgZnJvbSAnanNpaS1yZWZsZWN0JztcbmltcG9ydCB7IFByb3BlcnR5IH0gZnJvbSAnLi9wcm9wZXJ0eSc7XG5pbXBvcnQgeyBQcm9wZXJ0eVNjaGVtYSB9IGZyb20gJy4uL3NjaGVtYSc7XG5pbXBvcnQgeyBUcmFuc3BpbGUgfSBmcm9tICcuLi90cmFuc3BpbGUvdHJhbnNwaWxlJztcblxuZXhwb3J0IGNsYXNzIFByb3BlcnRpZXMge1xuICBwcml2YXRlIHJlYWRvbmx5IHByb3BlcnRpZXM6IFByb3BlcnR5W107XG4gIGNvbnN0cnVjdG9yKHRyYW5zcGlsZTogVHJhbnNwaWxlLCBwcm9wZXJ0aWVzOiByZWZsZWN0LlByb3BlcnR5W10pIHtcbiAgICB0aGlzLnByb3BlcnRpZXMgPSBwcm9wZXJ0aWVzXG4gICAgICAuZmlsdGVyKChwKSA9PiAhcC5wcm90ZWN0ZWQgJiYgIXAuY29uc3QpXG4gICAgICAubWFwKChwKSA9PiBuZXcgUHJvcGVydHkodHJhbnNwaWxlLCBwKSk7XG4gIH1cblxuICBwdWJsaWMgdG9Kc29uKCk6IFByb3BlcnR5U2NoZW1hW10ge1xuICAgIHJldHVybiB0aGlzLnByb3BlcnRpZXMubWFwKChwKSA9PiBwLnRvSnNvbigpKTtcbiAgfVxufVxuIl19

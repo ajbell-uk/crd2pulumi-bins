@@ -1,0 +1,46 @@
+/** Default font color for categories */
+export declare const CATEGORY_DEFAULT_FONT_COLOR = "#232F3E";
+/** Category definition */
+export interface AwsCategoryDefinition {
+    readonly id: string;
+    readonly name: string;
+    readonly fillColor: string;
+    readonly gradientColor: string;
+    readonly fontColor?: string;
+    readonly variants?: string[];
+}
+/** Record of all category definitions keyed by id */
+export declare const AwsCategoryDefinitions: {
+    readonly analytics: AwsCategoryDefinition;
+    readonly application_integration: AwsCategoryDefinition;
+    readonly blockchain: AwsCategoryDefinition;
+    readonly business_applications: AwsCategoryDefinition;
+    readonly cloud_financial_management: AwsCategoryDefinition;
+    readonly compute: AwsCategoryDefinition;
+    readonly containers: AwsCategoryDefinition;
+    readonly customer_enablement: AwsCategoryDefinition;
+    readonly database: AwsCategoryDefinition;
+    readonly developer_tools: AwsCategoryDefinition;
+    readonly end_user_computing: AwsCategoryDefinition;
+    readonly front_end_web_mobile: AwsCategoryDefinition;
+    readonly game_tech: AwsCategoryDefinition;
+    readonly general: AwsCategoryDefinition;
+    readonly internet_of_things: AwsCategoryDefinition;
+    readonly machine_learning: AwsCategoryDefinition;
+    readonly management_governance: AwsCategoryDefinition;
+    readonly media_services: AwsCategoryDefinition;
+    readonly migration_transfer: AwsCategoryDefinition;
+    readonly networking_content_delivery: AwsCategoryDefinition;
+    readonly quantum_technologies: AwsCategoryDefinition;
+    readonly robotics: AwsCategoryDefinition;
+    readonly satellite: AwsCategoryDefinition;
+    readonly security_identity_compliance: AwsCategoryDefinition;
+    readonly serverless: AwsCategoryDefinition;
+    readonly storage: AwsCategoryDefinition;
+    readonly vr_ar: AwsCategoryDefinition;
+};
+/** Literal union of all available category ids */
+export type AwsCategoryId = keyof typeof AwsCategoryDefinitions;
+/** Find category definition for given value */
+export declare function findAwsCategoryDefinition(value: string): AwsCategoryDefinition;
+export declare const GENERAL_CATEGORY_ID: string;
