@@ -44,14 +44,21 @@ export class RootMonorepoTsProject extends MonorepoTsProject {
     }
     const newSteps = releaseJob.steps.map((step) => {
       switch (step.name) {
-        case 'Checkout':
+        case 'Checkout': {
+          let sparseCheckout: string | undefined
+          if(name.endsWith('_npm')){
+            sparseCheckout = `packages/${workflow?.name.replace('release_', '')}`
+          }
+
           return {
             ...(step as github.workflows.Step),
             with: {
               ...(step as github.workflows.Step).with,
               lfs: true,
+              ...sparseCheckout ? { sparse_checkout: sparseCheckout } : {},
             },
           }
+        }
         default:
           return step
       }
