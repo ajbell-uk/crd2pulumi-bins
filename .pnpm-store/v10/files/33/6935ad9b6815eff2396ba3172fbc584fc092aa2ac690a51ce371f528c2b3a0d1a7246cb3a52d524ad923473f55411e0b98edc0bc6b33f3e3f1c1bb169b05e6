@@ -1,7 +1,0 @@
-/** The short version number for this JSII compiler (e.g: `X.Y.Z`) */
-export declare const SHORT_VERSION = "5.8.18";
-/** The qualified version number for this JSII compiler (e.g: `X.Y.Z (build #######)`) */
-export declare const VERSION = "5.8.18 (build f5c30fc)";
-/** The release line identifier for this JSII compiler (e.g: `X.Y`) */
-export declare const RELEASE_LINE = "5.8";
-//# sourceMappingURL=version.d.ts.map

@@ -1,9 +1,0 @@
-import { Themes, Theme } from "./types";
-export * from "./types";
-export * from "./light";
-export * from "./dark";
-/** The default theme id */
-export declare const DefaultThemeId: Themes;
-/** The default them definition */
-export declare const DefaultTheme: Theme;
-export declare function resolveTheme(themeId?: Themes): Theme;

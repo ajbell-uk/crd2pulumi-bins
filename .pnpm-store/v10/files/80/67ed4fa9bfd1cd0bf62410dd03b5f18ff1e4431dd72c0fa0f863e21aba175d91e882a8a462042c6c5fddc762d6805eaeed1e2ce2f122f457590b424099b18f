@@ -1,3 +1,0 @@
-/** The qualified version number for this JSII compiler. */
-export declare const VERSION = "1.113.0 (build fc68b25)";
-//# sourceMappingURL=version.d.ts.map

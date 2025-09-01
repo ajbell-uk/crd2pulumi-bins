@@ -1,6 +1,0 @@
-import { AwsAsset } from "../../generated/assets";
-/**
- * Resolve resource name value to asset based service key.
- * @internal
- */
-export declare function resolveResourceName(value: string, service?: AwsAsset.Service): AwsAsset.Resource;

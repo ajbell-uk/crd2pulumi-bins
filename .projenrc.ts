@@ -1,6 +1,6 @@
-import { cdk, type github, javascript } from 'projen'
+import { cdk, javascript } from 'projen'
 
-import { MonorepoTsProject } from './projenrc/monorepo/monorepo-ts'
+import { RootMonorepoTsProject } from './projenrc/root-monorepo-project'
 
 const defaultReleaseBranch = 'main'
 const repository = 'https://github.com/ajbell-uk/crd2pulumi-bins.git'
@@ -74,42 +74,6 @@ const biomeOptions: javascript.BiomeOptions = {
   },
 }
 
-const root = new MonorepoTsProject({
-  defaultReleaseBranch,
-  name: 'crd2pulumi-workspace',
-  projenrcTs: true,
-  eslint: false,
-  jest: false,
-  depsUpgrade: false,
-  depsUpgradeOptions: { workflow: false },
-  projenVersion: '~0.95.0',
-  typescriptVersion: '~5.8.0',
-  authorOrganization: true,
-  authorName: 'AJ Bell',
-  buildWorkflow: false,
-  readme: { filename: 'README.md', contents: '# title' },
-  release: false,
-  package: false,
-  repository,
-  packageManager: javascript.NodePackageManager.PNPM,
-  biome: true,
-  prettier: false,
-  sampleCode: false,
-  github: true,
-  githubOptions: {
-    downloadLfs: true,
-  },
-  buildWorkflowOptions,
-  biomeOptions,
-  devDeps: ['@aws/pdk']
-})
-
-// root.package.addField('workspaces', ['packages/*'])
-// root.package.addField('private', true)
-// root.addTask('update-bin', {
-//   exec: 'yarn exec nx run-many --target=update-bin',
-// })
-
 const projects = [
   {
     name: 'crd2pulumi-darwin-amd64',
@@ -138,6 +102,52 @@ const projects = [
     binUrl: `https://github.com/pulumi/crd2pulumi/releases/download/v${crd2pulumiVersion}/crd2pulumi-v${crd2pulumiVersion}-linux-arm64.tar.gz`,
   },
 ]
+
+const releaseWorkflows: Record<string, string[]> = {}
+for (const project of projects) {
+  releaseWorkflows[`release_${project.name}`] = ['release', 'release_npm']
+}
+
+const root = new RootMonorepoTsProject({
+  defaultReleaseBranch,
+  name: 'crd2pulumi-workspace',
+  projenrcTs: true,
+  eslint: false,
+  jest: false,
+  depsUpgrade: false,
+  depsUpgradeOptions: { workflow: false },
+  projenVersion: '~0.95.0',
+  typescriptVersion: '~5.8.0',
+  authorOrganization: true,
+  authorName: 'AJ Bell',
+  buildWorkflow: false,
+  readme: { filename: 'README.md', contents: '# title' },
+  release: false,
+  package: false,
+  repository,
+  packageManager: javascript.NodePackageManager.YARN_BERRY,
+  yarnBerryOptions: {
+    version: '4.9.2',
+    yarnRcOptions: {
+      nodeLinker: javascript.YarnNodeLinker.NODE_MODULES,
+    },
+  },
+  biome: true,
+  prettier: false,
+  sampleCode: false,
+  github: true,
+  githubOptions: {
+    downloadLfs: true,
+  },
+  buildWorkflowOptions,
+  biomeOptions,
+  devDeps: ['@aws/pdk'],
+  releaseWorkflows,
+})
+
+root.addTask('update-bin', {
+  exec: 'yarn exec nx run-many --target=update-bin',
+})
 
 for (const project of projects) {
   const childProject = new cdk.JsiiProject({
@@ -194,38 +204,47 @@ for (const project of projects) {
       command: 'npx project update-bin',
     },
   })
-  updateGitHubJobsSteps('release', root.github?.tryFindWorkflow(`release_${project.name}`))
   childProject.synth()
 }
 
 root.synth()
 
-function updateGitHubJobsSteps(name: string, workflow?: github.GithubWorkflow) {
-  const releaseJob = workflow?.getJob(name) as github.workflows.Job | undefined
-  if (!releaseJob) {
-    return
-  }
-  const newSteps = releaseJob.steps.map((step) => {
-    switch (step.name) {
-      case 'Checkout':
-        return {
-          ...(step as github.workflows.Step),
-          with: {
-            ...(step as github.workflows.Step).with,
-            lfs: true,
-          },
-        }
-      default:
-        return step
-    }
-  })
+// for (const [workflow, jobs] of Object.entries(releaseWorkflows)) {
+//   for (const job of jobs) {
+//     const workflowFile = root.tryFindObjectFile(`.github/workflows/release_${workflow}.yml`)
+//     updateGitHubJobsSteps(job, root.github?.tryFindWorkflow(workflow))
+//     workflowFile?.synthesize()
+//   }
+// }
 
-  const newJob: github.workflows.Job = {
-    ...releaseJob,
-    steps: newSteps,
-  }
+// function updateGitHubJobsSteps(name: string, workflow?: github.GithubWorkflow) {
+//   const releaseJob = workflow?.getJob(name) as github.workflows.Job | undefined
+//   if (!releaseJob) {
+//     return
+//   }
+//   const newSteps = releaseJob.steps.map((step) => {
+//     switch (step.name) {
+//       case 'Checkout':
+//         return {
+//           ...(step as github.workflows.Step),
+//           with: {
+//             ...(step as github.workflows.Step).with,
+//             lfs: true,
+//           },
+//         }
+//       default:
+//         return step
+//     }
+//   })
 
-  if (releaseJob) {
-    workflow?.updateJob(name, newJob)
-  }
-}
+//   const newJob: github.workflows.Job = {
+//     ...releaseJob,
+//     steps: newSteps,
+//   }
+
+//   if (releaseJob) {
+//     workflow?.updateJob(name, newJob)
+//   }
+
+//   workflow?.synthesize()
+// }

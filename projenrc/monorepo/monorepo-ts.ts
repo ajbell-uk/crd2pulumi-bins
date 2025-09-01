@@ -495,13 +495,13 @@ export class MonorepoTsProject extends TypeScriptProject implements INxProjectCo
       if (NodePackageUtils.isNodeProject(subProject)) {
         const subNodeProject: NodeProject = subProject as NodeProject
         const subNodeProjectResolver =
-          // @ts-ignore - `resolveDepsAndWritePackageJson` is private
+          // @ts-expect-error - `resolveDepsAndWritePackageJson` is private
           subNodeProject.package.resolveDepsAndWritePackageJson
-        // @ts-ignore - `installDependencies` is private
+        // @ts-expect-error - `installDependencies` is private
         subNodeProject.package.installDependencies = () => {
           this.subNodeProjectResolves.push(() => subNodeProjectResolver.apply(subNodeProject.package))
         }
-        // @ts-ignore - `resolveDepsAndWritePackageJson` is private
+        // @ts-expect-error - `resolveDepsAndWritePackageJson` is private
         subNodeProject.package.resolveDepsAndWritePackageJson = () => {}
       }
     })
@@ -525,13 +525,13 @@ export class MonorepoTsProject extends TypeScriptProject implements INxProjectCo
     if (this.subNodeProjectResolves.length) {
       if (!this.package.file.changed) {
         // Force workspace install deps since it would not have been invoked during `postSynthesis`.
-        // @ts-ignore - `installDependencies` is private
+        // @ts-expect-error - `installDependencies` is private
         this.package.installDependencies()
       }
       const completedResolves = this.subNodeProjectResolves.map((resolve) => resolve())
       if (completedResolves.some(Boolean)) {
         // Indicates that a subproject dependency has been resolved from '*', so update the lockfile.
-        // @ts-ignore - `installDependencies` is private
+        // @ts-expect-error - `installDependencies` is private
         this.package.installDependencies()
       }
     }
@@ -639,6 +639,7 @@ export class MonorepoTsProject extends TypeScriptProject implements INxProjectCo
    */
   private disableNodeWarnings() {
     this.tasks.addEnvironment('NODE_NO_WARNINGS', '1')
+    // biome-ignore lint/suspicious/useIterableCallbackReturn: <explanation>
     this.subprojects.forEach((subProject) => subProject.tasks.addEnvironment('NODE_NO_WARNINGS', '1'))
   }
 

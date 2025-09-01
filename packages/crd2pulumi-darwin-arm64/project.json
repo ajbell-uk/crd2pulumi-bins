@@ -5,119 +5,119 @@
     "default": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen default",
+        "command": "yarn exec projen default",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "pre-compile": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen pre-compile",
+        "command": "yarn exec projen pre-compile",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "compile": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen compile",
+        "command": "yarn exec projen compile",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "post-compile": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen post-compile",
+        "command": "yarn exec projen post-compile",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "test": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen test",
+        "command": "yarn exec projen test",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "package": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen package",
+        "command": "yarn exec projen package",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen build",
+        "command": "yarn exec projen build",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "test:watch": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen test:watch",
+        "command": "yarn exec projen test:watch",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "bump": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen bump",
+        "command": "yarn exec projen bump",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "unbump": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen unbump",
+        "command": "yarn exec projen unbump",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "release": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen release",
+        "command": "yarn exec projen release",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "watch": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen watch",
+        "command": "yarn exec projen watch",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "compat": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen compat",
+        "command": "yarn exec projen compat",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "package-all": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen package-all",
+        "command": "yarn exec projen package-all",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "package:js": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen package:js",
+        "command": "yarn exec projen package:js",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "docgen": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen docgen",
+        "command": "yarn exec projen docgen",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     },
     "update-bin": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm exec projen update-bin",
+        "command": "yarn exec projen update-bin",
         "cwd": "packages/crd2pulumi-darwin-arm64"
       }
     }

@@ -1,7 +1,0 @@
-/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
-SPDX-License-Identifier: Apache-2.0 */
-import type { AwsAsset } from "../../generated/assets";
-/** Mapping of service variants to asset key service name */
-export declare const NORMALIZED_SERVICE_VARIANTS: {
-    [K in AwsAsset.Service]?: string[];
-};

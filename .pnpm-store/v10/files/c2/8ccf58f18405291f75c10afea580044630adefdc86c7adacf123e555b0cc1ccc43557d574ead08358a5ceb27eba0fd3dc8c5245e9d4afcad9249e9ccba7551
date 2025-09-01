@@ -1,8 +1,0 @@
-import { GeneratedTypescriptCdkInfrastructureBaseProject, GeneratedTypescriptCdkInfrastructureBaseProjectOptions } from "./generated-typescript-cdk-infrastructure-base-project";
-import { CodegenOptions } from "../../components/utils";
-export interface GeneratedTypescriptAsyncCdkInfrastructureProjectOptions extends GeneratedTypescriptCdkInfrastructureBaseProjectOptions {
-}
-export declare class GeneratedTypescriptAsyncCdkInfrastructureProject extends GeneratedTypescriptCdkInfrastructureBaseProject {
-    constructor(options: GeneratedTypescriptAsyncCdkInfrastructureProjectOptions);
-    buildCodegenOptions(): CodegenOptions;
-}

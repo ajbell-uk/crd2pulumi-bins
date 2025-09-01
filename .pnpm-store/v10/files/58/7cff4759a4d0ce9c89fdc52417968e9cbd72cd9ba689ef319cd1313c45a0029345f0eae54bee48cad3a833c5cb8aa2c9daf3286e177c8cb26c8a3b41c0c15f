@@ -1,8 +1,0 @@
-/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
-SPDX-License-Identifier: Apache-2.0 */
-import { Project } from "projen";
-export declare const DEFAULT_PROJEN_VERSION = "^0.82.8";
-/**
- * Synchronise all subproject projen versions to the given projen version
- */
-export declare const syncProjenVersions: (subProjects: Project[], projenVersion?: string) => void;

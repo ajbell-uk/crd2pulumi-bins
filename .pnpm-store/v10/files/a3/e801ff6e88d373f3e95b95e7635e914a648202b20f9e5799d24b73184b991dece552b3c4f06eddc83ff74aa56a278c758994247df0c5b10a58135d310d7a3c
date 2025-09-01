@@ -1,5 +1,0 @@
-/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
-SPDX-License-Identifier: Apache-2.0 */
-import { Graph } from "../core";
-/** @internal */
-export declare function findReferencesOfSubGraph(subgraph: Graph.Node, depth?: number, predicate?: Graph.INodePredicate, strict?: boolean): Graph.Node[];

@@ -1,7 +1,0 @@
-import { IConstruct } from "constructs";
-import * as Graph from "./graph";
-/**
- * Computes the graph store for a given Cdk construct, usually App.
- * @internal
- */
-export declare function computeGraph(root: IConstruct): Graph.Store;

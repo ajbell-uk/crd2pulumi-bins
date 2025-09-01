@@ -1,8 +1,0 @@
-import { GeneratedPythonCdkInfrastructureBaseProject, GeneratedPythonCdkInfrastructureBaseProjectOptions } from "./generated-python-cdk-infrastructure-base-project";
-import { CodegenOptions } from "../../components/utils";
-export interface GeneratedPythonAsyncCdkInfrastructureProjectOptions extends GeneratedPythonCdkInfrastructureBaseProjectOptions {
-}
-export declare class GeneratedPythonAsyncCdkInfrastructureProject extends GeneratedPythonCdkInfrastructureBaseProject {
-    constructor(options: GeneratedPythonAsyncCdkInfrastructureProjectOptions);
-    buildCodegenOptions(): CodegenOptions;
-}
