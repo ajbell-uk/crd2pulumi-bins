@@ -1,0 +1,30 @@
+import { Task } from "projen";
+import { TypeScriptProject } from "projen/lib/typescript";
+import { NodeVersion } from "../../languages";
+import { CodeGenerationSourceOptions, GeneratedTypeScriptHandlersOptions } from "../../types";
+import { CodegenOptions } from "../components/utils";
+import { GeneratedTypescriptRuntimeBaseProject } from "../runtime/generated-typescript-runtime-base-project";
+export interface GeneratedTypescriptHandlersBaseProjectOptions extends GeneratedTypeScriptHandlersOptions, CodeGenerationSourceOptions {
+    /**
+     * Generated typescript types project
+     */
+    readonly generatedTypescriptTypes: GeneratedTypescriptRuntimeBaseProject;
+    /**
+     * Whether the infrastructure and client projects are parented by an monorepo or not
+     */
+    readonly isWithinMonorepo?: boolean;
+}
+export declare abstract class GeneratedTypescriptHandlersBaseProject extends TypeScriptProject {
+    /**
+     * Options configured for the project
+     */
+    protected readonly options: GeneratedTypescriptHandlersBaseProjectOptions;
+    /**
+     * Node runtime version for the handlers
+     */
+    readonly runtimeVersion: NodeVersion;
+    protected readonly generateTask: Task;
+    constructor(options: GeneratedTypescriptHandlersBaseProjectOptions);
+    buildGenerateCommandArgs: () => string;
+    protected abstract buildCodegenOptions(): CodegenOptions;
+}

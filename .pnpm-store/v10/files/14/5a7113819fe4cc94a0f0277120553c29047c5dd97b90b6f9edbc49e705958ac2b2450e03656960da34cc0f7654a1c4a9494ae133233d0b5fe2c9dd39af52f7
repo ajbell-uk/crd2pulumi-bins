@@ -1,0 +1,76 @@
+import { Project, Task } from "projen";
+import { JavaProject } from "projen/lib/java";
+import { PythonProject } from "projen/lib/python";
+import { JavaProjectOptions } from "./java-project-options";
+import { NxConfigurator, INxProjectCore } from "../../components/nx-configurator";
+import { NxWorkspace } from "../../components/nx-workspace";
+import { Nx } from "../../nx-types";
+/**
+ * Configuration options for the NxMonorepoJavaProject.
+ */
+export interface MonorepoJavaOptions extends JavaProjectOptions {
+    readonly defaultReleaseBranch?: string;
+    /**
+     * Whether to disable the generation of default licenses.
+     *
+     * @default false
+     */
+    readonly disableDefaultLicenses?: boolean;
+}
+/**
+ * This project type will bootstrap a NX based monorepo with support for polygot
+ * builds, build caching, dependency graph visualization and much more.
+ *
+ * @pjid monorepo-java
+ */
+export declare class MonorepoJavaProject extends JavaProject implements INxProjectCore {
+    readonly nxConfigurator: NxConfigurator;
+    private readonly installTask;
+    /**
+     * Version of projen used by the monorepo and its subprojects
+     */
+    private readonly projenVersion;
+    constructor(options: MonorepoJavaOptions);
+    /**
+     * @inheritdoc
+     */
+    get nx(): NxWorkspace;
+    /**
+     * @inheritdoc
+     */
+    execNxRunManyCommand(options: Nx.RunManyOptions): string;
+    /**
+     * @inheritdoc
+     */
+    composeNxRunManyCommand(options: Nx.RunManyOptions): string[];
+    /**
+     * @inheritdoc
+     */
+    addNxRunManyTask(name: string, options: Nx.RunManyOptions): Task;
+    /**
+     * @inheritdoc
+     */
+    addImplicitDependency(dependent: Project, dependee: string | Project): void;
+    /**
+     * @inheritdoc
+     */
+    addJavaDependency(dependent: JavaProject, dependee: JavaProject): void;
+    /**
+     * @inheritdoc
+     */
+    addPythonPoetryDependency(dependent: PythonProject, dependee: PythonProject): void;
+    private addUpgradeDepsTask;
+    /**
+     * @inheritdoc
+     */
+    preSynthesize(): void;
+    /**
+     * @inheritDoc
+     */
+    synth(): void;
+    postSynthesize(): void;
+    /**
+     * Run the install task which will install nx locally
+     */
+    private installNx;
+}

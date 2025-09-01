@@ -1,0 +1,24 @@
+import { TypeSafeApiModelBuildOutputOptions } from "../type-safe-api-model-build";
+import { SmithyBaseProject, SmithyBaseProjectOptions } from "./smithy-base-project";
+import { SmithyProjectDefinition } from "./smithy-project-definition";
+import { SmithyServiceProjectDefinition, SmithyServiceProjectDefinitionOptions } from "./smithy-service-project-definition";
+/**
+ * Options for the Smithy REST API model
+ */
+export interface SmithyModelProjectOptions extends SmithyBaseProjectOptions, SmithyServiceProjectDefinitionOptions, TypeSafeApiModelBuildOutputOptions {
+}
+/**
+ * Smithy model project for a REST API
+ */
+export declare class SmithyModelProject extends SmithyBaseProject {
+    /**
+     * Name of the API
+     */
+    readonly apiName: string;
+    /**
+     * Smithy model and build settings
+     */
+    readonly definition: SmithyServiceProjectDefinition;
+    constructor(options: SmithyModelProjectOptions);
+    smithyProjectDefinition(): SmithyProjectDefinition;
+}

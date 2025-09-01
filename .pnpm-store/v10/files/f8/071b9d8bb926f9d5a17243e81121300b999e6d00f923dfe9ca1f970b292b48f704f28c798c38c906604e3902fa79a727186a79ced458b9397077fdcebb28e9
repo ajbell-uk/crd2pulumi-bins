@@ -1,0 +1,143 @@
+import { Project, ProjectOptions } from "projen";
+import { Language, WebSocketDocumentationFormat, WebSocketLibrary } from "./languages";
+import { ModelConfiguration } from "./type-safe-api-project";
+import { GeneratedRuntimeCodeOptions, GeneratedCodeProjects, GeneratedInfrastructureCodeOptions, GeneratedHandlersCodeOptions, ProjectCollections, GeneratedWebSocketLibraryOptions, GeneratedWebSocketLibraryProjects, GeneratedWebSocketDocumentationProjects, GeneratedWebSocketDocumentationOptions, WebSocketModelProject } from "./types";
+/**
+ * Configuration for generated runtime projects
+ */
+export interface WebSocketRuntimeConfiguration {
+    /**
+     * The languages that runtime projects will be generated in. These projects can be used to provide type safety for
+     * both client and server projects.
+     */
+    readonly languages: Language[];
+    /**
+     * Options for the generated runtimes. Note that only options provided for the specified languages will apply.
+     */
+    readonly options?: GeneratedRuntimeCodeOptions;
+}
+/**
+ * Configuration for generated infrastructure
+ */
+export interface WebSocketInfrastructureConfiguration {
+    /**
+     * The language to generate the type-safe CDK infrastructure in
+     */
+    readonly language: Language;
+    /**
+     * Options for the infrastructure package. Note that only those provided for the specified language will apply.
+     */
+    readonly options?: GeneratedInfrastructureCodeOptions;
+}
+/**
+ * Configuration for generated lambda handlers
+ */
+export interface WebSocketHandlersConfiguration {
+    /**
+     * The languages lambda handlers are written in. Specify multiple languages if you wish to implement different operations
+     * as AWS Lambda functions in different languages.
+     */
+    readonly languages: Language[];
+    /**
+     * Options for the infrastructure package. Note that only those provided for the specified language will apply.
+     */
+    readonly options?: GeneratedHandlersCodeOptions;
+}
+/**
+ * Configuration for generated documentation
+ */
+export interface WebSocketDocumentationConfiguration {
+    /**
+     * Formats for generated documentation
+     */
+    readonly formats: WebSocketDocumentationFormat[];
+    /**
+     * Options for the generated documentation projects. Note that only those provided for the specified formats will apply
+     */
+    readonly options?: GeneratedWebSocketDocumentationOptions;
+}
+/**
+ * Configuration for generated libraries
+ */
+export interface WebSocketLibraryConfiguration {
+    /**
+     * The libraries to generate
+     */
+    readonly libraries: WebSocketLibrary[];
+    /**
+     * Options for the generated library package. Note that only options for the specified libraries will apply
+     */
+    readonly options?: GeneratedWebSocketLibraryOptions;
+}
+export interface TypeSafeWebSocketApiModelConfiguration extends ModelConfiguration {
+}
+/**
+ * Options for the TypeSafeWebSocketApiProject
+ */
+export interface TypeSafeWebSocketApiProjectOptions extends ProjectOptions {
+    /**
+     * Configuration for the API model
+     */
+    readonly model: TypeSafeWebSocketApiModelConfiguration;
+    /**
+     * Configuration for generated runtime projects (containing types, clients and server code)
+     */
+    readonly runtime?: WebSocketRuntimeConfiguration;
+    /**
+     * Configuration for generated infrastructure
+     */
+    readonly infrastructure: WebSocketInfrastructureConfiguration;
+    /**
+     * Configuration for lambda handlers for implementing the API
+     */
+    readonly handlers?: WebSocketHandlersConfiguration;
+    /**
+     * Configuration for generated documentation
+     */
+    readonly documentation?: WebSocketDocumentationConfiguration;
+    /**
+     * Configuration for generated libraries. These include clients for interacting with your websocket API
+     */
+    readonly library?: WebSocketLibraryConfiguration;
+}
+/**
+ * Project for a Type Safe WebSocket API, defined using Smithy or OpenAPI.
+ *
+ * Generates a CDK construct to deploy your API, as well as client and server code to help build your API quickly.
+ *
+ * @experimental
+ * @pjid type-safe-ws-api
+ */
+export declare class TypeSafeWebSocketApiProject extends Project {
+    /**
+     * Project for the api model.
+     */
+    readonly model: WebSocketModelProject;
+    /**
+     * Generated runtime projects. When `runtime.languages` includes the corresponding language, the project can be
+     * assumed to be defined.
+     */
+    readonly runtime: GeneratedCodeProjects;
+    /**
+     * Generated infrastructure projects. Only the property corresponding to `infrastructure.language` will be defined.
+     */
+    readonly infrastructure: GeneratedCodeProjects;
+    /**
+     * Lambda handlers projects. Only the properties corresponding to `handlers.languages` will be defined.
+     */
+    readonly handlers: GeneratedCodeProjects;
+    /**
+     * Generated library projects. Only the properties corresponding to specified `library.libraries` will be defined.
+     */
+    readonly library: GeneratedWebSocketLibraryProjects;
+    /**
+     * Generated documentation projects. Only the properties corresponding to specified `documentation.formats` will be defined.
+     */
+    readonly documentation: GeneratedWebSocketDocumentationProjects;
+    /**
+     * Collections of all sub-projects managed by this project
+     */
+    readonly all: ProjectCollections;
+    constructor(options: TypeSafeWebSocketApiProjectOptions);
+    private getNxWorkspace;
+}

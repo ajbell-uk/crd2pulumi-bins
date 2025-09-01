@@ -1,0 +1,43 @@
+import { CdkGraphArtifact, ICdkGraphPlugin, IGraphPluginBindCallback, IGraphReportCallback } from "../../../cdk-graph";
+import { DiagramFormat, IPluginConfig } from "./config";
+/**
+ * CdkGraphDiagramPlugin is a {@link ICdkGraphPlugin CdkGraph Plugin} implementation for generating
+ * diagram artifacts from the {@link CdkGraph} framework.
+ */
+export declare class CdkGraphDiagramPlugin implements ICdkGraphPlugin {
+    /** Namespace for artifacts of the diagram plugin */
+    static readonly ARTIFACT_NS = "DIAGRAM";
+    /** Fixed id of the diagram plugin */
+    static readonly ID = "diagram";
+    /** Current semantic version of the diagram plugin */
+    static readonly VERSION = "0.0.0";
+    /** Get standardized artifact id for diagram artifacts */
+    static artifactId(name: string, format: DiagramFormat): string;
+    /** Get standardized artifact file name for diagram artifacts */
+    static artifactFilename(name: string, format: DiagramFormat): string;
+    /** @inheritdoc */
+    get id(): string;
+    /** @inheritdoc */
+    get version(): string;
+    /** @inheritdoc */
+    readonly dependencies?: string[];
+    /** @internal */
+    private _graph?;
+    /** @internal */
+    private _config?;
+    /** Get default dot artifact */
+    get defaultDotArtifact(): CdkGraphArtifact | undefined;
+    /** Get default PNG artifact */
+    get defaultPngArtifact(): CdkGraphArtifact | undefined;
+    /** Get diagram plugin config */
+    get config(): IPluginConfig;
+    constructor(config?: IPluginConfig);
+    /** Get diagram artifact for a given name and format */
+    getDiagramArtifact(name: string, format: DiagramFormat): CdkGraphArtifact | undefined;
+    /** @inheritdoc */
+    bind: IGraphPluginBindCallback;
+    private streamToBuffer;
+    private isGraphvizInstalledGlobally;
+    /** @inheritdoc */
+    report?: IGraphReportCallback;
+}

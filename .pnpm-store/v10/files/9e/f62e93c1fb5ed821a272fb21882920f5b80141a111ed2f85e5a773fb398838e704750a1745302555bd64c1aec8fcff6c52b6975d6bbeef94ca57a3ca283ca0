@@ -1,0 +1,2 @@
+import { Construct } from "constructs";
+export declare const lazilyRender: (scope: Construct, payload: any) => import("aws-cdk-lib").IResolvable;

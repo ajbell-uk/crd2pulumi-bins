@@ -125,13 +125,7 @@ const root = new RootMonorepoTsProject({
   release: false,
   package: false,
   repository,
-  packageManager: javascript.NodePackageManager.YARN_BERRY,
-  yarnBerryOptions: {
-    version: '4.9.2',
-    yarnRcOptions: {
-      nodeLinker: javascript.YarnNodeLinker.NODE_MODULES,
-    },
-  },
+  packageManager: javascript.NodePackageManager.PNPM,
   biome: true,
   prettier: false,
   sampleCode: false,

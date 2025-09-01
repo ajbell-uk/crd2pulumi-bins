@@ -1,0 +1,6 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { SonarCodeScannerProps } from "./sonar-code-scanner";
+export declare const generateSonarqubeReports: () => string[];
+export declare const createSonarqubeProject: (props: SonarCodeScannerProps) => string[];
+export declare const sonarqubeScanner: (excludeGlobsForScan?: string[]) => string;

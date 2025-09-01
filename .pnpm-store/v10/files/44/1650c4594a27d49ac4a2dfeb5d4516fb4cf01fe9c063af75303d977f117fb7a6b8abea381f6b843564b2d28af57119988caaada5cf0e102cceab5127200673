@@ -1,0 +1,18 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { NodeProject, NodeProjectOptions } from "projen/lib/javascript";
+import { TypeSpecDefinition, TypeSpecDefinitionOptions } from "./type-spec-definition";
+import { TypeSafeApiModelBuildOutputOptions } from "../type-safe-api-model-build";
+/**
+ * Options for the TypeSpec model project
+ */
+export interface TypeSpecModelProjectOptions extends NodeProjectOptions, TypeSpecDefinitionOptions, TypeSafeApiModelBuildOutputOptions {
+}
+/**
+ * Model project for defining a REST API in TypeSpec
+ */
+export declare class TypeSpecModelProject extends NodeProject {
+    readonly apiName: string;
+    readonly definition: TypeSpecDefinition;
+    constructor(options: TypeSpecModelProjectOptions);
+}

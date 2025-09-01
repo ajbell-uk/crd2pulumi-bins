@@ -1,0 +1,8 @@
+export declare function secretToString(secretName: string): string;
+export declare function context(value: string): string;
+export declare function isHiddenPath(path: string): boolean;
+export declare function ensureNotHiddenPath(value: string, name: string): void;
+/**
+ * Turn any JavaScript value into a GitHub expression
+ */
+export declare function toGitHubExpr(x: NonNullable<any>): string;

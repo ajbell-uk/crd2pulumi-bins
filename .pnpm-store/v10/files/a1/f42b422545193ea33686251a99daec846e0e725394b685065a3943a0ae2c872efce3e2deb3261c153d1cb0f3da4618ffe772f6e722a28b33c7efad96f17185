@@ -1,0 +1,31 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { Project, FileBase, IResolver } from "projen";
+/**
+ * Options for the Smithy build.gradle file
+ */
+export interface SmithyBuildGradleFileOptions {
+    readonly modelDir: string;
+    readonly dependencies: string[];
+    readonly repositoryUrls?: string[];
+}
+/**
+ * Synthesize a build.gradle file for Smithy projects
+ */
+export declare class SmithyBuildGradleFile extends FileBase {
+    static readonly fileDependencyPrefix: string;
+    private readonly sources;
+    private readonly dependencies;
+    private readonly repositories;
+    constructor(project: Project, options: SmithyBuildGradleFileOptions);
+    /**
+     * Add dependencies to the build.gradle
+     */
+    addDeps(...deps: string[]): void;
+    /**
+     * Add source directories to the build.gradle
+     */
+    addSources(...sources: string[]): void;
+    private renderDependency;
+    synthesizeContent(_: IResolver): string | undefined;
+}

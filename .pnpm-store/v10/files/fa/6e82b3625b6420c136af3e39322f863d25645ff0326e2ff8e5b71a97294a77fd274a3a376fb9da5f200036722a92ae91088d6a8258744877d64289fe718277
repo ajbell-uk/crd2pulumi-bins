@@ -1,0 +1,29 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DefaultAuthorizerIds = exports.HttpMethods = void 0;
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+/**
+ * HTTP Methods supported by Open API v3
+ */
+var HttpMethods;
+(function (HttpMethods) {
+    HttpMethods["GET"] = "get";
+    HttpMethods["PUT"] = "put";
+    HttpMethods["POST"] = "post";
+    HttpMethods["DELETE"] = "delete";
+    HttpMethods["OPTIONS"] = "options";
+    HttpMethods["HEAD"] = "head";
+    HttpMethods["PATCH"] = "patch";
+    HttpMethods["TRACE"] = "trace";
+})(HttpMethods || (exports.HttpMethods = HttpMethods = {}));
+/**
+ * Default authorizer identifiers
+ */
+var DefaultAuthorizerIds;
+(function (DefaultAuthorizerIds) {
+    DefaultAuthorizerIds["NONE"] = "none";
+    DefaultAuthorizerIds["IAM"] = "aws.auth.sigv4";
+    DefaultAuthorizerIds["API_KEY"] = "api_key";
+})(DefaultAuthorizerIds || (exports.DefaultAuthorizerIds = DefaultAuthorizerIds = {}));
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29uc3RhbnRzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiY29uc3RhbnRzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBO3NDQUNzQztBQUN0Qzs7R0FFRztBQUNILElBQVksV0FTWDtBQVRELFdBQVksV0FBVztJQUNyQiwwQkFBVyxDQUFBO0lBQ1gsMEJBQVcsQ0FBQTtJQUNYLDRCQUFhLENBQUE7SUFDYixnQ0FBaUIsQ0FBQTtJQUNqQixrQ0FBbUIsQ0FBQTtJQUNuQiw0QkFBYSxDQUFBO0lBQ2IsOEJBQWUsQ0FBQTtJQUNmLDhCQUFlLENBQUE7QUFDakIsQ0FBQyxFQVRXLFdBQVcsMkJBQVgsV0FBVyxRQVN0QjtBQUVEOztHQUVHO0FBQ0gsSUFBWSxvQkFJWDtBQUpELFdBQVksb0JBQW9CO0lBQzlCLHFDQUFhLENBQUE7SUFDYiw4Q0FBc0IsQ0FBQTtJQUN0QiwyQ0FBbUIsQ0FBQTtBQUNyQixDQUFDLEVBSlcsb0JBQW9CLG9DQUFwQixvQkFBb0IsUUFJL0IiLCJzb3VyY2VzQ29udGVudCI6WyIvKiEgQ29weXJpZ2h0IFtBbWF6b24uY29tXShodHRwOi8vYW1hem9uLmNvbS8pLCBJbmMuIG9yIGl0cyBhZmZpbGlhdGVzLiBBbGwgUmlnaHRzIFJlc2VydmVkLlxuU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEFwYWNoZS0yLjAgKi9cbi8qKlxuICogSFRUUCBNZXRob2RzIHN1cHBvcnRlZCBieSBPcGVuIEFQSSB2M1xuICovXG5leHBvcnQgZW51bSBIdHRwTWV0aG9kcyB7XG4gIEdFVCA9IFwiZ2V0XCIsXG4gIFBVVCA9IFwicHV0XCIsXG4gIFBPU1QgPSBcInBvc3RcIixcbiAgREVMRVRFID0gXCJkZWxldGVcIixcbiAgT1BUSU9OUyA9IFwib3B0aW9uc1wiLFxuICBIRUFEID0gXCJoZWFkXCIsXG4gIFBBVENIID0gXCJwYXRjaFwiLFxuICBUUkFDRSA9IFwidHJhY2VcIixcbn1cblxuLyoqXG4gKiBEZWZhdWx0IGF1dGhvcml6ZXIgaWRlbnRpZmllcnNcbiAqL1xuZXhwb3J0IGVudW0gRGVmYXVsdEF1dGhvcml6ZXJJZHMge1xuICBOT05FID0gXCJub25lXCIsXG4gIElBTSA9IFwiYXdzLmF1dGguc2lndjRcIixcbiAgQVBJX0tFWSA9IFwiYXBpX2tleVwiLFxufVxuIl19

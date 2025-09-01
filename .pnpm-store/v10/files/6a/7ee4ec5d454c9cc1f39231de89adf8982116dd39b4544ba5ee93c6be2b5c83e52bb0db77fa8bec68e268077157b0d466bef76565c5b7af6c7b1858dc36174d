@@ -1,0 +1,17 @@
+import { Project, FileBase, IResolver } from "projen";
+/**
+ * Options for the aws-pdk/prelude.js file
+ */
+export interface TypeSpecAwsPdkPreludeJsOptions {
+    /**
+     * Path to the generated model directory in which to add the prelude
+     */
+    readonly generatedModelDir: string;
+}
+/**
+ * Synthesize the aws-pdk/prelude.js file
+ */
+export declare class TypeSpecAwsPdkPreludeJs extends FileBase {
+    constructor(project: Project, options: TypeSpecAwsPdkPreludeJsOptions);
+    synthesizeContent(_: IResolver): string | undefined;
+}

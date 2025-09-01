@@ -1,0 +1,92 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NpmError = exports.TransliterationError = exports.LanguageNotSupportedError = exports.CorruptedAssemblyError = exports.UnInstallablePackageError = exports.DocGenError = exports.NoSpaceLeftOnDevice = void 0;
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { name } = require('../package.json');
+/**
+ * The error raised when processing a package fails due to running out of disk
+ * space while installing it's dependency closure in a temporary directory. This
+ * error cannot be immediately recovered, short of deleting files to make more
+ * space availabe, then retrying.
+ *
+ * Users may perform an `err instanceof NoSpaceLeftOnDevice` test to determine
+ * whether this error was raised or not, and cut retry attempts.
+ */
+class NoSpaceLeftOnDevice extends Error {
+    /** @internal */
+    constructor(message, stack) {
+        super(message);
+        this.name = `${name}.${this.constructor.name}`;
+        if (this.stack) {
+            this.stack = stack;
+        }
+        else {
+            Error.captureStackTrace(this, this.constructor);
+        }
+    }
+}
+exports.NoSpaceLeftOnDevice = NoSpaceLeftOnDevice;
+/**
+ * Generic error thrown by the library.
+ */
+class DocGenError extends Error {
+    /** @internal */
+    constructor(message, stack) {
+        super(message);
+        this.name = `${name}.${this.constructor.name}`;
+        if (this.stack) {
+            this.stack = stack;
+        }
+        else {
+            Error.captureStackTrace(this, this.constructor);
+        }
+    }
+}
+exports.DocGenError = DocGenError;
+/**
+ * Raised when docgen is unable to install the given package.
+ * This can happen due to invalid dependency clojures for example.
+ */
+class UnInstallablePackageError extends DocGenError {
+}
+exports.UnInstallablePackageError = UnInstallablePackageError;
+/**
+ * Raised when docgen detects corrupted assemblies, preventing it from
+ * generating documentation for a specific language.
+ * This can happen either due to jsii compiler bugs, or authoring mistakes.
+ *
+ * For example: https://github.com/aws/jsii/pull/3147
+ */
+class CorruptedAssemblyError extends DocGenError {
+}
+exports.CorruptedAssemblyError = CorruptedAssemblyError;
+/**
+ * Raised when a render is requested for a language the package does not support.
+ */
+class LanguageNotSupportedError extends DocGenError {
+}
+exports.LanguageNotSupportedError = LanguageNotSupportedError;
+;
+/**
+ * Raised when snippet transliteration into a target language failed.
+ */
+class TransliterationError extends DocGenError {
+}
+exports.TransliterationError = TransliterationError;
+;
+/**
+ * The error raised when `npm` commands fail with an "opaque" exit code,
+ * attempting to obtain more information from the commands output.
+ */
+class NpmError extends DocGenError {
+    /** @internal */
+    constructor(message, stdout, npmErrorCode) {
+        super(message);
+        Error.captureStackTrace(this, this.constructor);
+        this.stdout = stdout;
+        this.npmErrorCode = npmErrorCode;
+        this.name = `${name}.${this.constructor.name}${npmErrorCode ? `.${npmErrorCode}` : ''}`;
+    }
+}
+exports.NpmError = NpmError;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZXJyb3JzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vc3JjL2Vycm9ycy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSxpRUFBaUU7QUFDakUsTUFBTSxFQUFFLElBQUksRUFBRSxHQUFHLE9BQU8sQ0FBQyxpQkFBaUIsQ0FBQyxDQUFDO0FBRTVDOzs7Ozs7OztHQVFHO0FBQ0gsTUFBYSxtQkFBb0IsU0FBUSxLQUFLO0lBRzVDLGdCQUFnQjtJQUNoQixZQUFtQixPQUFlLEVBQUUsS0FBYztRQUNoRCxLQUFLLENBQUMsT0FBTyxDQUFDLENBQUM7UUFKRCxTQUFJLEdBQUcsR0FBRyxJQUFJLElBQUksSUFBSSxDQUFDLFdBQVcsQ0FBQyxJQUFJLEVBQUUsQ0FBQztRQUt4RCxJQUFJLElBQUksQ0FBQyxLQUFLLEVBQUUsQ0FBQztZQUNmLElBQUksQ0FBQyxLQUFLLEdBQUcsS0FBSyxDQUFDO1FBQ3JCLENBQUM7YUFBTSxDQUFDO1lBQ04sS0FBSyxDQUFDLGlCQUFpQixDQUFDLElBQUksRUFBRSxJQUFJLENBQUMsV0FBVyxDQUFDLENBQUM7UUFDbEQsQ0FBQztJQUNILENBQUM7Q0FDRjtBQVpELGtEQVlDO0FBRUQ7O0dBRUc7QUFDSCxNQUFhLFdBQVksU0FBUSxLQUFLO0lBSXBDLGdCQUFnQjtJQUNoQixZQUFtQixPQUFlLEVBQUUsS0FBYztRQUNoRCxLQUFLLENBQUMsT0FBTyxDQUFDLENBQUM7UUFKRCxTQUFJLEdBQUcsR0FBRyxJQUFJLElBQUksSUFBSSxDQUFDLFdBQVcsQ0FBQyxJQUFJLEVBQUUsQ0FBQztRQUt4RCxJQUFJLElBQUksQ0FBQyxLQUFLLEVBQUUsQ0FBQztZQUNmLElBQUksQ0FBQyxLQUFLLEdBQUcsS0FBSyxDQUFDO1FBQ3JCLENBQUM7YUFBTSxDQUFDO1lBQ04sS0FBSyxDQUFDLGlCQUFpQixDQUFDLElBQUksRUFBRSxJQUFJLENBQUMsV0FBVyxDQUFDLENBQUM7UUFDbEQsQ0FBQztJQUNILENBQUM7Q0FFRjtBQWRELGtDQWNDO0FBRUQ7OztHQUdHO0FBQ0gsTUFBYSx5QkFBMEIsU0FBUSxXQUFXO0NBQUc7QUFBN0QsOERBQTZEO0FBRTdEOzs7Ozs7R0FNRztBQUNILE1BQWEsc0JBQXVCLFNBQVEsV0FBVztDQUFHO0FBQTFELHdEQUEwRDtBQUUxRDs7R0FFRztBQUNILE1BQWEseUJBQTBCLFNBQVEsV0FBVztDQUFHO0FBQTdELDhEQUE2RDtBQUFBLENBQUM7QUFFOUQ7O0dBRUc7QUFDSCxNQUFhLG9CQUFxQixTQUFRLFdBQVc7Q0FBRztBQUF4RCxvREFBd0Q7QUFBQSxDQUFDO0FBRXpEOzs7R0FHRztBQUNILE1BQWEsUUFBc0IsU0FBUSxXQUFXO0lBd0JwRCxnQkFBZ0I7SUFDaEIsWUFBbUIsT0FBZSxFQUFFLE1BQVMsRUFBRSxZQUFxQjtRQUNsRSxLQUFLLENBQUMsT0FBTyxDQUFDLENBQUM7UUFDZixLQUFLLENBQUMsaUJBQWlCLENBQUMsSUFBSSxFQUFFLElBQUksQ0FBQyxXQUFXLENBQUMsQ0FBQztRQUVoRCxJQUFJLENBQUMsTUFBTSxHQUFHLE1BQU0sQ0FBQztRQUNyQixJQUFJLENBQUMsWUFBWSxHQUFHLFlBQVksQ0FBQztRQUVqQyxJQUFJLENBQUMsSUFBSSxHQUFHLEdBQUcsSUFBSSxJQUFJLElBQUksQ0FBQyxXQUFXLENBQUMsSUFBSSxHQUFHLFlBQVksQ0FBQyxDQUFDLENBQUMsSUFBSSxZQUFZLEVBQUUsQ0FBQyxDQUFDLENBQUMsRUFBRSxFQUFFLENBQUM7SUFDMUYsQ0FBQztDQUNGO0FBbENELDRCQWtDQyIsInNvdXJjZXNDb250ZW50IjpbIi8vIGVzbGludC1kaXNhYmxlLW5leHQtbGluZSBAdHlwZXNjcmlwdC1lc2xpbnQvbm8tcmVxdWlyZS1pbXBvcnRzXG5jb25zdCB7IG5hbWUgfSA9IHJlcXVpcmUoJy4uL3BhY2thZ2UuanNvbicpO1xuXG4vKipcbiAqIFRoZSBlcnJvciByYWlzZWQgd2hlbiBwcm9jZXNzaW5nIGEgcGFja2FnZSBmYWlscyBkdWUgdG8gcnVubmluZyBvdXQgb2YgZGlza1xuICogc3BhY2Ugd2hpbGUgaW5zdGFsbGluZyBpdCdzIGRlcGVuZGVuY3kgY2xvc3VyZSBpbiBhIHRlbXBvcmFyeSBkaXJlY3RvcnkuIFRoaXNcbiAqIGVycm9yIGNhbm5vdCBiZSBpbW1lZGlhdGVseSByZWNvdmVyZWQsIHNob3J0IG9mIGRlbGV0aW5nIGZpbGVzIHRvIG1ha2UgbW9yZVxuICogc3BhY2UgYXZhaWxhYmUsIHRoZW4gcmV0cnlpbmcuXG4gKlxuICogVXNlcnMgbWF5IHBlcmZvcm0gYW4gYGVyciBpbnN0YW5jZW9mIE5vU3BhY2VMZWZ0T25EZXZpY2VgIHRlc3QgdG8gZGV0ZXJtaW5lXG4gKiB3aGV0aGVyIHRoaXMgZXJyb3Igd2FzIHJhaXNlZCBvciBub3QsIGFuZCBjdXQgcmV0cnkgYXR0ZW1wdHMuXG4gKi9cbmV4cG9ydCBjbGFzcyBOb1NwYWNlTGVmdE9uRGV2aWNlIGV4dGVuZHMgRXJyb3Ige1xuICBwdWJsaWMgcmVhZG9ubHkgbmFtZSA9IGAke25hbWV9LiR7dGhpcy5jb25zdHJ1Y3Rvci5uYW1lfWA7XG5cbiAgLyoqIEBpbnRlcm5hbCAqL1xuICBwdWJsaWMgY29uc3RydWN0b3IobWVzc2FnZTogc3RyaW5nLCBzdGFjaz86IHN0cmluZykge1xuICAgIHN1cGVyKG1lc3NhZ2UpO1xuICAgIGlmICh0aGlzLnN0YWNrKSB7XG4gICAgICB0aGlzLnN0YWNrID0gc3RhY2s7XG4gICAgfSBlbHNlIHtcbiAgICAgIEVycm9yLmNhcHR1cmVTdGFja1RyYWNlKHRoaXMsIHRoaXMuY29uc3RydWN0b3IpO1xuICAgIH1cbiAgfVxufVxuXG4vKipcbiAqIEdlbmVyaWMgZXJyb3IgdGhyb3duIGJ5IHRoZSBsaWJyYXJ5LlxuICovXG5leHBvcnQgY2xhc3MgRG9jR2VuRXJyb3IgZXh0ZW5kcyBFcnJvciB7XG5cbiAgcHVibGljIHJlYWRvbmx5IG5hbWUgPSBgJHtuYW1lfS4ke3RoaXMuY29uc3RydWN0b3IubmFtZX1gO1xuXG4gIC8qKiBAaW50ZXJuYWwgKi9cbiAgcHVibGljIGNvbnN0cnVjdG9yKG1lc3NhZ2U6IHN0cmluZywgc3RhY2s/OiBzdHJpbmcpIHtcbiAgICBzdXBlcihtZXNzYWdlKTtcbiAgICBpZiAodGhpcy5zdGFjaykge1xuICAgICAgdGhpcy5zdGFjayA9IHN0YWNrO1xuICAgIH0gZWxzZSB7XG4gICAgICBFcnJvci5jYXB0dXJlU3RhY2tUcmFjZSh0aGlzLCB0aGlzLmNvbnN0cnVjdG9yKTtcbiAgICB9XG4gIH1cblxufVxuXG4vKipcbiAqIFJhaXNlZCB3aGVuIGRvY2dlbiBpcyB1bmFibGUgdG8gaW5zdGFsbCB0aGUgZ2l2ZW4gcGFja2FnZS5cbiAqIFRoaXMgY2FuIGhhcHBlbiBkdWUgdG8gaW52YWxpZCBkZXBlbmRlbmN5IGNsb2p1cmVzIGZvciBleGFtcGxlLlxuICovXG5leHBvcnQgY2xhc3MgVW5JbnN0YWxsYWJsZVBhY2thZ2VFcnJvciBleHRlbmRzIERvY0dlbkVycm9yIHt9XG5cbi8qKlxuICogUmFpc2VkIHdoZW4gZG9jZ2VuIGRldGVjdHMgY29ycnVwdGVkIGFzc2VtYmxpZXMsIHByZXZlbnRpbmcgaXQgZnJvbVxuICogZ2VuZXJhdGluZyBkb2N1bWVudGF0aW9uIGZvciBhIHNwZWNpZmljIGxhbmd1YWdlLlxuICogVGhpcyBjYW4gaGFwcGVuIGVpdGhlciBkdWUgdG8ganNpaSBjb21waWxlciBidWdzLCBvciBhdXRob3JpbmcgbWlzdGFrZXMuXG4gKlxuICogRm9yIGV4YW1wbGU6IGh0dHBzOi8vZ2l0aHViLmNvbS9hd3MvanNpaS9wdWxsLzMxNDdcbiAqL1xuZXhwb3J0IGNsYXNzIENvcnJ1cHRlZEFzc2VtYmx5RXJyb3IgZXh0ZW5kcyBEb2NHZW5FcnJvciB7fVxuXG4vKipcbiAqIFJhaXNlZCB3aGVuIGEgcmVuZGVyIGlzIHJlcXVlc3RlZCBmb3IgYSBsYW5ndWFnZSB0aGUgcGFja2FnZSBkb2VzIG5vdCBzdXBwb3J0LlxuICovXG5leHBvcnQgY2xhc3MgTGFuZ3VhZ2VOb3RTdXBwb3J0ZWRFcnJvciBleHRlbmRzIERvY0dlbkVycm9yIHt9O1xuXG4vKipcbiAqIFJhaXNlZCB3aGVuIHNuaXBwZXQgdHJhbnNsaXRlcmF0aW9uIGludG8gYSB0YXJnZXQgbGFuZ3VhZ2UgZmFpbGVkLlxuICovXG5leHBvcnQgY2xhc3MgVHJhbnNsaXRlcmF0aW9uRXJyb3IgZXh0ZW5kcyBEb2NHZW5FcnJvciB7fTtcblxuLyoqXG4gKiBUaGUgZXJyb3IgcmFpc2VkIHdoZW4gYG5wbWAgY29tbWFuZHMgZmFpbCB3aXRoIGFuIFwib3BhcXVlXCIgZXhpdCBjb2RlLFxuICogYXR0ZW1wdGluZyB0byBvYnRhaW4gbW9yZSBpbmZvcm1hdGlvbiBmcm9tIHRoZSBjb21tYW5kcyBvdXRwdXQuXG4gKi9cbmV4cG9ydCBjbGFzcyBOcG1FcnJvcjxUID0gdW5rbm93bj4gZXh0ZW5kcyBEb2NHZW5FcnJvciB7XG4gIC8qKlxuICAgKiBUaGUgbmFtZSBvZiB0aGlzIGVycm9yLlxuICAgKi9cbiAgcHVibGljIHJlYWRvbmx5IG5hbWU6IHN0cmluZztcblxuICAvKipcbiAgICogVGhlIGVycm9yIGNvZGUgbnBtIHByaW50ZWQgb3V0IHRvIHN0ZGVyciBvciBzdGRvdXQgYmVmb3JlIGV4aXRpbmcuIFRoaXMgY2FuXG4gICAqIHByb3ZpZGUgbW9yZSBpbmZvcm1hdGlvbiBhYm91dCB0aGUgZXJyb3IgaW4gYSBtYWNoaW5lLWZyaWVuZGxpZXIgd2F5LlxuICAgKlxuICAgKiBUaGlzIGlzIGV4dHJhY3RlZCBmcm9tIGxvZy1wYXJzaW5nLCBhbmQgaXMgaGVuY2Ugbm90IGd1YXJhbnRlZWQgdG8gYmVcbiAgICogYWNjdXJhdGUuXG4gICAqXG4gICAqIEBleGFtcGxlICdFUFJPVE8nXG4gICAqIEBleGFtcGxlICdFNDI5J1xuICAgKiBAZXhhbXBsZSAnRTQwNCdcbiAgICovXG4gIHB1YmxpYyByZWFkb25seSBucG1FcnJvckNvZGU6IHN0cmluZyB8IHVuZGVmaW5lZDtcblxuICAvKipcbiAgICogRGF0YSB0aGUgY29tbWFuZCBwcm9kdWNlZCB0byBgU1RET1VUYC5cbiAgICovXG4gIHB1YmxpYyByZWFkb25seSBzdGRvdXQ6IFQ7XG5cbiAgLyoqIEBpbnRlcm5hbCAqL1xuICBwdWJsaWMgY29uc3RydWN0b3IobWVzc2FnZTogc3RyaW5nLCBzdGRvdXQ6IFQsIG5wbUVycm9yQ29kZT86IHN0cmluZykge1xuICAgIHN1cGVyKG1lc3NhZ2UpO1xuICAgIEVycm9yLmNhcHR1cmVTdGFja1RyYWNlKHRoaXMsIHRoaXMuY29uc3RydWN0b3IpO1xuXG4gICAgdGhpcy5zdGRvdXQgPSBzdGRvdXQ7XG4gICAgdGhpcy5ucG1FcnJvckNvZGUgPSBucG1FcnJvckNvZGU7XG5cbiAgICB0aGlzLm5hbWUgPSBgJHtuYW1lfS4ke3RoaXMuY29uc3RydWN0b3IubmFtZX0ke25wbUVycm9yQ29kZSA/IGAuJHtucG1FcnJvckNvZGV9YCA6ICcnfWA7XG4gIH1cbn1cbiJdfQ==

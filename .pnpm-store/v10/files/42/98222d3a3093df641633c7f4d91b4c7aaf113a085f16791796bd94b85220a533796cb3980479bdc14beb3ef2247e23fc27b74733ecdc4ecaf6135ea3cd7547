@@ -1,0 +1,29 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import * as Dot from "ts-graphviz";
+/**
+ * Diagram class defines the root {@link Dot.Digraph} of the diagram
+ * @internal
+ */
+export declare class Diagram extends Dot.Digraph {
+    /** @internal */
+    private readonly _trackedImages;
+    /** Image path attribute of the diagram used to prefix relative paths */
+    readonly imagepath: string;
+    /** @internal */
+    constructor(label: string, imagepath: string);
+    /**
+     * Track image used in the graph for downstream tooling support integration.
+     *
+     * @see [dot-wasm options](https://hpcc-systems.github.io/hpcc-js-wasm/classes/graphviz.Graphviz.html#layout)
+     * @param image Image to track
+     */
+    trackImage(image: string): void;
+    /** Get list of all tracked images */
+    getTrackedImages(): string[];
+    /**
+     * Converts the diagram to **dot** string format
+     * @see {@link Dot.toDot}
+     */
+    toDot(): string;
+}

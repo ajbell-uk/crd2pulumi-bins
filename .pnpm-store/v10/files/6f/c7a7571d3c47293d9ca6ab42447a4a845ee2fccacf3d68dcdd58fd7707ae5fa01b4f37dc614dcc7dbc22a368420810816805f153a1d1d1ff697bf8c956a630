@@ -1,0 +1,46 @@
+"use strict";
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SmithyBaseProject = void 0;
+const JSII_RTTI_SYMBOL_1 = Symbol.for("jsii.rtti");
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+const monorepo_1 = require("../../../../monorepo");
+const projen_1 = require("projen");
+/**
+ * Base project for Smithy projects
+ */
+class SmithyBaseProject extends projen_1.Project {
+    constructor(options) {
+        super(options);
+        this.smithyDeps = [];
+    }
+    /**
+     * Add a dependency on other smithy projects
+     */
+    addSmithyDeps(...deps) {
+        this.smithyDeps.push(...deps);
+        const allDeps = this.allSmithyDeps();
+        // Add the smithy dependencies.
+        // Smithy jars only include the models defined in that project, so we must add transitive dependencies explicitly
+        this.smithyProjectDefinition().addSmithyDeps(...allDeps.map((dep) => dep.smithyProjectDefinition()));
+        // Add the monorepo implicit dependency if applicable
+        const isNxWorkspace = this.parent &&
+            (monorepo_1.ProjectUtils.isNamedInstanceOf(this.parent, monorepo_1.MonorepoTsProject) ||
+                monorepo_1.ProjectUtils.isNamedInstanceOf(this.parent, monorepo_1.MonorepoJavaProject) ||
+                monorepo_1.ProjectUtils.isNamedInstanceOf(this.parent, monorepo_1.MonorepoPythonProject));
+        if (isNxWorkspace) {
+            deps.forEach((dep) => monorepo_1.NxProject.ensure(this).addImplicitDependency(dep));
+        }
+    }
+    allSmithyDeps() {
+        return [
+            ...this.smithyDeps,
+            ...this.smithyDeps.flatMap((d) => d.allSmithyDeps()),
+        ];
+    }
+}
+exports.SmithyBaseProject = SmithyBaseProject;
+_a = JSII_RTTI_SYMBOL_1;
+SmithyBaseProject[_a] = { fqn: "@aws/pdk.type_safe_api.SmithyBaseProject", version: "0.26.14" };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic21pdGh5LWJhc2UtcHJvamVjdC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbInNtaXRoeS1iYXNlLXByb2plY3QudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQTtzQ0FDc0M7QUFDdEMsNENBTXVCO0FBQ3ZCLG1DQUFpRDtBQVFqRDs7R0FFRztBQUNILE1BQXNCLGlCQUFrQixTQUFRLGdCQUFPO0lBR3JELFlBQVksT0FBaUM7UUFDM0MsS0FBSyxDQUFDLE9BQU8sQ0FBQyxDQUFDO1FBSEEsZUFBVSxHQUF3QixFQUFFLENBQUM7SUFJdEQsQ0FBQztJQU9EOztPQUVHO0lBQ0ksYUFBYSxDQUFDLEdBQUcsSUFBeUI7UUFDL0MsSUFBSSxDQUFDLFVBQVUsQ0FBQyxJQUFJLENBQUMsR0FBRyxJQUFJLENBQUMsQ0FBQztRQUU5QixNQUFNLE9BQU8sR0FBRyxJQUFJLENBQUMsYUFBYSxFQUFFLENBQUM7UUFFckMsK0JBQStCO1FBQy9CLGlIQUFpSDtRQUNqSCxJQUFJLENBQUMsdUJBQXVCLEVBQUUsQ0FBQyxhQUFhLENBQzFDLEdBQUcsT0FBTyxDQUFDLEdBQUcsQ0FBQyxDQUFDLEdBQUcsRUFBRSxFQUFFLENBQUMsR0FBRyxDQUFDLHVCQUF1QixFQUFFLENBQUMsQ0FDdkQsQ0FBQztRQUVGLHFEQUFxRDtRQUNyRCxNQUFNLGFBQWEsR0FDakIsSUFBSSxDQUFDLE1BQU07WUFDWCxDQUFDLHVCQUFZLENBQUMsaUJBQWlCLENBQUMsSUFBSSxDQUFDLE1BQU0sRUFBRSw0QkFBaUIsQ0FBQztnQkFDN0QsdUJBQVksQ0FBQyxpQkFBaUIsQ0FBQyxJQUFJLENBQUMsTUFBTSxFQUFFLDhCQUFtQixDQUFDO2dCQUNoRSx1QkFBWSxDQUFDLGlCQUFpQixDQUFDLElBQUksQ0FBQyxNQUFNLEVBQUUsZ0NBQXFCLENBQUMsQ0FBQyxDQUFDO1FBRXhFLElBQUksYUFBYSxFQUFFLENBQUM7WUFDbEIsSUFBSSxDQUFDLE9BQU8sQ0FBQyxDQUFDLEdBQUcsRUFBRSxFQUFFLENBQUMsb0JBQVMsQ0FBQyxNQUFNLENBQUMsSUFBSSxDQUFDLENBQUMscUJBQXFCLENBQUMsR0FBRyxDQUFDLENBQUMsQ0FBQztRQUMzRSxDQUFDO0lBQ0gsQ0FBQztJQUVPLGFBQWE7UUFDbkIsT0FBTztZQUNMLEdBQUcsSUFBSSxDQUFDLFVBQVU7WUFDbEIsR0FBRyxJQUFJLENBQUMsVUFBVSxDQUFDLE9BQU8sQ0FBQyxDQUFDLENBQUMsRUFBRSxFQUFFLENBQUMsQ0FBQyxDQUFDLGFBQWEsRUFBRSxDQUFDO1NBQ3JELENBQUM7SUFDSixDQUFDOztBQTNDSCw4Q0E0Q0MiLCJzb3VyY2VzQ29udGVudCI6WyIvKiEgQ29weXJpZ2h0IFtBbWF6b24uY29tXShodHRwOi8vYW1hem9uLmNvbS8pLCBJbmMuIG9yIGl0cyBhZmZpbGlhdGVzLiBBbGwgUmlnaHRzIFJlc2VydmVkLlxuU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEFwYWNoZS0yLjAgKi9cbmltcG9ydCB7XG4gIE1vbm9yZXBvSmF2YVByb2plY3QsXG4gIE1vbm9yZXBvUHl0aG9uUHJvamVjdCxcbiAgTW9ub3JlcG9Uc1Byb2plY3QsXG4gIE54UHJvamVjdCxcbiAgUHJvamVjdFV0aWxzLFxufSBmcm9tIFwiQGF3cy9tb25vcmVwb1wiO1xuaW1wb3J0IHsgUHJvamVjdCwgUHJvamVjdE9wdGlvbnMgfSBmcm9tIFwicHJvamVuXCI7XG5pbXBvcnQgeyBTbWl0aHlQcm9qZWN0RGVmaW5pdGlvbiB9IGZyb20gXCIuL3NtaXRoeS1wcm9qZWN0LWRlZmluaXRpb25cIjtcblxuLyoqXG4gKiBPcHRpb25zIGZvciBhIFNtaXRoeSBwcm9qZWN0XG4gKi9cbmV4cG9ydCBpbnRlcmZhY2UgU21pdGh5QmFzZVByb2plY3RPcHRpb25zIGV4dGVuZHMgUHJvamVjdE9wdGlvbnMge31cblxuLyoqXG4gKiBCYXNlIHByb2plY3QgZm9yIFNtaXRoeSBwcm9qZWN0c1xuICovXG5leHBvcnQgYWJzdHJhY3QgY2xhc3MgU21pdGh5QmFzZVByb2plY3QgZXh0ZW5kcyBQcm9qZWN0IHtcbiAgcHJpdmF0ZSByZWFkb25seSBzbWl0aHlEZXBzOiBTbWl0aHlCYXNlUHJvamVjdFtdID0gW107XG5cbiAgY29uc3RydWN0b3Iob3B0aW9uczogU21pdGh5QmFzZVByb2plY3RPcHRpb25zKSB7XG4gICAgc3VwZXIob3B0aW9ucyk7XG4gIH1cblxuICAvKipcbiAgICogUmV0dXJucyB0aGUgc21pdGh5IHByb2plY3QgZGVmaW5pdGlvblxuICAgKi9cbiAgcHVibGljIGFic3RyYWN0IHNtaXRoeVByb2plY3REZWZpbml0aW9uKCk6IFNtaXRoeVByb2plY3REZWZpbml0aW9uO1xuXG4gIC8qKlxuICAgKiBBZGQgYSBkZXBlbmRlbmN5IG9uIG90aGVyIHNtaXRoeSBwcm9qZWN0c1xuICAgKi9cbiAgcHVibGljIGFkZFNtaXRoeURlcHMoLi4uZGVwczogU21pdGh5QmFzZVByb2plY3RbXSkge1xuICAgIHRoaXMuc21pdGh5RGVwcy5wdXNoKC4uLmRlcHMpO1xuXG4gICAgY29uc3QgYWxsRGVwcyA9IHRoaXMuYWxsU21pdGh5RGVwcygpO1xuXG4gICAgLy8gQWRkIHRoZSBzbWl0aHkgZGVwZW5kZW5jaWVzLlxuICAgIC8vIFNtaXRoeSBqYXJzIG9ubHkgaW5jbHVkZSB0aGUgbW9kZWxzIGRlZmluZWQgaW4gdGhhdCBwcm9qZWN0LCBzbyB3ZSBtdXN0IGFkZCB0cmFuc2l0aXZlIGRlcGVuZGVuY2llcyBleHBsaWNpdGx5XG4gICAgdGhpcy5zbWl0aHlQcm9qZWN0RGVmaW5pdGlvbigpLmFkZFNtaXRoeURlcHMoXG4gICAgICAuLi5hbGxEZXBzLm1hcCgoZGVwKSA9PiBkZXAuc21pdGh5UHJvamVjdERlZmluaXRpb24oKSlcbiAgICApO1xuXG4gICAgLy8gQWRkIHRoZSBtb25vcmVwbyBpbXBsaWNpdCBkZXBlbmRlbmN5IGlmIGFwcGxpY2FibGVcbiAgICBjb25zdCBpc054V29ya3NwYWNlID1cbiAgICAgIHRoaXMucGFyZW50ICYmXG4gICAgICAoUHJvamVjdFV0aWxzLmlzTmFtZWRJbnN0YW5jZU9mKHRoaXMucGFyZW50LCBNb25vcmVwb1RzUHJvamVjdCkgfHxcbiAgICAgICAgUHJvamVjdFV0aWxzLmlzTmFtZWRJbnN0YW5jZU9mKHRoaXMucGFyZW50LCBNb25vcmVwb0phdmFQcm9qZWN0KSB8fFxuICAgICAgICBQcm9qZWN0VXRpbHMuaXNOYW1lZEluc3RhbmNlT2YodGhpcy5wYXJlbnQsIE1vbm9yZXBvUHl0aG9uUHJvamVjdCkpO1xuXG4gICAgaWYgKGlzTnhXb3Jrc3BhY2UpIHtcbiAgICAgIGRlcHMuZm9yRWFjaCgoZGVwKSA9PiBOeFByb2plY3QuZW5zdXJlKHRoaXMpLmFkZEltcGxpY2l0RGVwZW5kZW5jeShkZXApKTtcbiAgICB9XG4gIH1cblxuICBwcml2YXRlIGFsbFNtaXRoeURlcHMoKTogU21pdGh5QmFzZVByb2plY3RbXSB7XG4gICAgcmV0dXJuIFtcbiAgICAgIC4uLnRoaXMuc21pdGh5RGVwcyxcbiAgICAgIC4uLnRoaXMuc21pdGh5RGVwcy5mbGF0TWFwKChkKSA9PiBkLmFsbFNtaXRoeURlcHMoKSksXG4gICAgXTtcbiAgfVxufVxuIl19

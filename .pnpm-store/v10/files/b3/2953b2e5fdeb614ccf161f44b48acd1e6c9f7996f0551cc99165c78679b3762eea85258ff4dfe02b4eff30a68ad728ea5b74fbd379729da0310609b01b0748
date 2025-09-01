@@ -1,0 +1,15 @@
+import { GeneratedTypescriptCdkInfrastructureBaseProject, GeneratedTypescriptCdkInfrastructureBaseProjectOptions } from "./generated-typescript-cdk-infrastructure-base-project";
+import { MockResponseGenerationOptions } from "../../../types";
+import { CodegenOptions } from "../../components/utils";
+export interface GeneratedTypescriptCdkInfrastructureProjectOptions extends GeneratedTypescriptCdkInfrastructureBaseProjectOptions, MockResponseGenerationOptions {
+}
+export declare class GeneratedTypescriptCdkInfrastructureProject extends GeneratedTypescriptCdkInfrastructureBaseProject {
+    /**
+     * Options configured for the project
+     * @private
+     */
+    protected readonly options: GeneratedTypescriptCdkInfrastructureProjectOptions;
+    constructor(options: GeneratedTypescriptCdkInfrastructureProjectOptions);
+    protected buildCodegenOptions(): CodegenOptions;
+    buildGenerateMockDataCommand: () => string;
+}

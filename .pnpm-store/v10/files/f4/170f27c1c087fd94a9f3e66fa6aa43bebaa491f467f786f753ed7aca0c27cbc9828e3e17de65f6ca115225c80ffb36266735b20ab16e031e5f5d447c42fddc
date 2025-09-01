@@ -1,0 +1,82 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ERROR_CLASSES_TO_STABILITIES = exports.ERROR_CLASSES = exports.DiagLevel = void 0;
+exports.formatDiagnostic = formatDiagnostic;
+exports.hasErrors = hasErrors;
+exports.onlyErrors = onlyErrors;
+exports.onlyWarnings = onlyWarnings;
+exports.treatAsError = treatAsError;
+exports.classifyDiagnostics = classifyDiagnostics;
+const spec_1 = require("@jsii/spec");
+var DiagLevel;
+(function (DiagLevel) {
+    DiagLevel[DiagLevel["Error"] = 0] = "Error";
+    DiagLevel[DiagLevel["Warning"] = 1] = "Warning";
+    DiagLevel[DiagLevel["Skipped"] = 2] = "Skipped";
+})(DiagLevel || (exports.DiagLevel = DiagLevel = {}));
+const LEVEL_PREFIX = {
+    [DiagLevel.Error]: 'err ',
+    [DiagLevel.Warning]: 'warn',
+    [DiagLevel.Skipped]: 'skip',
+};
+function formatDiagnostic(diag, includeSuppressionKey = false) {
+    return [
+        LEVEL_PREFIX[diag.level],
+        '-',
+        diag.message,
+        ...(includeSuppressionKey ? [`[${diag.suppressionKey}]`] : []),
+    ].join(' ');
+}
+function hasErrors(diags) {
+    return diags.some((diag) => diag.level === DiagLevel.Error);
+}
+function onlyErrors(diags) {
+    return diags.filter((diag) => diag.level === DiagLevel.Error);
+}
+function onlyWarnings(diags) {
+    return diags.filter((diag) => diag.level === DiagLevel.Warning);
+}
+exports.ERROR_CLASSES = ['prod', 'non-experimental', 'all'];
+exports.ERROR_CLASSES_TO_STABILITIES = {
+    prod: [spec_1.Stability.Stable, spec_1.Stability.Deprecated],
+    'non-experimental': [
+        spec_1.Stability.Stable,
+        spec_1.Stability.Deprecated,
+        spec_1.Stability.External,
+    ],
+    all: [
+        spec_1.Stability.Stable,
+        spec_1.Stability.Experimental,
+        spec_1.Stability.External,
+        spec_1.Stability.Deprecated,
+    ],
+};
+function treatAsError(errorClass, deprecatedExperimentalErrors = false) {
+    const shouldError = new Set();
+    for (const stability of exports.ERROR_CLASSES_TO_STABILITIES[errorClass]) {
+        shouldError.add(stability);
+    }
+    if (deprecatedExperimentalErrors) {
+        shouldError.add(spec_1.Stability.Experimental);
+    }
+    return shouldError;
+}
+/**
+ * Classify API mismatches into a set of warnings and errors
+ */
+function classifyDiagnostics(mismatches, shouldError, skipFilter = new Set()) {
+    const ret = mismatches.mismatches.map((mis) => ({
+        level: level(mis),
+        message: mis.message,
+        suppressionKey: mis.violationKey,
+    }));
+    ret.sort((a, b) => a.level - b.level);
+    return ret;
+    function level(mis) {
+        if (skipFilter.has(mis.violationKey)) {
+            return DiagLevel.Skipped;
+        }
+        return shouldError.has(mis.stability) ? DiagLevel.Error : DiagLevel.Warning;
+    }
+}
+//# sourceMappingURL=diagnostics.js.map

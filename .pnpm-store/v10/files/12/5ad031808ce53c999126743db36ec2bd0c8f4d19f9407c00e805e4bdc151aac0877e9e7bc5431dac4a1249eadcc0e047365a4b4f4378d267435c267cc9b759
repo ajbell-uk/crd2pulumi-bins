@@ -1,0 +1,12 @@
+###TSAPI_WRITE_FILE###
+{
+  "dir": "<%- metadata.srcDir || 'src' %>",
+  "name": "index",
+  "ext": ".ts",
+  "overwrite": true
+}
+###/TSAPI_WRITE_FILE###/* tslint:disable */
+/* eslint-disable */
+export * from './runtime<%_ if (metadata.esm) { _%>.js<%_ } _%>';
+export * from './apis<%_ if (metadata.esm) { _%>/index.js<%_ } _%>';
+export * from './models<%_ if (metadata.esm) { _%>/index.js<%_ } _%>';

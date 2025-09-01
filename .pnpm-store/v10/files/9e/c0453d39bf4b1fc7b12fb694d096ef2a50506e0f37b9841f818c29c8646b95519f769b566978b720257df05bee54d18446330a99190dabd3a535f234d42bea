@@ -1,0 +1,21 @@
+import { CfnIPSet, CfnWebACL, CfnWebACLAssociation } from "aws-cdk-lib/aws-wafv2";
+import { Construct } from "constructs";
+import { TypeSafeApiWebAclOptions } from "./types";
+/**
+ * Configuration for the Web ACL for the API
+ */
+export interface OpenApiGatewayWebAclProps extends TypeSafeApiWebAclOptions {
+    /**
+     * The arn of the deployment stage of the API with which the Web ACL will be associated
+     */
+    readonly apiDeploymentStageArn: string;
+}
+/**
+ * Associate an AWS WAF v2 Web ACL with the given api
+ */
+export declare class OpenApiGatewayWebAcl extends Construct {
+    readonly webAcl?: CfnWebACL;
+    readonly ipSet?: CfnIPSet;
+    readonly webAclAssociation?: CfnWebACLAssociation;
+    constructor(scope: Construct, id: string, props: OpenApiGatewayWebAclProps);
+}

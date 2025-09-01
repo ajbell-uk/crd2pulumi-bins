@@ -1,0 +1,110 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { aws_arch } from "../../../../aws-arch";
+import * as Dot from "ts-graphviz";
+import { GraphThemeRenderingIconTarget, IGraphThemeConfigAlt, IGraphThemeRendering, IGraphThemeRenderingOptions } from "./theme";
+/**
+ * Icon definition for graph rendering of resource icons.
+ * @internal
+ */
+export interface IGraphThemeRenderingIconInternal {
+    /** Lowest Graph.ResourceNode icon to render */
+    readonly resourceIconMin: GraphThemeRenderingIconTarget;
+    /** Highest Graph.ResourceNode icon to render */
+    readonly resourceIconMax: GraphThemeRenderingIconTarget;
+    /** Lowest Graph.CfnResourceNode icon to render */
+    readonly cfnResourceIconMin: GraphThemeRenderingIconTarget;
+    /** Highest Graph.CfnResourceNode icon to render */
+    readonly cfnResourceIconMax: GraphThemeRenderingIconTarget;
+}
+/**
+ * Rendering definition for the graph theme.
+ * @internal
+ */
+export interface IGraphThemeRenderingInternal extends IGraphThemeRenderingIconInternal, IGraphThemeRenderingOptions {
+}
+/** GraphTheme definition */
+export interface IGraphTheme {
+    readonly rendering: IGraphThemeRenderingInternal;
+    /** Styling for {@link Dot.Digraph} */
+    readonly graph: Dot.GraphAttributesObject;
+    /** Styling for {@link Dot.Subgraph}s */
+    readonly subgraph: Dot.SubgraphAttributesObject;
+    /** Styling for {@link Dot.Subgraph} **clusters** */
+    readonly cluster: Dot.SubgraphAttributesObject;
+    /** Default styling for {@link Dot.Node}s */
+    readonly node: Dot.NodeAttributesObject;
+    /** Default styling for {@link Dot.Edge}s */
+    readonly edge: Dot.EdgeAttributesObject;
+    /** Styling for **cloud** *containers* */
+    readonly cloud: Dot.SubgraphAttributesObject;
+    /** Styling for {@link Graph.StageNode} diagram entities */
+    readonly stage: Dot.SubgraphAttributesObject;
+    /** Styling for {@link Graph.StackNode} diagram entities */
+    readonly stack: Dot.SubgraphAttributesObject;
+    /** Styling for {@link Graph.NestedStackNode} diagram entities */
+    readonly nestedStack: Dot.SubgraphAttributesObject;
+    /** Default styling for {@link Dot.Node}s that have an **image** */
+    readonly imageNode: Dot.NodeAttributesObject;
+    /** Styling for {@link Graph.CfnResourceNode} diagram entities */
+    readonly cfnResourceNode: Dot.NodeAttributesObject;
+    /** Styling for {@link Graph.ResourceNode} diagram entities */
+    readonly resourceNode: Dot.NodeAttributesObject;
+    /** Styling for {@link Graph.Edge} *parent-child* based diagram edges */
+    readonly childLink: Dot.EdgeAttributesObject;
+    /** Styling for {@link Graph.Reference} based diagram edges */
+    readonly referenceLink: Dot.EdgeAttributesObject;
+    /** Styling for {@link Graph.Dependency} based diagram edges */
+    readonly dependencyLink: Dot.EdgeAttributesObject;
+    /** Reference to the theme definition for this diagram theme - {@link aws_arch.Theme} */
+    readonly awsTheme?: aws_arch.Theme;
+}
+export type GraphThemeConfigProp = aws_arch.Themes | IGraphThemeConfigAlt;
+/** GraphTheme class is the implementation of diagram graph based theme */
+export declare class GraphTheme implements IGraphTheme {
+    /** Initializes the theme based on {@link aws_arch.Theme} definition */
+    static init(config?: GraphThemeConfigProp): GraphTheme;
+    /** @internal */
+    private static _instance;
+    /** Get the current singleton instance for the theme being utilized for the diagram */
+    static get instance(): GraphTheme;
+    /** @inheritdoc */
+    readonly rendering: IGraphThemeRenderingInternal;
+    /** @inheritdoc */
+    readonly graph: Dot.GraphAttributesObject;
+    /** @inheritdoc */
+    readonly subgraph: Dot.SubgraphAttributesObject;
+    /** @inheritdoc */
+    readonly cluster: Dot.SubgraphAttributesObject;
+    /** @inheritdoc */
+    readonly node: Dot.NodeAttributesObject;
+    /** @inheritdoc */
+    readonly edge: Dot.EdgeAttributesObject;
+    /** @inheritdoc */
+    readonly cloud: Dot.SubgraphAttributesObject;
+    /** @inheritdoc */
+    readonly stage: Dot.SubgraphAttributesObject;
+    /** @inheritdoc */
+    readonly stack: Dot.SubgraphAttributesObject;
+    /** @inheritdoc */
+    readonly nestedStack: Dot.SubgraphAttributesObject;
+    /** @inheritdoc */
+    readonly imageNode: Dot.NodeAttributesObject;
+    /** @inheritdoc */
+    readonly cfnResourceNode: Dot.NodeAttributesObject;
+    /** @inheritdoc */
+    readonly resourceNode: Dot.NodeAttributesObject;
+    /** @inheritdoc */
+    readonly childLink: Dot.EdgeAttributesObject;
+    /** @inheritdoc */
+    readonly referenceLink: Dot.EdgeAttributesObject;
+    /** @inheritdoc */
+    readonly dependencyLink: Dot.EdgeAttributesObject;
+    /** @inheritdoc */
+    /** @inheritdoc */
+    readonly awsTheme?: aws_arch.Theme | undefined;
+    /** @internal */
+    private constructor();
+}
+/** Get the base theme */
+export declare function getBaseTheme(rendering?: IGraphThemeRendering): IGraphTheme;

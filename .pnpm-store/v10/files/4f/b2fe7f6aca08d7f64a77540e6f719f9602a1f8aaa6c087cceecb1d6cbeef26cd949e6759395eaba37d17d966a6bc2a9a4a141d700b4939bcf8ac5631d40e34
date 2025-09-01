@@ -1,0 +1,15 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { NodeProject } from "projen/lib/javascript";
+import { TypeSpecProjectDefinition, TypeSpecProjectDefinitionOptions } from "./type-spec-project-definition";
+/**
+ * Options for the TypeSpec async model definition
+ */
+export interface TypeSpecAsyncDefinitionOptions extends TypeSpecProjectDefinitionOptions {
+}
+/**
+ * The TypeSpec model definition for an async api
+ */
+export declare class TypeSpecAsyncDefinition extends TypeSpecProjectDefinition {
+    constructor(project: NodeProject, options: TypeSpecAsyncDefinitionOptions);
+}

@@ -1,0 +1,15 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { Project } from "projen";
+import { OpenApiProjectDefinition, OpenApiProjectDefinitionOptions } from "./open-api-project-definition";
+/**
+ * Options for the OpenAPI Spec
+ */
+export interface OpenApiAsyncDefinitionOptions extends OpenApiProjectDefinitionOptions {
+}
+/**
+ * The OpenAPI Spec
+ */
+export declare class OpenApiAsyncDefinition extends OpenApiProjectDefinition {
+    constructor(project: Project, options: OpenApiAsyncDefinitionOptions);
+}

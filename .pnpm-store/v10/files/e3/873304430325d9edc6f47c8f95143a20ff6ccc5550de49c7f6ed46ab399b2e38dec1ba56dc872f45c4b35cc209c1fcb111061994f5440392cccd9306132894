@@ -1,0 +1,15 @@
+import { IGraphFilterPlan } from "./types";
+import { Graph } from "../core";
+export * from "./types";
+export * from "./filters";
+/**
+ * Perform graph filter plan on store.
+ *
+ * This operation is performed *in-place* and is destructive, therefore can only be applied
+ * on stores that allow destructive mutations.
+ * @param {Graph.Store} store - The store to perform filter plan against
+ * @param {IGraphFilterPlan} plan - The filter plan to apply
+ * @throws Error is store does not allow destructive mutations
+ * @destructive
+ */
+export declare function performGraphFilterPlan(store: Graph.Store, plan: IGraphFilterPlan): void;

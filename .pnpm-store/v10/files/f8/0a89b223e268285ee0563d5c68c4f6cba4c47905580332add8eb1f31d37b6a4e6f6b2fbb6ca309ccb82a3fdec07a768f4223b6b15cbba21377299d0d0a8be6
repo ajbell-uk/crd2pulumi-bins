@@ -1,0 +1,21 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { Project, ProjectOptions } from "projen";
+import { OpenApiDefinition, OpenApiDefinitionOptions } from "./open-api-definition";
+import { TypeSafeApiModelBuildOutputOptions } from "../type-safe-api-model-build";
+export interface OpenApiModelProjectOptions extends ProjectOptions, OpenApiDefinitionOptions, TypeSafeApiModelBuildOutputOptions {
+}
+/**
+ * Project for defining an OpenAPI model for a REST API
+ */
+export declare class OpenApiModelProject extends Project {
+    /**
+     * Name of the API
+     */
+    readonly apiName: string;
+    /**
+     * OpenAPI specification component
+     */
+    readonly definition: OpenApiDefinition;
+    constructor(options: OpenApiModelProjectOptions);
+}

@@ -1,0 +1,120 @@
+import { IGraphFilter, IGraphStoreFilter } from "./types";
+import { Graph, NodeTypeEnum } from "../core";
+/**
+ * Filter value to use.
+ */
+export interface FilterValue {
+    /**
+     * String representation of a regex
+     */
+    readonly regex?: string;
+    /**
+     * Raw value
+     */
+    readonly value?: string;
+}
+export declare class Filters {
+    /**
+     * Verify that store is filterable, meaning it allows destructive mutations.
+     * @throws Error if store is not filterable
+     */
+    static verifyFilterable(store: Graph.Store): void;
+    /**
+     * Prune **extraneous** nodes and edges
+     * @throws Error if store is not filterable
+     * @destructive
+     */
+    static pruneExtraneous(): IGraphStoreFilter;
+    /**
+     * Collapses all Cdk Owned containers, which more closely mirrors the application code
+     * by removing resources that are automatically created by cdk.
+     */
+    static collapseCdkOwnedResources(): IGraphStoreFilter;
+    /**
+     * Collapses all Cdk Resource wrappers that wrap directly wrap a CfnResource.
+     * Example, s3.Bucket wraps s3.CfnBucket.
+     */
+    static collapseCdkWrappers(): IGraphStoreFilter;
+    /**
+     * Collapses Custom Resource nodes to a single node.
+     */
+    static collapseCustomResources(): IGraphStoreFilter;
+    /**
+     * Prune Custom Resource nodes.
+     */
+    static pruneCustomResources(): IGraphStoreFilter;
+    /**
+     * Prune empty containers, which are non-resource default nodes without any children.
+     *
+     * Generally L3 constructs in which all children have already been pruned, which
+     * would be useful as containers, but without children are considered extraneous.
+     */
+    static pruneEmptyContainers(): IGraphStoreFilter;
+    /**
+     * Collapses extraneous nodes to parent and cdk created nodes on themselves,
+     * and prunes extraneous edges.
+     *
+     * This most closely represents the developers code for the current application
+     * and reduces the noise one expects.
+     *
+     * Invokes:
+     * 1.
+     * 1. pruneExtraneous()(store);
+     * 1. collapseCdkOwnedResources()(store);
+     * 1. collapseCdkWrappers()(store);
+     * 1. collapseCustomResources()(store);
+     * 1. ~pruneCustomResources()(store);~
+     * 1. pruneEmptyContainers()(store);
+     *
+     * @throws Error if store is not filterable
+     * @destructive
+     */
+    static compact(): IGraphStoreFilter;
+    /**
+     * @internal
+     */
+    static _filterNodeType(values: FilterValue[], exclude: boolean): IGraphStoreFilter;
+    /**
+     * Prune all {@link Graph.Node}s *except those matching* specified list.
+     *
+     * This filter targets all nodes (except root) - {@link IGraphFilter.allNodes}
+     * @throws Error if store is not filterable
+     * @destructive
+     */
+    static includeNodeType(nodeTypes: FilterValue[]): IGraphStoreFilter;
+    /**
+     * Prune all {@link Graph.Node}s *matching* specified list.
+     *
+     * This filter targets all nodes (except root) - {@link IGraphFilter.allNodes}
+     * @throws Error if store is not filterable
+     * @destructive
+     */
+    static excludeNodeType(nodeTypes: FilterValue[]): IGraphStoreFilter;
+    /**
+     * @internal
+     */
+    static _filterCfnType(values: FilterValue[], exclude: boolean): IGraphFilter;
+    /**
+     * Prune all {@link Graph.ResourceNode} and {@link Graph.CfnResourceNode} nodes
+     * *except those matching* specified list of CloudFormation types.
+     * @throws Error if store is not filterable
+     * @destructive
+     */
+    static includeCfnType(cfnTypes: FilterValue[]): IGraphFilter;
+    /**
+     * Prune all {@link Graph.ResourceNode} and {@link Graph.CfnResourceNode} nodes
+     * *matching* specified list of CloudFormation types.
+     * @throws Error if store is not filterable
+     * @destructive
+     */
+    static excludeCfnType(cfnTypes: FilterValue[]): IGraphFilter;
+    /**
+     * Remove clusters by hoisting their children to the parent of the cluster
+     * and collapsing the cluster itself to its parent.
+     * @param clusterTypes
+     * @throws Error if store is not filterable
+     * @see {@link Graph.Node.mutateUncluster}
+     * @destructive
+     */
+    static uncluster(clusterTypes?: NodeTypeEnum[]): IGraphStoreFilter;
+}

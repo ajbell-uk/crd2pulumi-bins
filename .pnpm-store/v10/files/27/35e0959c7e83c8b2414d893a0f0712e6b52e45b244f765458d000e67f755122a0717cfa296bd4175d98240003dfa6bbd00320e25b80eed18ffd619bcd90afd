@@ -1,0 +1,5 @@
+import { DrawioSpec } from "../../generated/drawio-spec";
+/** Explicit mapping of drawio shapes to asset keys */
+export declare const DRAWIO_EXPLICIT_MAPPING: {
+    [K in DrawioSpec.Aws4.ShapeNames]?: string;
+};

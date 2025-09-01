@@ -1,0 +1,10 @@
+"use strict";
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DEFAULT_SMITHY_VERSION = void 0;
+/**
+ * Default version of Smithy
+ */
+exports.DEFAULT_SMITHY_VERSION = "1.28.0";
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidmVyc2lvbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbInZlcnNpb24udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBO3NDQUNzQzs7O0FBRXRDOztHQUVHO0FBQ1UsUUFBQSxzQkFBc0IsR0FBRyxRQUFRLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKiEgQ29weXJpZ2h0IFtBbWF6b24uY29tXShodHRwOi8vYW1hem9uLmNvbS8pLCBJbmMuIG9yIGl0cyBhZmZpbGlhdGVzLiBBbGwgUmlnaHRzIFJlc2VydmVkLlxuU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEFwYWNoZS0yLjAgKi9cblxuLyoqXG4gKiBEZWZhdWx0IHZlcnNpb24gb2YgU21pdGh5XG4gKi9cbmV4cG9ydCBjb25zdCBERUZBVUxUX1NNSVRIWV9WRVJTSU9OID0gXCIxLjI4LjBcIjtcbiJdfQ==

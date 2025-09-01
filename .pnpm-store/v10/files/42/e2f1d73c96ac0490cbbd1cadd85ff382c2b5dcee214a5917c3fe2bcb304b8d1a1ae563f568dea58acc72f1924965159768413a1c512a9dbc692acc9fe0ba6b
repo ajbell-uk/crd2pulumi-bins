@@ -1,0 +1,16 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { GeneratedTypescriptLibraryProject, GeneratedTypescriptLibraryProjectOptions } from "./generated-typescript-library-project";
+import { CodegenOptions } from "../components/utils";
+/**
+ * Configuration for the generated typescript websocket client project
+ */
+export interface TypescriptWebsocketClientLibraryOptions extends GeneratedTypescriptLibraryProjectOptions {
+}
+/**
+ * Typescript project containing a generated websocket client
+ */
+export declare class TypescriptWebsocketClientLibrary extends GeneratedTypescriptLibraryProject {
+    constructor(options: TypescriptWebsocketClientLibraryOptions);
+    protected buildCodegenOptions(): CodegenOptions;
+}

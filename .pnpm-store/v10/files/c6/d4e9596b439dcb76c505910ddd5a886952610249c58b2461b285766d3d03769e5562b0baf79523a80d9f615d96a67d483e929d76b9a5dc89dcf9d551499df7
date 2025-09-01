@@ -1,0 +1,19 @@
+import { UserPool, UserPoolProps } from "aws-cdk-lib/aws-cognito";
+import { Construct } from "constructs";
+/**
+ * Boolean context to indicate whether legacy MFA props should be used.
+ *
+ * @deprecated
+ */
+export declare const USE_LEGACY_MFA_PROPS_CONTEXT_KEY = "@aws/identity:useLegacyMFAProps";
+/**
+ * UserPoolWithMfa props.
+ */
+export interface UserPoolWithMfaProps extends UserPoolProps {
+}
+/**
+ * Configures a UserPool with MFA across SMS/TOTP using sane defaults.
+ */
+export declare class UserPoolWithMfa extends UserPool {
+    constructor(scope: Construct, id: string, props?: UserPoolWithMfaProps);
+}

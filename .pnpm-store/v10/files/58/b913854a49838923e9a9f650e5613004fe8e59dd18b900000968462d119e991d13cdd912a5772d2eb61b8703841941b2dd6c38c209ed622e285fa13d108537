@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Enums = void 0;
+const enum_1 = require("./enum");
+class Enums {
+    constructor(transpile, enums) {
+        this.enums = enums.map((e) => new enum_1.Enum(transpile, e));
+    }
+    toJson() {
+        return this.enums.map((enu) => enu.toJson());
+    }
+}
+exports.Enums = Enums;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZW51bXMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvZG9jZ2VuL3ZpZXcvZW51bXMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQ0EsaUNBQThCO0FBSTlCLE1BQWEsS0FBSztJQUVoQixZQUFZLFNBQW9CLEVBQUUsS0FBeUI7UUFDekQsSUFBSSxDQUFDLEtBQUssR0FBRyxLQUFLLENBQUMsR0FBRyxDQUFDLENBQUMsQ0FBQyxFQUFFLEVBQUUsQ0FBQyxJQUFJLFdBQUksQ0FBQyxTQUFTLEVBQUUsQ0FBQyxDQUFDLENBQUMsQ0FBQztJQUN4RCxDQUFDO0lBRU0sTUFBTTtRQUNYLE9BQU8sSUFBSSxDQUFDLEtBQUssQ0FBQyxHQUFHLENBQUMsQ0FBQyxHQUFHLEVBQUUsRUFBRSxDQUFDLEdBQUcsQ0FBQyxNQUFNLEVBQUUsQ0FBQyxDQUFDO0lBQy9DLENBQUM7Q0FDRjtBQVRELHNCQVNDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICogYXMgcmVmbGVjdCBmcm9tICdqc2lpLXJlZmxlY3QnO1xuaW1wb3J0IHsgRW51bSB9IGZyb20gJy4vZW51bSc7XG5pbXBvcnQgeyBFbnVtU2NoZW1hIH0gZnJvbSAnLi4vc2NoZW1hJztcbmltcG9ydCB7IFRyYW5zcGlsZSB9IGZyb20gJy4uL3RyYW5zcGlsZS90cmFuc3BpbGUnO1xuXG5leHBvcnQgY2xhc3MgRW51bXMge1xuICBwcml2YXRlIHJlYWRvbmx5IGVudW1zOiBFbnVtW107XG4gIGNvbnN0cnVjdG9yKHRyYW5zcGlsZTogVHJhbnNwaWxlLCBlbnVtczogcmVmbGVjdC5FbnVtVHlwZVtdKSB7XG4gICAgdGhpcy5lbnVtcyA9IGVudW1zLm1hcCgoZSkgPT4gbmV3IEVudW0odHJhbnNwaWxlLCBlKSk7XG4gIH1cblxuICBwdWJsaWMgdG9Kc29uKCk6IEVudW1TY2hlbWFbXSB7XG4gICAgcmV0dXJuIHRoaXMuZW51bXMubWFwKChlbnUpID0+IGVudS50b0pzb24oKSk7XG4gIH1cbn1cbiJdfQ==

@@ -1,0 +1,43 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TypeSpecAsyncAwsPdkPreludeJs = void 0;
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+const path = require("path");
+const projen_1 = require("projen");
+/**
+ * Synthesize the aws-pdk/async.js file
+ */
+class TypeSpecAsyncAwsPdkPreludeJs extends projen_1.FileBase {
+    constructor(project, options) {
+        super(project, path.join(options.generatedModelDir, "aws-pdk", "async.js"), {
+            marker: true,
+            readonly: true,
+        });
+    }
+    synthesizeContent(_) {
+        // Define the @async, @connectHandler and @disconnectHandler decorator implementations.
+        // The @async decorator implementation adds the "x-async" vendor extension to the operation in
+        // the OpenAPI spec, as well as setting the method to POST and path to /<OperationID>.
+        return `// ${this.marker}
+import { $extension } from "@typespec/openapi";
+import { $post, $route } from "@typespec/http";
+
+export function $async(context, target, value) {
+  $post(context, target);
+  $route(context, target, \`/\${target.name}\`);
+  $extension(context, target, "x-async", value);
+}
+
+export function $connectHandler(context, target, value) {
+  $extension(context, target, "x-connect-handler", value);
+}
+
+export function $disconnectHandler(context, target, value) {
+  $extension(context, target, "x-disconnect-handler", value);
+}
+`;
+    }
+}
+exports.TypeSpecAsyncAwsPdkPreludeJs = TypeSpecAsyncAwsPdkPreludeJs;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidHlwZS1zcGVjLWFzeW5jLWF3cy1wZGstcHJlbHVkZS1qcy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbInR5cGUtc3BlYy1hc3luYy1hd3MtcGRrLXByZWx1ZGUtanMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUE7c0NBQ3NDO0FBQ3RDLDZCQUE2QjtBQUM3QixtQ0FBc0Q7QUFZdEQ7O0dBRUc7QUFDSCxNQUFhLDRCQUE2QixTQUFRLGlCQUFRO0lBQ3hELFlBQVksT0FBZ0IsRUFBRSxPQUE0QztRQUN4RSxLQUFLLENBQ0gsT0FBTyxFQUNQLElBQUksQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLGlCQUFpQixFQUFFLFNBQVMsRUFBRSxVQUFVLENBQUMsRUFDM0Q7WUFDRSxNQUFNLEVBQUUsSUFBSTtZQUNaLFFBQVEsRUFBRSxJQUFJO1NBQ2YsQ0FDRixDQUFDO0lBQ0osQ0FBQztJQUVNLGlCQUFpQixDQUFDLENBQVk7UUFDbkMsdUZBQXVGO1FBQ3ZGLDhGQUE4RjtRQUM5RixzRkFBc0Y7UUFDdEYsT0FBTyxNQUFNLElBQUksQ0FBQyxNQUFNOzs7Ozs7Ozs7Ozs7Ozs7OztDQWlCM0IsQ0FBQztJQUNBLENBQUM7Q0FDRjtBQW5DRCxvRUFtQ0MiLCJzb3VyY2VzQ29udGVudCI6WyIvKiEgQ29weXJpZ2h0IFtBbWF6b24uY29tXShodHRwOi8vYW1hem9uLmNvbS8pLCBJbmMuIG9yIGl0cyBhZmZpbGlhdGVzLiBBbGwgUmlnaHRzIFJlc2VydmVkLlxuU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEFwYWNoZS0yLjAgKi9cbmltcG9ydCAqIGFzIHBhdGggZnJvbSBcInBhdGhcIjtcbmltcG9ydCB7IFByb2plY3QsIEZpbGVCYXNlLCBJUmVzb2x2ZXIgfSBmcm9tIFwicHJvamVuXCI7XG5cbi8qKlxuICogT3B0aW9ucyBmb3IgdGhlIGF3cy1wZGsvYXN5bmMuanMgZmlsZVxuICovXG5leHBvcnQgaW50ZXJmYWNlIFR5cGVTcGVjQXN5bmNBd3NQZGtQcmVsdWRlSnNPcHRpb25zIHtcbiAgLyoqXG4gICAqIFBhdGggdG8gdGhlIGdlbmVyYXRlZCBtb2RlbCBkaXJlY3RvcnkgaW4gd2hpY2ggdG8gYWRkIHRoZSBwcmVsdWRlXG4gICAqL1xuICByZWFkb25seSBnZW5lcmF0ZWRNb2RlbERpcjogc3RyaW5nO1xufVxuXG4vKipcbiAqIFN5bnRoZXNpemUgdGhlIGF3cy1wZGsvYXN5bmMuanMgZmlsZVxuICovXG5leHBvcnQgY2xhc3MgVHlwZVNwZWNBc3luY0F3c1Bka1ByZWx1ZGVKcyBleHRlbmRzIEZpbGVCYXNlIHtcbiAgY29uc3RydWN0b3IocHJvamVjdDogUHJvamVjdCwgb3B0aW9uczogVHlwZVNwZWNBc3luY0F3c1Bka1ByZWx1ZGVKc09wdGlvbnMpIHtcbiAgICBzdXBlcihcbiAgICAgIHByb2plY3QsXG4gICAgICBwYXRoLmpvaW4ob3B0aW9ucy5nZW5lcmF0ZWRNb2RlbERpciwgXCJhd3MtcGRrXCIsIFwiYXN5bmMuanNcIiksXG4gICAgICB7XG4gICAgICAgIG1hcmtlcjogdHJ1ZSxcbiAgICAgICAgcmVhZG9ubHk6IHRydWUsXG4gICAgICB9XG4gICAgKTtcbiAgfVxuXG4gIHB1YmxpYyBzeW50aGVzaXplQ29udGVudChfOiBJUmVzb2x2ZXIpOiBzdHJpbmcgfCB1bmRlZmluZWQge1xuICAgIC8vIERlZmluZSB0aGUgQGFzeW5jLCBAY29ubmVjdEhhbmRsZXIgYW5kIEBkaXNjb25uZWN0SGFuZGxlciBkZWNvcmF0b3IgaW1wbGVtZW50YXRpb25zLlxuICAgIC8vIFRoZSBAYXN5bmMgZGVjb3JhdG9yIGltcGxlbWVudGF0aW9uIGFkZHMgdGhlIFwieC1hc3luY1wiIHZlbmRvciBleHRlbnNpb24gdG8gdGhlIG9wZXJhdGlvbiBpblxuICAgIC8vIHRoZSBPcGVuQVBJIHNwZWMsIGFzIHdlbGwgYXMgc2V0dGluZyB0aGUgbWV0aG9kIHRvIFBPU1QgYW5kIHBhdGggdG8gLzxPcGVyYXRpb25JRD4uXG4gICAgcmV0dXJuIGAvLyAke3RoaXMubWFya2VyfVxuaW1wb3J0IHsgJGV4dGVuc2lvbiB9IGZyb20gXCJAdHlwZXNwZWMvb3BlbmFwaVwiO1xuaW1wb3J0IHsgJHBvc3QsICRyb3V0ZSB9IGZyb20gXCJAdHlwZXNwZWMvaHR0cFwiO1xuXG5leHBvcnQgZnVuY3Rpb24gJGFzeW5jKGNvbnRleHQsIHRhcmdldCwgdmFsdWUpIHtcbiAgJHBvc3QoY29udGV4dCwgdGFyZ2V0KTtcbiAgJHJvdXRlKGNvbnRleHQsIHRhcmdldCwgXFxgL1xcJHt0YXJnZXQubmFtZX1cXGApO1xuICAkZXh0ZW5zaW9uKGNvbnRleHQsIHRhcmdldCwgXCJ4LWFzeW5jXCIsIHZhbHVlKTtcbn1cblxuZXhwb3J0IGZ1bmN0aW9uICRjb25uZWN0SGFuZGxlcihjb250ZXh0LCB0YXJnZXQsIHZhbHVlKSB7XG4gICRleHRlbnNpb24oY29udGV4dCwgdGFyZ2V0LCBcIngtY29ubmVjdC1oYW5kbGVyXCIsIHZhbHVlKTtcbn1cblxuZXhwb3J0IGZ1bmN0aW9uICRkaXNjb25uZWN0SGFuZGxlcihjb250ZXh0LCB0YXJnZXQsIHZhbHVlKSB7XG4gICRleHRlbnNpb24oY29udGV4dCwgdGFyZ2V0LCBcIngtZGlzY29ubmVjdC1oYW5kbGVyXCIsIHZhbHVlKTtcbn1cbmA7XG4gIH1cbn1cbiJdfQ==

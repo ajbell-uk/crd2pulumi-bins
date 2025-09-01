@@ -1,0 +1,101 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { AuthorizationType } from "aws-cdk-lib/aws-apigateway";
+import { Construct } from "constructs";
+import { OpenAPIV3 } from "openapi-types";
+import { ApiKeyOptions, TypeSafeApiIntegrations } from "./api-gateway-integrations-types";
+import { Authorizer, CustomAuthorizerType } from "../authorizers";
+/**
+ * Snippet of OpenAPI API Gateway extension for a cognito x-amazon-apigateway-authorizer
+ * @see https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-enable-cognito-user-pool.html
+ */
+export interface CognitoApiGatewayAuthorizer {
+    /**
+     * The type of authorizer (always cognito_user_pools)
+     */
+    readonly type: AuthorizationType.COGNITO;
+    /**
+     * The arns of the user pools used to authorize the request
+     */
+    readonly providerARNs: string[];
+}
+/**
+ * Snippet of OpenAPI API Gateway extension for a custom x-amazon-apigateway-authorizer
+ * @see https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-swagger-extensions-authorizer.html
+ */
+export interface CustomApiGatewayAuthorizer {
+    /**
+     * Type of custom authorizer
+     */
+    readonly type: CustomAuthorizerType;
+    /**
+     * The part of the request that denotes the identity of the caller
+     */
+    readonly identitySource?: string;
+    /**
+     * The lambda invocation uri for the custom authorizer
+     */
+    readonly authorizerUri: string;
+    /**
+     * The time in seconds that the authorizer result is cached given the same identity source
+     */
+    readonly authorizerResultTtlInSeconds: number;
+}
+/**
+ * Open API definition for an api gateway security scheme
+ */
+export interface ApiGatewaySecurityScheme extends OpenAPIV3.ApiKeySecurityScheme {
+    /**
+     * The type of api gateway authorizer
+     */
+    readonly "x-amazon-apigateway-authtype": string;
+}
+/**
+ * Open API definition for an api gateway security scheme with authorizer details
+ */
+export interface ApiGatewaySecuritySchemeWithAuthorizer<AuthorizerType> extends ApiGatewaySecurityScheme {
+    /**
+     * Details about the authorizer
+     */
+    readonly "x-amazon-apigateway-authorizer": AuthorizerType;
+}
+/**
+ * The security scheme for a cognito authorizer
+ */
+export type CognitoSecurityScheme = ApiGatewaySecuritySchemeWithAuthorizer<CognitoApiGatewayAuthorizer>;
+/**
+ * The security scheme for a custom authorizer
+ */
+export type CustomSecurityScheme = ApiGatewaySecuritySchemeWithAuthorizer<CustomApiGatewayAuthorizer>;
+/**
+ * The security scheme for an iam authorizer
+ */
+export type IamSecurityScheme = ApiGatewaySecurityScheme;
+/**
+ * Serialised representation of a method authorizer
+ */
+export interface SerialisedAuthorizerReference {
+    /**
+     * The unique identifier of the authorizer to reference
+     */
+    readonly authorizerId: string;
+    /**
+     * Scopes to use for this particular authorizer reference
+     */
+    readonly authorizationScopes?: string[];
+}
+/**
+ * Build a serialized reference to an authorizer for use in an api method
+ * @param authorizer the author to serialize
+ */
+export declare const serializeAsAuthorizerReference: (authorizer?: Authorizer) => SerialisedAuthorizerReference | undefined;
+/**
+ * Return a list of all unique authorizers used in the api
+ */
+export declare const getAllAuthorizers: (integrations: TypeSafeApiIntegrations, defaultAuthorizer?: Authorizer) => Authorizer[];
+/**
+ * Generate the security schemes section of an OpenAPI specification
+ */
+export declare const prepareSecuritySchemes: (scope: Construct, integrations: TypeSafeApiIntegrations, defaultAuthorizer?: Authorizer, apiKeyOptions?: ApiKeyOptions) => {
+    [key: string]: OpenAPIV3.SecuritySchemeObject;
+};

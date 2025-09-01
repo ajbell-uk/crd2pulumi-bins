@@ -1,0 +1,15 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { NagPack, NagPackProps } from "cdk-nag";
+import { IConstruct } from "constructs";
+/**
+ * Check best practices for prototypes
+ *
+ */
+export declare class AwsPrototypingChecks extends NagPack {
+    constructor(props?: NagPackProps);
+    /**
+     * Check if CfnResource and apply rules
+     */
+    visit(node: IConstruct): void;
+}

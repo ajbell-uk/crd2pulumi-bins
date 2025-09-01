@@ -1,0 +1,47 @@
+import { CdkGraphArtifact, ICdkGraphPlugin, IGraphPluginBindCallback, IGraphReportCallback } from "../cdk-graph";
+import { ThreatComposerApplicationDetails } from "./model-generator/types";
+/**
+ * Options for the Threat Composer CDK Graph plugin
+ */
+export interface CdkGraphThreatComposerPluginOptions {
+    /**
+     * Details about the application to include in the threat model
+     */
+    readonly applicationDetails?: ThreatComposerApplicationDetails;
+}
+/**
+ * CdkGraphThreatComposerPlugin is a {@link ICdkGraphPlugin CdkGraph Plugin} implementation for generating
+ * Threat Composer threat models.
+ * @see https://github.com/awslabs/threat-composer
+ */
+export declare class CdkGraphThreatComposerPlugin implements ICdkGraphPlugin {
+    /**
+     * Fixed ID of the threat-composer plugin
+     */
+    static readonly ID = "threat-composer";
+    /**
+     * Curent semantic version of the threat-composer plugin
+     */
+    static readonly VERSION = "0.0.0";
+    /** @inheritdoc */
+    get id(): string;
+    /** @inheritdoc */
+    get version(): string;
+    /**
+     * Retrieve the threat model artifact
+     */
+    get threatModelArtifact(): CdkGraphArtifact | undefined;
+    /** @inheritdoc */
+    readonly dependencies?: string[];
+    /** @internal */
+    private _app?;
+    /** @internal */
+    private _options?;
+    /** @internal */
+    private _threatModelArtifact;
+    constructor(options?: CdkGraphThreatComposerPluginOptions);
+    /** @inheritdoc */
+    bind: IGraphPluginBindCallback;
+    /** @inheritdoc */
+    report?: IGraphReportCallback;
+}

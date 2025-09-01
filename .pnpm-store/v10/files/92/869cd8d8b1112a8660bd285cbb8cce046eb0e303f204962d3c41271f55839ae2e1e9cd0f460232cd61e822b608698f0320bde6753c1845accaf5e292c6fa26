@@ -1,0 +1,18 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { NagMessageLevel } from "cdk-nag";
+/**
+ * Pack name
+ *
+ */
+export declare let PackName: string;
+/**
+ * Rule metadata
+ *
+ */
+export declare let RuleMetadata: {
+    info: string;
+    explanation: string;
+    level: NagMessageLevel;
+    rule: any;
+}[];

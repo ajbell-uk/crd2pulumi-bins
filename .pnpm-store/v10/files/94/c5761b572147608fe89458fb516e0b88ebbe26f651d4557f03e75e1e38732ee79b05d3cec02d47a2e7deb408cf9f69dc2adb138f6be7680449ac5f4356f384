@@ -1,0 +1,89 @@
+"use strict";
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.OpenApiAsyncDefinition = void 0;
+const JSII_RTTI_SYMBOL_1 = Symbol.for("jsii.rtti");
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+const projen_1 = require("projen");
+const open_api_project_definition_1 = require("./open-api-project-definition");
+/**
+ * The OpenAPI Spec
+ */
+class OpenApiAsyncDefinition extends open_api_project_definition_1.OpenApiProjectDefinition {
+    constructor(project, options) {
+        super(project, options);
+        const firstHandlerLanguage = options.handlerLanguages?.[0];
+        // Create a sample OpenAPI spec yaml if not defined
+        new projen_1.SampleFile(project, this.openApiSpecificationPath, {
+            contents: `openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: ${options.openApiOptions.title}
+paths:
+  /SubscribeToNotifications:
+    post:
+      operationId: subscribeToNotifications${firstHandlerLanguage
+                ? `
+      x-handler:
+        language: ${firstHandlerLanguage}`
+                : ""}
+      x-async:
+        direction: client_to_server
+        collection: notifications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeToNotificationsRequestContent'
+      responses:
+        200:
+          description: Successful response
+  /SendNotification:
+    post:
+      operationId: sendNotification${firstHandlerLanguage
+                ? `
+      x-handler:
+        language: ${firstHandlerLanguage}`
+                : ""}
+      x-async:
+        direction: server_to_client
+        collection: notifications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendNotificationRequestContent'
+      responses:
+        200:
+          description: Successful response
+components:
+  schemas:
+    SubscribeToNotificationsRequestContent:
+      type: object
+      properties:
+        topic:
+          type: string
+      required:
+        - topic
+    SendNotificationRequestContent:
+      type: object
+      properties:
+        topic:
+          type: string
+        title:
+          type: string
+        message:
+          type: string
+      required:
+        - topic
+        - title
+        - message
+`,
+        });
+    }
+}
+exports.OpenApiAsyncDefinition = OpenApiAsyncDefinition;
+_a = JSII_RTTI_SYMBOL_1;
+OpenApiAsyncDefinition[_a] = { fqn: "@aws/pdk.type_safe_api.OpenApiAsyncDefinition", version: "0.26.14" };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoib3Blbi1hcGktYXN5bmMtZGVmaW5pdGlvbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIm9wZW4tYXBpLWFzeW5jLWRlZmluaXRpb24udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQTtzQ0FDc0M7QUFDdEMsbUNBQTZDO0FBQzdDLCtFQUd1QztBQVF2Qzs7R0FFRztBQUNILE1BQWEsc0JBQXVCLFNBQVEsc0RBQXdCO0lBQ2xFLFlBQVksT0FBZ0IsRUFBRSxPQUFzQztRQUNsRSxLQUFLLENBQUMsT0FBTyxFQUFFLE9BQU8sQ0FBQyxDQUFDO1FBRXhCLE1BQU0sb0JBQW9CLEdBQUcsT0FBTyxDQUFDLGdCQUFnQixFQUFFLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFFM0QsbURBQW1EO1FBQ25ELElBQUksbUJBQVUsQ0FBQyxPQUFPLEVBQUUsSUFBSSxDQUFDLHdCQUF3QixFQUFFO1lBQ3JELFFBQVEsRUFBRTs7O1dBR0wsT0FBTyxDQUFDLGNBQWMsQ0FBQyxLQUFLOzs7OzZDQUsvQixvQkFBb0I7Z0JBQ2xCLENBQUMsQ0FBQzs7b0JBRVEsb0JBQW9CLEVBQUU7Z0JBQ2hDLENBQUMsQ0FBQyxFQUNOOzs7Ozs7Ozs7Ozs7OztxQ0FlRSxvQkFBb0I7Z0JBQ2xCLENBQUMsQ0FBQzs7b0JBRVEsb0JBQW9CLEVBQUU7Z0JBQ2hDLENBQUMsQ0FBQyxFQUNOOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0NBa0NMO1NBQ0ksQ0FBQyxDQUFDO0lBQ0wsQ0FBQzs7QUE3RUgsd0RBOEVDIiwic291cmNlc0NvbnRlbnQiOlsiLyohIENvcHlyaWdodCBbQW1hem9uLmNvbV0oaHR0cDovL2FtYXpvbi5jb20vKSwgSW5jLiBvciBpdHMgYWZmaWxpYXRlcy4gQWxsIFJpZ2h0cyBSZXNlcnZlZC5cblNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBBcGFjaGUtMi4wICovXG5pbXBvcnQgeyBQcm9qZWN0LCBTYW1wbGVGaWxlIH0gZnJvbSBcInByb2plblwiO1xuaW1wb3J0IHtcbiAgT3BlbkFwaVByb2plY3REZWZpbml0aW9uLFxuICBPcGVuQXBpUHJvamVjdERlZmluaXRpb25PcHRpb25zLFxufSBmcm9tIFwiLi9vcGVuLWFwaS1wcm9qZWN0LWRlZmluaXRpb25cIjtcblxuLyoqXG4gKiBPcHRpb25zIGZvciB0aGUgT3BlbkFQSSBTcGVjXG4gKi9cbmV4cG9ydCBpbnRlcmZhY2UgT3BlbkFwaUFzeW5jRGVmaW5pdGlvbk9wdGlvbnNcbiAgZXh0ZW5kcyBPcGVuQXBpUHJvamVjdERlZmluaXRpb25PcHRpb25zIHt9XG5cbi8qKlxuICogVGhlIE9wZW5BUEkgU3BlY1xuICovXG5leHBvcnQgY2xhc3MgT3BlbkFwaUFzeW5jRGVmaW5pdGlvbiBleHRlbmRzIE9wZW5BcGlQcm9qZWN0RGVmaW5pdGlvbiB7XG4gIGNvbnN0cnVjdG9yKHByb2plY3Q6IFByb2plY3QsIG9wdGlvbnM6IE9wZW5BcGlBc3luY0RlZmluaXRpb25PcHRpb25zKSB7XG4gICAgc3VwZXIocHJvamVjdCwgb3B0aW9ucyk7XG5cbiAgICBjb25zdCBmaXJzdEhhbmRsZXJMYW5ndWFnZSA9IG9wdGlvbnMuaGFuZGxlckxhbmd1YWdlcz8uWzBdO1xuXG4gICAgLy8gQ3JlYXRlIGEgc2FtcGxlIE9wZW5BUEkgc3BlYyB5YW1sIGlmIG5vdCBkZWZpbmVkXG4gICAgbmV3IFNhbXBsZUZpbGUocHJvamVjdCwgdGhpcy5vcGVuQXBpU3BlY2lmaWNhdGlvblBhdGgsIHtcbiAgICAgIGNvbnRlbnRzOiBgb3BlbmFwaTogMy4wLjNcbmluZm86XG4gIHZlcnNpb246IDEuMC4wXG4gIHRpdGxlOiAke29wdGlvbnMub3BlbkFwaU9wdGlvbnMudGl0bGV9XG5wYXRoczpcbiAgL1N1YnNjcmliZVRvTm90aWZpY2F0aW9uczpcbiAgICBwb3N0OlxuICAgICAgb3BlcmF0aW9uSWQ6IHN1YnNjcmliZVRvTm90aWZpY2F0aW9ucyR7XG4gICAgICAgIGZpcnN0SGFuZGxlckxhbmd1YWdlXG4gICAgICAgICAgPyBgXG4gICAgICB4LWhhbmRsZXI6XG4gICAgICAgIGxhbmd1YWdlOiAke2ZpcnN0SGFuZGxlckxhbmd1YWdlfWBcbiAgICAgICAgICA6IFwiXCJcbiAgICAgIH1cbiAgICAgIHgtYXN5bmM6XG4gICAgICAgIGRpcmVjdGlvbjogY2xpZW50X3RvX3NlcnZlclxuICAgICAgICBjb2xsZWN0aW9uOiBub3RpZmljYXRpb25zXG4gICAgICByZXF1ZXN0Qm9keTpcbiAgICAgICAgY29udGVudDpcbiAgICAgICAgICBhcHBsaWNhdGlvbi9qc29uOlxuICAgICAgICAgICAgc2NoZW1hOlxuICAgICAgICAgICAgICAkcmVmOiAnIy9jb21wb25lbnRzL3NjaGVtYXMvU3Vic2NyaWJlVG9Ob3RpZmljYXRpb25zUmVxdWVzdENvbnRlbnQnXG4gICAgICByZXNwb25zZXM6XG4gICAgICAgIDIwMDpcbiAgICAgICAgICBkZXNjcmlwdGlvbjogU3VjY2Vzc2Z1bCByZXNwb25zZVxuICAvU2VuZE5vdGlmaWNhdGlvbjpcbiAgICBwb3N0OlxuICAgICAgb3BlcmF0aW9uSWQ6IHNlbmROb3RpZmljYXRpb24ke1xuICAgICAgICBmaXJzdEhhbmRsZXJMYW5ndWFnZVxuICAgICAgICAgID8gYFxuICAgICAgeC1oYW5kbGVyOlxuICAgICAgICBsYW5ndWFnZTogJHtmaXJzdEhhbmRsZXJMYW5ndWFnZX1gXG4gICAgICAgICAgOiBcIlwiXG4gICAgICB9XG4gICAgICB4LWFzeW5jOlxuICAgICAgICBkaXJlY3Rpb246IHNlcnZlcl90b19jbGllbnRcbiAgICAgICAgY29sbGVjdGlvbjogbm90aWZpY2F0aW9uc1xuICAgICAgcmVxdWVzdEJvZHk6XG4gICAgICAgIGNvbnRlbnQ6XG4gICAgICAgICAgYXBwbGljYXRpb24vanNvbjpcbiAgICAgICAgICAgIHNjaGVtYTpcbiAgICAgICAgICAgICAgJHJlZjogJyMvY29tcG9uZW50cy9zY2hlbWFzL1NlbmROb3RpZmljYXRpb25SZXF1ZXN0Q29udGVudCdcbiAgICAgIHJlc3BvbnNlczpcbiAgICAgICAgMjAwOlxuICAgICAgICAgIGRlc2NyaXB0aW9uOiBTdWNjZXNzZnVsIHJlc3BvbnNlXG5jb21wb25lbnRzOlxuICBzY2hlbWFzOlxuICAgIFN1YnNjcmliZVRvTm90aWZpY2F0aW9uc1JlcXVlc3RDb250ZW50OlxuICAgICAgdHlwZTogb2JqZWN0XG4gICAgICBwcm9wZXJ0aWVzOlxuICAgICAgICB0b3BpYzpcbiAgICAgICAgICB0eXBlOiBzdHJpbmdcbiAgICAgIHJlcXVpcmVkOlxuICAgICAgICAtIHRvcGljXG4gICAgU2VuZE5vdGlmaWNhdGlvblJlcXVlc3RDb250ZW50OlxuICAgICAgdHlwZTogb2JqZWN0XG4gICAgICBwcm9wZXJ0aWVzOlxuICAgICAgICB0b3BpYzpcbiAgICAgICAgICB0eXBlOiBzdHJpbmdcbiAgICAgICAgdGl0bGU6XG4gICAgICAgICAgdHlwZTogc3RyaW5nXG4gICAgICAgIG1lc3NhZ2U6XG4gICAgICAgICAgdHlwZTogc3RyaW5nXG4gICAgICByZXF1aXJlZDpcbiAgICAgICAgLSB0b3BpY1xuICAgICAgICAtIHRpdGxlXG4gICAgICAgIC0gbWVzc2FnZVxuYCxcbiAgICB9KTtcbiAgfVxufVxuIl19

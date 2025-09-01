@@ -1,0 +1,124 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SmithyAwsPdkAsyncPrelude = void 0;
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+const path = require("path");
+const projen_1 = require("projen");
+const smithy_aws_pdk_prelude_1 = require("./smithy-aws-pdk-prelude");
+/**
+ * Synthesize the aws-pdk/async.smithy file
+ */
+class SmithyAwsPdkAsyncPrelude extends projen_1.FileBase {
+    constructor(project, options) {
+        super(project, path.join(options.generatedModelDir, "aws-pdk", "async.smithy"), {
+            marker: true,
+            readonly: true,
+        });
+        this.options = options;
+    }
+    synthesizeContent(_) {
+        return `// ${this.marker}
+
+$version: "2"
+
+metadata validators = [
+
+    {
+        id: "MissingAsyncTrait"
+        name: "EmitEachSelector"
+        message: "Operation is missing @async trait"
+        configuration: {
+            selector: """
+                operation :not([trait|${this.options.serviceNamespace}#async])
+            """
+        }
+    }
+
+    {
+        id: "MissingWebSocketProtocolTrait"
+        name: "EmitEachSelector"
+        message: "Service is missing @websocketJson trait"
+        configuration: {
+            selector: """
+                service :not([trait|${this.options.serviceNamespace}#websocketJson])
+            """
+        }
+    }
+
+    {
+        id: "OperationMayNotHaveOutput"
+        name: "EmitEachSelector"
+        message: "Async operations must have no output"
+        configuration: {
+            selector: """
+                operation -[output]->
+            """
+        }
+    }
+
+    {
+        id: "OperationMustHaveInput"
+        name: "EmitEachSelector"
+        message: "Async operations must define an input"
+        configuration: {
+            selector: """
+                operation :not(-[input]->)
+            """
+        }
+    }
+
+    {
+        id: "HandlerTraitNotPermittedForServerToClient"
+        name: "EmitEachSelector"
+        message: "The @handler trait cannot be applied to an @async operation with direction server_to_client"
+        configuration: {
+            selector: """
+              operation
+              [@trait|${this.options.serviceNamespace}#async: @{direction} = server_to_client]
+              [trait|${this.options.serviceNamespace}#handler]
+            """
+        }
+    }
+
+    ${smithy_aws_pdk_prelude_1.SmithyAwsPdkPrelude.buildHandlerTraitValidators(this.options.serviceNamespace, "connectHandler", this.options.handlerLanguages)}
+    ${smithy_aws_pdk_prelude_1.SmithyAwsPdkPrelude.buildHandlerTraitValidators(this.options.serviceNamespace, "disconnectHandler", this.options.handlerLanguages)}
+]
+
+namespace ${this.options.serviceNamespace}
+
+/// Add this trait to an asynchronous service
+@trait(selector: "service")
+structure websocketJson {}
+
+enum AsyncDirection {
+    CLIENT_TO_SERVER = "client_to_server"
+    SERVER_TO_CLIENT = "server_to_client"
+    BIDIRECTIONAL = "bidirectional"
+}
+
+/// Add this trait to all asynchronous operations
+@trait(selector: "operation")
+structure async {
+    /// The direction this operation will be used in, used to inform the generated client and server sdks.
+    @required
+    direction: AsyncDirection
+}
+
+@trait(selector: "service")
+structure connectHandler {
+  @required
+  language: String
+}
+
+@trait(selector: "service")
+structure disconnectHandler {
+  @required
+  language: String
+}
+
+`;
+    }
+}
+exports.SmithyAwsPdkAsyncPrelude = SmithyAwsPdkAsyncPrelude;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic21pdGh5LWF3cy1wZGstYXN5bmMtcHJlbHVkZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbInNtaXRoeS1hd3MtcGRrLWFzeW5jLXByZWx1ZGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUE7c0NBQ3NDO0FBQ3RDLDZCQUE2QjtBQUM3QixtQ0FBc0Q7QUFDdEQscUVBQStEO0FBcUIvRDs7R0FFRztBQUNILE1BQWEsd0JBQXlCLFNBQVEsaUJBQVE7SUFHcEQsWUFBWSxPQUFnQixFQUFFLE9BQXdDO1FBQ3BFLEtBQUssQ0FDSCxPQUFPLEVBQ1AsSUFBSSxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsaUJBQWlCLEVBQUUsU0FBUyxFQUFFLGNBQWMsQ0FBQyxFQUMvRDtZQUNFLE1BQU0sRUFBRSxJQUFJO1lBQ1osUUFBUSxFQUFFLElBQUk7U0FDZixDQUNGLENBQUM7UUFDRixJQUFJLENBQUMsT0FBTyxHQUFHLE9BQU8sQ0FBQztJQUN6QixDQUFDO0lBRU0saUJBQWlCLENBQUMsQ0FBWTtRQUNuQyxPQUFPLE1BQU0sSUFBSSxDQUFDLE1BQU07Ozs7Ozs7Ozs7Ozt3Q0FZWSxJQUFJLENBQUMsT0FBTyxDQUFDLGdCQUFnQjs7Ozs7Ozs7Ozs7c0NBWW5ELElBQUksQ0FBQyxPQUFPLENBQUMsZ0JBQ2Y7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7d0JBbUNBLElBQUksQ0FBQyxPQUFPLENBQUMsZ0JBQ2Y7dUJBQ1MsSUFBSSxDQUFDLE9BQU8sQ0FBQyxnQkFBZ0I7Ozs7O01BSzlDLDRDQUFtQixDQUFDLDJCQUEyQixDQUMvQyxJQUFJLENBQUMsT0FBTyxDQUFDLGdCQUFnQixFQUM3QixnQkFBZ0IsRUFDaEIsSUFBSSxDQUFDLE9BQU8sQ0FBQyxnQkFBZ0IsQ0FDOUI7TUFDQyw0Q0FBbUIsQ0FBQywyQkFBMkIsQ0FDL0MsSUFBSSxDQUFDLE9BQU8sQ0FBQyxnQkFBZ0IsRUFDN0IsbUJBQW1CLEVBQ25CLElBQUksQ0FBQyxPQUFPLENBQUMsZ0JBQWdCLENBQzlCOzs7WUFHTyxJQUFJLENBQUMsT0FBTyxDQUFDLGdCQUFnQjs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Q0FnQ3hDLENBQUM7SUFDQSxDQUFDO0NBQ0Y7QUFqSUQsNERBaUlDIiwic291cmNlc0NvbnRlbnQiOlsiLyohIENvcHlyaWdodCBbQW1hem9uLmNvbV0oaHR0cDovL2FtYXpvbi5jb20vKSwgSW5jLiBvciBpdHMgYWZmaWxpYXRlcy4gQWxsIFJpZ2h0cyBSZXNlcnZlZC5cblNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBBcGFjaGUtMi4wICovXG5pbXBvcnQgKiBhcyBwYXRoIGZyb20gXCJwYXRoXCI7XG5pbXBvcnQgeyBQcm9qZWN0LCBGaWxlQmFzZSwgSVJlc29sdmVyIH0gZnJvbSBcInByb2plblwiO1xuaW1wb3J0IHsgU21pdGh5QXdzUGRrUHJlbHVkZSB9IGZyb20gXCIuL3NtaXRoeS1hd3MtcGRrLXByZWx1ZGVcIjtcbmltcG9ydCB7IExhbmd1YWdlIH0gZnJvbSBcIi4uLy4uLy4uL2xhbmd1YWdlc1wiO1xuXG4vKipcbiAqIE9wdGlvbnMgZm9yIHRoZSBhd3MtcGRrL2FzeW5jLnNtaXRoeSBmaWxlXG4gKi9cbmV4cG9ydCBpbnRlcmZhY2UgU21pdGh5QXdzUGRrQXN5bmNQcmVsdWRlT3B0aW9ucyB7XG4gIC8qKlxuICAgKiBQYXRoIHRvIHRoZSBnZW5lcmF0ZWQgbW9kZWwgZGlyZWN0b3J5IGluIHdoaWNoIHRvIGFkZCB0aGUgcHJlbHVkZVxuICAgKi9cbiAgcmVhZG9ubHkgZ2VuZXJhdGVkTW9kZWxEaXI6IHN0cmluZztcbiAgLyoqXG4gICAqIE5hbWVzcGFjZSBmb3IgdGhlIHNtaXRoeSBzZXJ2aWNlXG4gICAqL1xuICByZWFkb25seSBzZXJ2aWNlTmFtZXNwYWNlOiBzdHJpbmc7XG4gIC8qKlxuICAgKiBMYW5ndWFnZXMgc2VsZWN0ZWQgZm9yIGhhbmRsZXJzXG4gICAqL1xuICByZWFkb25seSBoYW5kbGVyTGFuZ3VhZ2VzPzogTGFuZ3VhZ2VbXTtcbn1cblxuLyoqXG4gKiBTeW50aGVzaXplIHRoZSBhd3MtcGRrL2FzeW5jLnNtaXRoeSBmaWxlXG4gKi9cbmV4cG9ydCBjbGFzcyBTbWl0aHlBd3NQZGtBc3luY1ByZWx1ZGUgZXh0ZW5kcyBGaWxlQmFzZSB7XG4gIHByaXZhdGUgcmVhZG9ubHkgb3B0aW9uczogU21pdGh5QXdzUGRrQXN5bmNQcmVsdWRlT3B0aW9ucztcblxuICBjb25zdHJ1Y3Rvcihwcm9qZWN0OiBQcm9qZWN0LCBvcHRpb25zOiBTbWl0aHlBd3NQZGtBc3luY1ByZWx1ZGVPcHRpb25zKSB7XG4gICAgc3VwZXIoXG4gICAgICBwcm9qZWN0LFxuICAgICAgcGF0aC5qb2luKG9wdGlvbnMuZ2VuZXJhdGVkTW9kZWxEaXIsIFwiYXdzLXBka1wiLCBcImFzeW5jLnNtaXRoeVwiKSxcbiAgICAgIHtcbiAgICAgICAgbWFya2VyOiB0cnVlLFxuICAgICAgICByZWFkb25seTogdHJ1ZSxcbiAgICAgIH1cbiAgICApO1xuICAgIHRoaXMub3B0aW9ucyA9IG9wdGlvbnM7XG4gIH1cblxuICBwdWJsaWMgc3ludGhlc2l6ZUNvbnRlbnQoXzogSVJlc29sdmVyKTogc3RyaW5nIHwgdW5kZWZpbmVkIHtcbiAgICByZXR1cm4gYC8vICR7dGhpcy5tYXJrZXJ9XG5cbiR2ZXJzaW9uOiBcIjJcIlxuXG5tZXRhZGF0YSB2YWxpZGF0b3JzID0gW1xuXG4gICAge1xuICAgICAgICBpZDogXCJNaXNzaW5nQXN5bmNUcmFpdFwiXG4gICAgICAgIG5hbWU6IFwiRW1pdEVhY2hTZWxlY3RvclwiXG4gICAgICAgIG1lc3NhZ2U6IFwiT3BlcmF0aW9uIGlzIG1pc3NpbmcgQGFzeW5jIHRyYWl0XCJcbiAgICAgICAgY29uZmlndXJhdGlvbjoge1xuICAgICAgICAgICAgc2VsZWN0b3I6IFwiXCJcIlxuICAgICAgICAgICAgICAgIG9wZXJhdGlvbiA6bm90KFt0cmFpdHwke3RoaXMub3B0aW9ucy5zZXJ2aWNlTmFtZXNwYWNlfSNhc3luY10pXG4gICAgICAgICAgICBcIlwiXCJcbiAgICAgICAgfVxuICAgIH1cblxuICAgIHtcbiAgICAgICAgaWQ6IFwiTWlzc2luZ1dlYlNvY2tldFByb3RvY29sVHJhaXRcIlxuICAgICAgICBuYW1lOiBcIkVtaXRFYWNoU2VsZWN0b3JcIlxuICAgICAgICBtZXNzYWdlOiBcIlNlcnZpY2UgaXMgbWlzc2luZyBAd2Vic29ja2V0SnNvbiB0cmFpdFwiXG4gICAgICAgIGNvbmZpZ3VyYXRpb246IHtcbiAgICAgICAgICAgIHNlbGVjdG9yOiBcIlwiXCJcbiAgICAgICAgICAgICAgICBzZXJ2aWNlIDpub3QoW3RyYWl0fCR7XG4gICAgICAgICAgICAgICAgICB0aGlzLm9wdGlvbnMuc2VydmljZU5hbWVzcGFjZVxuICAgICAgICAgICAgICAgIH0jd2Vic29ja2V0SnNvbl0pXG4gICAgICAgICAgICBcIlwiXCJcbiAgICAgICAgfVxuICAgIH1cblxuICAgIHtcbiAgICAgICAgaWQ6IFwiT3BlcmF0aW9uTWF5Tm90SGF2ZU91dHB1dFwiXG4gICAgICAgIG5hbWU6IFwiRW1pdEVhY2hTZWxlY3RvclwiXG4gICAgICAgIG1lc3NhZ2U6IFwiQXN5bmMgb3BlcmF0aW9ucyBtdXN0IGhhdmUgbm8gb3V0cHV0XCJcbiAgICAgICAgY29uZmlndXJhdGlvbjoge1xuICAgICAgICAgICAgc2VsZWN0b3I6IFwiXCJcIlxuICAgICAgICAgICAgICAgIG9wZXJhdGlvbiAtW291dHB1dF0tPlxuICAgICAgICAgICAgXCJcIlwiXG4gICAgICAgIH1cbiAgICB9XG5cbiAgICB7XG4gICAgICAgIGlkOiBcIk9wZXJhdGlvbk11c3RIYXZlSW5wdXRcIlxuICAgICAgICBuYW1lOiBcIkVtaXRFYWNoU2VsZWN0b3JcIlxuICAgICAgICBtZXNzYWdlOiBcIkFzeW5jIG9wZXJhdGlvbnMgbXVzdCBkZWZpbmUgYW4gaW5wdXRcIlxuICAgICAgICBjb25maWd1cmF0aW9uOiB7XG4gICAgICAgICAgICBzZWxlY3RvcjogXCJcIlwiXG4gICAgICAgICAgICAgICAgb3BlcmF0aW9uIDpub3QoLVtpbnB1dF0tPilcbiAgICAgICAgICAgIFwiXCJcIlxuICAgICAgICB9XG4gICAgfVxuXG4gICAge1xuICAgICAgICBpZDogXCJIYW5kbGVyVHJhaXROb3RQZXJtaXR0ZWRGb3JTZXJ2ZXJUb0NsaWVudFwiXG4gICAgICAgIG5hbWU6IFwiRW1pdEVhY2hTZWxlY3RvclwiXG4gICAgICAgIG1lc3NhZ2U6IFwiVGhlIEBoYW5kbGVyIHRyYWl0IGNhbm5vdCBiZSBhcHBsaWVkIHRvIGFuIEBhc3luYyBvcGVyYXRpb24gd2l0aCBkaXJlY3Rpb24gc2VydmVyX3RvX2NsaWVudFwiXG4gICAgICAgIGNvbmZpZ3VyYXRpb246IHtcbiAgICAgICAgICAgIHNlbGVjdG9yOiBcIlwiXCJcbiAgICAgICAgICAgICAgb3BlcmF0aW9uXG4gICAgICAgICAgICAgIFtAdHJhaXR8JHtcbiAgICAgICAgICAgICAgICB0aGlzLm9wdGlvbnMuc2VydmljZU5hbWVzcGFjZVxuICAgICAgICAgICAgICB9I2FzeW5jOiBAe2RpcmVjdGlvbn0gPSBzZXJ2ZXJfdG9fY2xpZW50XVxuICAgICAgICAgICAgICBbdHJhaXR8JHt0aGlzLm9wdGlvbnMuc2VydmljZU5hbWVzcGFjZX0jaGFuZGxlcl1cbiAgICAgICAgICAgIFwiXCJcIlxuICAgICAgICB9XG4gICAgfVxuXG4gICAgJHtTbWl0aHlBd3NQZGtQcmVsdWRlLmJ1aWxkSGFuZGxlclRyYWl0VmFsaWRhdG9ycyhcbiAgICAgIHRoaXMub3B0aW9ucy5zZXJ2aWNlTmFtZXNwYWNlLFxuICAgICAgXCJjb25uZWN0SGFuZGxlclwiLFxuICAgICAgdGhpcy5vcHRpb25zLmhhbmRsZXJMYW5ndWFnZXNcbiAgICApfVxuICAgICR7U21pdGh5QXdzUGRrUHJlbHVkZS5idWlsZEhhbmRsZXJUcmFpdFZhbGlkYXRvcnMoXG4gICAgICB0aGlzLm9wdGlvbnMuc2VydmljZU5hbWVzcGFjZSxcbiAgICAgIFwiZGlzY29ubmVjdEhhbmRsZXJcIixcbiAgICAgIHRoaXMub3B0aW9ucy5oYW5kbGVyTGFuZ3VhZ2VzXG4gICAgKX1cbl1cblxubmFtZXNwYWNlICR7dGhpcy5vcHRpb25zLnNlcnZpY2VOYW1lc3BhY2V9XG5cbi8vLyBBZGQgdGhpcyB0cmFpdCB0byBhbiBhc3luY2hyb25vdXMgc2VydmljZVxuQHRyYWl0KHNlbGVjdG9yOiBcInNlcnZpY2VcIilcbnN0cnVjdHVyZSB3ZWJzb2NrZXRKc29uIHt9XG5cbmVudW0gQXN5bmNEaXJlY3Rpb24ge1xuICAgIENMSUVOVF9UT19TRVJWRVIgPSBcImNsaWVudF90b19zZXJ2ZXJcIlxuICAgIFNFUlZFUl9UT19DTElFTlQgPSBcInNlcnZlcl90b19jbGllbnRcIlxuICAgIEJJRElSRUNUSU9OQUwgPSBcImJpZGlyZWN0aW9uYWxcIlxufVxuXG4vLy8gQWRkIHRoaXMgdHJhaXQgdG8gYWxsIGFzeW5jaHJvbm91cyBvcGVyYXRpb25zXG5AdHJhaXQoc2VsZWN0b3I6IFwib3BlcmF0aW9uXCIpXG5zdHJ1Y3R1cmUgYXN5bmMge1xuICAgIC8vLyBUaGUgZGlyZWN0aW9uIHRoaXMgb3BlcmF0aW9uIHdpbGwgYmUgdXNlZCBpbiwgdXNlZCB0byBpbmZvcm0gdGhlIGdlbmVyYXRlZCBjbGllbnQgYW5kIHNlcnZlciBzZGtzLlxuICAgIEByZXF1aXJlZFxuICAgIGRpcmVjdGlvbjogQXN5bmNEaXJlY3Rpb25cbn1cblxuQHRyYWl0KHNlbGVjdG9yOiBcInNlcnZpY2VcIilcbnN0cnVjdHVyZSBjb25uZWN0SGFuZGxlciB7XG4gIEByZXF1aXJlZFxuICBsYW5ndWFnZTogU3RyaW5nXG59XG5cbkB0cmFpdChzZWxlY3RvcjogXCJzZXJ2aWNlXCIpXG5zdHJ1Y3R1cmUgZGlzY29ubmVjdEhhbmRsZXIge1xuICBAcmVxdWlyZWRcbiAgbGFuZ3VhZ2U6IFN0cmluZ1xufVxuXG5gO1xuICB9XG59XG4iXX0=

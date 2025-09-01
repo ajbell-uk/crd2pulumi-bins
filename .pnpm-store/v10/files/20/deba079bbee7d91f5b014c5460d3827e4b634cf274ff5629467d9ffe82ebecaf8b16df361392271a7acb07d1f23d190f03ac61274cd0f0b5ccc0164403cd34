@@ -1,0 +1,36 @@
+import { Task } from "projen";
+import { TypeScriptProject, TypeScriptProjectOptions } from "projen/lib/typescript";
+import { CodeGenerationSourceOptions, GeneratedProjectOptions } from "../../../types";
+import { CodegenOptions } from "../../components/utils";
+import { GeneratedHandlersProjects } from "../../generate";
+import { GeneratedTypescriptRuntimeBaseProject } from "../../runtime/generated-typescript-runtime-base-project";
+export interface GeneratedTypescriptInfrastructureBaseOptions extends TypeScriptProjectOptions, GeneratedProjectOptions {
+}
+export interface GeneratedTypescriptCdkInfrastructureBaseProjectOptions extends GeneratedTypescriptInfrastructureBaseOptions, CodeGenerationSourceOptions {
+    /**
+     * Generated typescript types project
+     */
+    readonly generatedTypescriptTypes: GeneratedTypescriptRuntimeBaseProject;
+    /**
+     * Generated handlers projects
+     */
+    readonly generatedHandlers: GeneratedHandlersProjects;
+    /**
+     * Whether the infrastructure and client projects are parented by an monorepo or not
+     */
+    readonly isWithinMonorepo?: boolean;
+}
+export declare abstract class GeneratedTypescriptCdkInfrastructureBaseProject extends TypeScriptProject {
+    /**
+     * Options configured for the project
+     */
+    protected readonly options: GeneratedTypescriptCdkInfrastructureBaseProjectOptions;
+    /**
+     * Path to the packaged copy of the openapi specification
+     */
+    protected readonly packagedSpecPath = "assets/api.json";
+    protected readonly generateTask: Task;
+    constructor(options: GeneratedTypescriptCdkInfrastructureBaseProjectOptions);
+    buildGenerateCommandArgs: () => string;
+    protected abstract buildCodegenOptions(): CodegenOptions;
+}

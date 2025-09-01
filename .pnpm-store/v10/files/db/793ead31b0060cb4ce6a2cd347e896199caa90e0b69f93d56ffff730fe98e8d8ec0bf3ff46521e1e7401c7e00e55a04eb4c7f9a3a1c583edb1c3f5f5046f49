@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Construct = void 0;
+const class_1 = require("./class");
+class Construct {
+    constructor(transpile, klass) {
+        this.construct = new class_1.Class(transpile, klass);
+    }
+    toJson() {
+        return this.construct.toJson();
+    }
+}
+exports.Construct = Construct;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29uc3RydWN0LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL2RvY2dlbi92aWV3L2NvbnN0cnVjdC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFDQSxtQ0FBZ0M7QUFJaEMsTUFBYSxTQUFTO0lBRXBCLFlBQVksU0FBb0IsRUFBRSxLQUF3QjtRQUN4RCxJQUFJLENBQUMsU0FBUyxHQUFHLElBQUksYUFBSyxDQUFDLFNBQVMsRUFBRSxLQUFLLENBQUMsQ0FBQztJQUMvQyxDQUFDO0lBRU0sTUFBTTtRQUNYLE9BQU8sSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLEVBQUUsQ0FBQztJQUNqQyxDQUFDO0NBQ0Y7QUFURCw4QkFTQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIHJlZmxlY3QgZnJvbSAnanNpaS1yZWZsZWN0JztcbmltcG9ydCB7IENsYXNzIH0gZnJvbSAnLi9jbGFzcyc7XG5pbXBvcnQgeyBDb25zdHJ1Y3RTY2hlbWEgfSBmcm9tICcuLi9zY2hlbWEnO1xuaW1wb3J0IHsgVHJhbnNwaWxlIH0gZnJvbSAnLi4vdHJhbnNwaWxlL3RyYW5zcGlsZSc7XG5cbmV4cG9ydCBjbGFzcyBDb25zdHJ1Y3Qge1xuICBwcml2YXRlIHJlYWRvbmx5IGNvbnN0cnVjdDogQ2xhc3M7XG4gIGNvbnN0cnVjdG9yKHRyYW5zcGlsZTogVHJhbnNwaWxlLCBrbGFzczogcmVmbGVjdC5DbGFzc1R5cGUpIHtcbiAgICB0aGlzLmNvbnN0cnVjdCA9IG5ldyBDbGFzcyh0cmFuc3BpbGUsIGtsYXNzKTtcbiAgfVxuXG4gIHB1YmxpYyB0b0pzb24oKTogQ29uc3RydWN0U2NoZW1hIHtcbiAgICByZXR1cm4gdGhpcy5jb25zdHJ1Y3QudG9Kc29uKCk7XG4gIH1cbn1cbiJdfQ==

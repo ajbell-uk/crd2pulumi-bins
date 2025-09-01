@@ -1,0 +1,94 @@
+"use strict";
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ReleaseTrigger = void 0;
+const JSII_RTTI_SYMBOL_1 = Symbol.for("jsii.rtti");
+/**
+ * Used to manage release strategies. This includes release
+ * and release artifact automation
+ */
+class ReleaseTrigger {
+    /**
+     * Creates a manual release trigger.
+     *
+     * Use this option if you want totally manual releases.
+     *
+     * This will give you a release task that, in addition to the normal
+     * release activities will trigger a `publish:git` task. This task will
+     * handle project-level changelog management, release tagging, and pushing
+     * these artifacts to origin.
+     *
+     * The command used for pushing can be customised by specifying
+     * `gitPushCommand`. Set to an empty string to disable pushing entirely.
+     *
+     * Simply run `yarn release` to trigger a manual release.
+     *
+     * @param options release options
+     */
+    static manual(options = {}) {
+        let changelogPath;
+        if (options.changelog ?? true) {
+            changelogPath = options.changelogPath ?? "CHANGELOG.md";
+        }
+        return new ReleaseTrigger({
+            changelogPath: changelogPath,
+            gitPushCommand: options.gitPushCommand,
+        });
+    }
+    /**
+     * Creates a scheduled release trigger.
+     *
+     * Automated releases will occur based on the provided cron schedule.
+     *
+     * @param options release options.
+     */
+    static scheduled(options) {
+        return new ReleaseTrigger({
+            schedule: options.schedule,
+        });
+    }
+    /**
+     * The release can only be triggered using the GitHub UI.
+     */
+    static workflowDispatch() {
+        // This works because every workflow is always automatically `workflowDispatch`able
+        //
+        // The only thing we need to ensure is that no schedule or push trigger is
+        // added, and that we don't count as "manual" because that leads to the
+        // creation of a working copy task we don't need.
+        return new ReleaseTrigger({
+            workflowDispatchOnly: true,
+        });
+    }
+    /**
+     * Creates a continuous release trigger.
+     *
+     * Automated releases will occur on every commit.
+     */
+    static continuous(options = {}) {
+        return new ReleaseTrigger({
+            continuous: true,
+            paths: options.paths,
+        });
+    }
+    constructor(options = {}) {
+        this.isContinuous = options.continuous ?? false;
+        this.paths = options.paths;
+        this.schedule = options.schedule;
+        this.changelogPath = options.changelogPath;
+        this.gitPushCommand = options.gitPushCommand;
+        this.workflowDispatchOnly = options.workflowDispatchOnly;
+    }
+    /**
+     * Whether or not this is a release trigger with a manual task run in a working copy.
+     *
+     * If the `ReleaseTrigger` is a GitHub-only manual task, this will return `false`.
+     */
+    get isManual() {
+        return !(this.isContinuous || this.schedule) && !this.workflowDispatchOnly;
+    }
+}
+exports.ReleaseTrigger = ReleaseTrigger;
+_a = JSII_RTTI_SYMBOL_1;
+ReleaseTrigger[_a] = { fqn: "projen.release.ReleaseTrigger", version: "0.95.4" };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicmVsZWFzZS10cmlnZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL3JlbGVhc2UvcmVsZWFzZS10cmlnZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O0FBcUZBOzs7R0FHRztBQUNILE1BQWEsY0FBYztJQUN6Qjs7Ozs7Ozs7Ozs7Ozs7OztPQWdCRztJQUNJLE1BQU0sQ0FBQyxNQUFNLENBQUMsVUFBZ0MsRUFBRTtRQUNyRCxJQUFJLGFBQWEsQ0FBQztRQUVsQixJQUFJLE9BQU8sQ0FBQyxTQUFTLElBQUksSUFBSSxFQUFFLENBQUM7WUFDOUIsYUFBYSxHQUFHLE9BQU8sQ0FBQyxhQUFhLElBQUksY0FBYyxDQUFDO1FBQzFELENBQUM7UUFFRCxPQUFPLElBQUksY0FBYyxDQUFDO1lBQ3hCLGFBQWEsRUFBRSxhQUFhO1lBQzVCLGNBQWMsRUFBRSxPQUFPLENBQUMsY0FBYztTQUN2QyxDQUFDLENBQUM7SUFDTCxDQUFDO0lBRUQ7Ozs7OztPQU1HO0lBQ0ksTUFBTSxDQUFDLFNBQVMsQ0FBQyxPQUFnQztRQUN0RCxPQUFPLElBQUksY0FBYyxDQUFDO1lBQ3hCLFFBQVEsRUFBRSxPQUFPLENBQUMsUUFBUTtTQUMzQixDQUFDLENBQUM7SUFDTCxDQUFDO0lBRUQ7O09BRUc7SUFDSSxNQUFNLENBQUMsZ0JBQWdCO1FBQzVCLG1GQUFtRjtRQUNuRixFQUFFO1FBQ0YsMEVBQTBFO1FBQzFFLHVFQUF1RTtRQUN2RSxpREFBaUQ7UUFDakQsT0FBTyxJQUFJLGNBQWMsQ0FBQztZQUN4QixvQkFBb0IsRUFBRSxJQUFJO1NBQzNCLENBQUMsQ0FBQztJQUNMLENBQUM7SUFFRDs7OztPQUlHO0lBQ0ksTUFBTSxDQUFDLFVBQVUsQ0FBQyxVQUFvQyxFQUFFO1FBQzdELE9BQU8sSUFBSSxjQUFjLENBQUM7WUFDeEIsVUFBVSxFQUFFLElBQUk7WUFDaEIsS0FBSyxFQUFFLE9BQU8sQ0FBQyxLQUFLO1NBQ3JCLENBQUMsQ0FBQztJQUNMLENBQUM7SUFtQ0QsWUFBb0IsVUFBaUMsRUFBRTtRQUNyRCxJQUFJLENBQUMsWUFBWSxHQUFHLE9BQU8sQ0FBQyxVQUFVLElBQUksS0FBSyxDQUFDO1FBQ2hELElBQUksQ0FBQyxLQUFLLEdBQUcsT0FBTyxDQUFDLEtBQUssQ0FBQztRQUMzQixJQUFJLENBQUMsUUFBUSxHQUFHLE9BQU8sQ0FBQyxRQUFRLENBQUM7UUFDakMsSUFBSSxDQUFDLGFBQWEsR0FBRyxPQUFPLENBQUMsYUFBYSxDQUFDO1FBQzNDLElBQUksQ0FBQyxjQUFjLEdBQUcsT0FBTyxDQUFDLGNBQWMsQ0FBQztRQUM3QyxJQUFJLENBQUMsb0JBQW9CLEdBQUcsT0FBTyxDQUFDLG9CQUFvQixDQUFDO0lBQzNELENBQUM7SUFFRDs7OztPQUlHO0lBQ0gsSUFBVyxRQUFRO1FBQ2pCLE9BQU8sQ0FBQyxDQUFDLElBQUksQ0FBQyxZQUFZLElBQUksSUFBSSxDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLG9CQUFvQixDQUFDO0lBQzdFLENBQUM7O0FBdkhILHdDQXdIQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBpbnRlcmZhY2UgU2NoZWR1bGVkUmVsZWFzZU9wdGlvbnMge1xuICAvKipcbiAgICogQ3JvbiBzY2hlZHVsZSBmb3IgcmVsZWFzZXMuXG4gICAqXG4gICAqIE9ubHkgZGVmaW5lZCBpZiB0aGlzIGlzIGEgc2NoZWR1bGVkIHJlbGVhc2UuXG4gICAqXG4gICAqIEBleGFtcGxlICcwIDE3ICogKiAqJyAtIGV2ZXJ5IGRheSBhdCA1IHBtXG4gICAqL1xuICByZWFkb25seSBzY2hlZHVsZTogc3RyaW5nO1xufVxuXG5leHBvcnQgaW50ZXJmYWNlIE1hbnVhbFJlbGVhc2VPcHRpb25zIHtcbiAgLyoqXG4gICAqIE1haW50YWluIGEgcHJvamVjdC1sZXZlbCBjaGFuZ2Vsb2cuXG4gICAqXG4gICAqIEBkZWZhdWx0IHRydWVcbiAgICovXG4gIHJlYWRvbmx5IGNoYW5nZWxvZz86IGJvb2xlYW47XG5cbiAgLyoqXG4gICAqIFByb2plY3QtbGV2ZWwgY2hhbmdlbG9nIGZpbGUgcGF0aC5cbiAgICpcbiAgICogSWdub3JlZCBpZiBgY2hhbmdlbG9nYCBpcyBmYWxzZS5cbiAgICpcbiAgICogQGRlZmF1bHQgJ0NIQU5HRUxPRy5tZCdcbiAgICovXG4gIHJlYWRvbmx5IGNoYW5nZWxvZ1BhdGg/OiBzdHJpbmc7XG5cbiAgLyoqXG4gICAqIE92ZXJyaWRlIGdpdC1wdXNoIGNvbW1hbmQuXG4gICAqXG4gICAqIFNldCB0byBhbiBlbXB0eSBzdHJpbmcgdG8gZGlzYWJsZSBwdXNoaW5nLlxuICAgKi9cbiAgcmVhZG9ubHkgZ2l0UHVzaENvbW1hbmQ/OiBzdHJpbmc7XG59XG5cbmV4cG9ydCBpbnRlcmZhY2UgQ29udGludW91c1JlbGVhc2VPcHRpb25zIHtcbiAgLyoqXG4gICAqIFBhdGhzIGZvciB3aGljaCBwdXNoZXMgc2hvdWxkIHRyaWdnZXIgYSByZWxlYXNlXG4gICAqL1xuICByZWFkb25seSBwYXRocz86IHN0cmluZ1tdO1xufVxuXG5pbnRlcmZhY2UgUmVsZWFzZVRyaWdnZXJPcHRpb25zIHtcbiAgLyoqXG4gICAqIFByb2plY3QtbGV2ZWwgY2hhbmdlbG9nIGZpbGUgcGF0aC5cbiAgICpcbiAgICogSWdub3JlZCBpZiBgY2hhbmdlbG9nYCBpcyBmYWxzZVxuICAgKi9cbiAgcmVhZG9ubHkgY2hhbmdlbG9nUGF0aD86IHN0cmluZztcblxuICAvKipcbiAgICogQ29udGludW91cyByZWxlYXNlcywgd2hpY2ggd2lsbCByZWxlYXNlIGV2ZXJ5IGNvbW1pdC5cbiAgICpcbiAgICogQGRlZmF1bHQgZmFsc2VcbiAgICovXG4gIHJlYWRvbmx5IGNvbnRpbnVvdXM/OiBib29sZWFuO1xuXG4gIC8qKlxuICAgKiBQYXRocyBmb3Igd2hpY2ggcHVzaGVzIChjb250aW51b3VzIHJlbGVhc2UpIHNob3VsZCB0cmlnZ2VyIGEgcmVsZWFzZVxuICAgKi9cbiAgcmVhZG9ubHkgcGF0aHM/OiBzdHJpbmdbXTtcblxuICAvKipcbiAgICogQ3JvbiBzY2hlZHVsZSBmb3IgcmVsZWFzZS5cbiAgICpcbiAgICogT25seSBkZWZpbmVkIGlmIHRoaXMgaXMgYSBzY2hlZHVsZWQgcmVsZWFzZS5cbiAgICpcbiAgICogQGV4YW1wbGUgJzAgMTcgKiAqIConIC0gZXZlcnkgZGF5IGF0IDUgcG1cbiAgICovXG4gIHJlYWRvbmx5IHNjaGVkdWxlPzogc3RyaW5nO1xuXG4gIC8qKlxuICAgKiBPdmVycmlkZSBnaXQtcHVzaCBjb21tYW5kLlxuICAgKlxuICAgKiBTZXQgdG8gYW4gZW1wdHkgc3RyaW5nIHRvIGRpc2FibGUgcHVzaGluZy5cbiAgICovXG4gIHJlYWRvbmx5IGdpdFB1c2hDb21tYW5kPzogc3RyaW5nO1xuXG4gIC8qKlxuICAgKiBPbmx5IGEgd29ya2Zsb3dEaXNwYXRjaCB0cmlnZ2VyXG4gICAqL1xuICByZWFkb25seSB3b3JrZmxvd0Rpc3BhdGNoT25seT86IGJvb2xlYW47XG59XG5cbi8qKlxuICogVXNlZCB0byBtYW5hZ2UgcmVsZWFzZSBzdHJhdGVnaWVzLiBUaGlzIGluY2x1ZGVzIHJlbGVhc2VcbiAqIGFuZCByZWxlYXNlIGFydGlmYWN0IGF1dG9tYXRpb25cbiAqL1xuZXhwb3J0IGNsYXNzIFJlbGVhc2VUcmlnZ2VyIHtcbiAgLyoqXG4gICAqIENyZWF0ZXMgYSBtYW51YWwgcmVsZWFzZSB0cmlnZ2VyLlxuICAgKlxuICAgKiBVc2UgdGhpcyBvcHRpb24gaWYgeW91IHdhbnQgdG90YWxseSBtYW51YWwgcmVsZWFzZXMuXG4gICAqXG4gICAqIFRoaXMgd2lsbCBnaXZlIHlvdSBhIHJlbGVhc2UgdGFzayB0aGF0LCBpbiBhZGRpdGlvbiB0byB0aGUgbm9ybWFsXG4gICAqIHJlbGVhc2UgYWN0aXZpdGllcyB3aWxsIHRyaWdnZXIgYSBgcHVibGlzaDpnaXRgIHRhc2suIFRoaXMgdGFzayB3aWxsXG4gICAqIGhhbmRsZSBwcm9qZWN0LWxldmVsIGNoYW5nZWxvZyBtYW5hZ2VtZW50LCByZWxlYXNlIHRhZ2dpbmcsIGFuZCBwdXNoaW5nXG4gICAqIHRoZXNlIGFydGlmYWN0cyB0byBvcmlnaW4uXG4gICAqXG4gICAqIFRoZSBjb21tYW5kIHVzZWQgZm9yIHB1c2hpbmcgY2FuIGJlIGN1c3RvbWlzZWQgYnkgc3BlY2lmeWluZ1xuICAgKiBgZ2l0UHVzaENvbW1hbmRgLiBTZXQgdG8gYW4gZW1wdHkgc3RyaW5nIHRvIGRpc2FibGUgcHVzaGluZyBlbnRpcmVseS5cbiAgICpcbiAgICogU2ltcGx5IHJ1biBgeWFybiByZWxlYXNlYCB0byB0cmlnZ2VyIGEgbWFudWFsIHJlbGVhc2UuXG4gICAqXG4gICAqIEBwYXJhbSBvcHRpb25zIHJlbGVhc2Ugb3B0aW9uc1xuICAgKi9cbiAgcHVibGljIHN0YXRpYyBtYW51YWwob3B0aW9uczogTWFudWFsUmVsZWFzZU9wdGlvbnMgPSB7fSkge1xuICAgIGxldCBjaGFuZ2Vsb2dQYXRoO1xuXG4gICAgaWYgKG9wdGlvbnMuY2hhbmdlbG9nID8/IHRydWUpIHtcbiAgICAgIGNoYW5nZWxvZ1BhdGggPSBvcHRpb25zLmNoYW5nZWxvZ1BhdGggPz8gXCJDSEFOR0VMT0cubWRcIjtcbiAgICB9XG5cbiAgICByZXR1cm4gbmV3IFJlbGVhc2VUcmlnZ2VyKHtcbiAgICAgIGNoYW5nZWxvZ1BhdGg6IGNoYW5nZWxvZ1BhdGgsXG4gICAgICBnaXRQdXNoQ29tbWFuZDogb3B0aW9ucy5naXRQdXNoQ29tbWFuZCxcbiAgICB9KTtcbiAgfVxuXG4gIC8qKlxuICAgKiBDcmVhdGVzIGEgc2NoZWR1bGVkIHJlbGVhc2UgdHJpZ2dlci5cbiAgICpcbiAgICogQXV0b21hdGVkIHJlbGVhc2VzIHdpbGwgb2NjdXIgYmFzZWQgb24gdGhlIHByb3ZpZGVkIGNyb24gc2NoZWR1bGUuXG4gICAqXG4gICAqIEBwYXJhbSBvcHRpb25zIHJlbGVhc2Ugb3B0aW9ucy5cbiAgICovXG4gIHB1YmxpYyBzdGF0aWMgc2NoZWR1bGVkKG9wdGlvbnM6IFNjaGVkdWxlZFJlbGVhc2VPcHRpb25zKSB7XG4gICAgcmV0dXJuIG5ldyBSZWxlYXNlVHJpZ2dlcih7XG4gICAgICBzY2hlZHVsZTogb3B0aW9ucy5zY2hlZHVsZSxcbiAgICB9KTtcbiAgfVxuXG4gIC8qKlxuICAgKiBUaGUgcmVsZWFzZSBjYW4gb25seSBiZSB0cmlnZ2VyZWQgdXNpbmcgdGhlIEdpdEh1YiBVSS5cbiAgICovXG4gIHB1YmxpYyBzdGF0aWMgd29ya2Zsb3dEaXNwYXRjaCgpIHtcbiAgICAvLyBUaGlzIHdvcmtzIGJlY2F1c2UgZXZlcnkgd29ya2Zsb3cgaXMgYWx3YXlzIGF1dG9tYXRpY2FsbHkgYHdvcmtmbG93RGlzcGF0Y2hgYWJsZVxuICAgIC8vXG4gICAgLy8gVGhlIG9ubHkgdGhpbmcgd2UgbmVlZCB0byBlbnN1cmUgaXMgdGhhdCBubyBzY2hlZHVsZSBvciBwdXNoIHRyaWdnZXIgaXNcbiAgICAvLyBhZGRlZCwgYW5kIHRoYXQgd2UgZG9uJ3QgY291bnQgYXMgXCJtYW51YWxcIiBiZWNhdXNlIHRoYXQgbGVhZHMgdG8gdGhlXG4gICAgLy8gY3JlYXRpb24gb2YgYSB3b3JraW5nIGNvcHkgdGFzayB3ZSBkb24ndCBuZWVkLlxuICAgIHJldHVybiBuZXcgUmVsZWFzZVRyaWdnZXIoe1xuICAgICAgd29ya2Zsb3dEaXNwYXRjaE9ubHk6IHRydWUsXG4gICAgfSk7XG4gIH1cblxuICAvKipcbiAgICogQ3JlYXRlcyBhIGNvbnRpbnVvdXMgcmVsZWFzZSB0cmlnZ2VyLlxuICAgKlxuICAgKiBBdXRvbWF0ZWQgcmVsZWFzZXMgd2lsbCBvY2N1ciBvbiBldmVyeSBjb21taXQuXG4gICAqL1xuICBwdWJsaWMgc3RhdGljIGNvbnRpbnVvdXMob3B0aW9uczogQ29udGludW91c1JlbGVhc2VPcHRpb25zID0ge30pIHtcbiAgICByZXR1cm4gbmV3IFJlbGVhc2VUcmlnZ2VyKHtcbiAgICAgIGNvbnRpbnVvdXM6IHRydWUsXG4gICAgICBwYXRoczogb3B0aW9ucy5wYXRocyxcbiAgICB9KTtcbiAgfVxuXG4gIC8qKlxuICAgKiBQcm9qZWN0LWxldmVsIGNoYW5nZWxvZyBmaWxlIHBhdGguXG4gICAqL1xuICBwdWJsaWMgcmVhZG9ubHkgY2hhbmdlbG9nUGF0aD86IHN0cmluZztcblxuICAvKipcbiAgICogQ3JvbiBzY2hlZHVsZSBmb3IgcmVsZWFzZXMuXG4gICAqXG4gICAqIE9ubHkgZGVmaW5lZCBpZiB0aGlzIGlzIGEgc2NoZWR1bGVkIHJlbGVhc2UuXG4gICAqXG4gICAqIEBleGFtcGxlICcwIDE3ICogKiAqJyAtIGV2ZXJ5IGRheSBhdCA1IHBtXG4gICAqL1xuICBwdWJsaWMgcmVhZG9ubHkgc2NoZWR1bGU/OiBzdHJpbmc7XG5cbiAgLyoqXG4gICAqIFdoZXRoZXIgb3Igbm90IHRoaXMgaXMgYSBjb250aW51b3VzIHJlbGVhc2UuXG4gICAqL1xuICBwdWJsaWMgcmVhZG9ubHkgaXNDb250aW51b3VzOiBib29sZWFuO1xuXG4gIC8qKlxuICAgKiBQYXRocyBmb3Igd2hpY2ggcHVzaGVzIHdpbGwgdHJpZ2dlciBhIHJlbGVhc2Ugd2hlbiBgaXNDb250aW51b3VzYCBpcyBgdHJ1ZWBcbiAgICovXG4gIHB1YmxpYyByZWFkb25seSBwYXRocz86IHN0cmluZ1tdO1xuXG4gIC8qKlxuICAgKiBPdmVycmlkZSBnaXQtcHVzaCBjb21tYW5kIHVzZWQgd2hlbiByZWxlYXNpbmcgbWFudWFsbHkuXG4gICAqXG4gICAqIFNldCB0byBhbiBlbXB0eSBzdHJpbmcgdG8gZGlzYWJsZSBwdXNoaW5nLlxuICAgKi9cbiAgcHVibGljIHJlYWRvbmx5IGdpdFB1c2hDb21tYW5kPzogc3RyaW5nO1xuXG4gIHByaXZhdGUgcmVhZG9ubHkgd29ya2Zsb3dEaXNwYXRjaE9ubHk/OiBib29sZWFuO1xuXG4gIHByaXZhdGUgY29uc3RydWN0b3Iob3B0aW9uczogUmVsZWFzZVRyaWdnZXJPcHRpb25zID0ge30pIHtcbiAgICB0aGlzLmlzQ29udGludW91cyA9IG9wdGlvbnMuY29udGludW91cyA/PyBmYWxzZTtcbiAgICB0aGlzLnBhdGhzID0gb3B0aW9ucy5wYXRocztcbiAgICB0aGlzLnNjaGVkdWxlID0gb3B0aW9ucy5zY2hlZHVsZTtcbiAgICB0aGlzLmNoYW5nZWxvZ1BhdGggPSBvcHRpb25zLmNoYW5nZWxvZ1BhdGg7XG4gICAgdGhpcy5naXRQdXNoQ29tbWFuZCA9IG9wdGlvbnMuZ2l0UHVzaENvbW1hbmQ7XG4gICAgdGhpcy53b3JrZmxvd0Rpc3BhdGNoT25seSA9IG9wdGlvbnMud29ya2Zsb3dEaXNwYXRjaE9ubHk7XG4gIH1cblxuICAvKipcbiAgICogV2hldGhlciBvciBub3QgdGhpcyBpcyBhIHJlbGVhc2UgdHJpZ2dlciB3aXRoIGEgbWFudWFsIHRhc2sgcnVuIGluIGEgd29ya2luZyBjb3B5LlxuICAgKlxuICAgKiBJZiB0aGUgYFJlbGVhc2VUcmlnZ2VyYCBpcyBhIEdpdEh1Yi1vbmx5IG1hbnVhbCB0YXNrLCB0aGlzIHdpbGwgcmV0dXJuIGBmYWxzZWAuXG4gICAqL1xuICBwdWJsaWMgZ2V0IGlzTWFudWFsKCkge1xuICAgIHJldHVybiAhKHRoaXMuaXNDb250aW51b3VzIHx8IHRoaXMuc2NoZWR1bGUpICYmICF0aGlzLndvcmtmbG93RGlzcGF0Y2hPbmx5O1xuICB9XG59XG4iXX0=

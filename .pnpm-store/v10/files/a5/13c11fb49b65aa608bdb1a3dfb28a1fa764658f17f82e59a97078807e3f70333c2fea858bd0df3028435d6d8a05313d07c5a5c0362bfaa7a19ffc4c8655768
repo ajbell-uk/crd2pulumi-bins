@@ -1,0 +1,20 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { NodeProject, NodeProjectOptions } from "projen/lib/javascript";
+import { TypeSpecDefinitionOptions } from "./type-spec-definition";
+import { TypeSafeApiAsyncModelBuildOutputOptions } from "../type-safe-api-async-model-build";
+import { TypeSafeApiModelBuildOutputOptions } from "../type-safe-api-model-build";
+import { TypeSpecAsyncDefinition } from "./type-spec-async-definition";
+/**
+ * Options for the TypeSpec WebSocket API model project
+ */
+export interface TypeSpecAsyncModelProjectOptions extends NodeProjectOptions, TypeSpecDefinitionOptions, TypeSafeApiAsyncModelBuildOutputOptions, TypeSafeApiModelBuildOutputOptions {
+}
+/**
+ * Model project for defining a WebSocket API in TypeSpec
+ */
+export declare class TypeSpecAsyncModelProject extends NodeProject {
+    readonly apiName: string;
+    readonly definition: TypeSpecAsyncDefinition;
+    constructor(options: TypeSpecAsyncModelProjectOptions);
+}

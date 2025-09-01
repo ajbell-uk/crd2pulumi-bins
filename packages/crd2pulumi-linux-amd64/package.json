@@ -4,7 +4,9 @@
     "type": "git",
     "url": "https://github.com/ajbell-uk/crd2pulumi-bins.git"
   },
-  "bin": "bin/crd2pulumi-linux-amd64",
+  "bin": {
+    "crd2pulumi-linux-amd64": "bin/crd2pulumi-linux-amd64"
+  },
   "scripts": {
     "build": "npx projen build",
     "bump": "npx projen bump",
@@ -48,7 +50,6 @@
     "access": "public"
   },
   "version": "0.0.0",
-  "packageManager": "yarn@4.9.2",
   "jest": {
     "coverageProvider": "v8",
     "testMatch": [

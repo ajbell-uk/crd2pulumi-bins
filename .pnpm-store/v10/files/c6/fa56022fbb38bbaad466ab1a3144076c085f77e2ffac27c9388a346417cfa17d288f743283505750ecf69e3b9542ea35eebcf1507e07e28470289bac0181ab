@@ -1,0 +1,21 @@
+import { Component, Project, Task } from "projen";
+/**
+ * Component which manages a "generate" task for a project
+ */
+export declare class GenerateTask extends Component {
+    /**
+     * Retrieves an instance of GenerateTask if one is associated to the given project.
+     *
+     * @param project project instance.
+     */
+    static of(project: Project): Task | undefined;
+    /**
+     * Retrieves an instance of GenerateTask if one is associated to the given project,
+     * otherwise creates a GenerateTask instance for the project.
+     *
+     * @param project project instance.
+     */
+    static ensure(project: Project): Task;
+    readonly task: Task;
+    constructor(project: Project);
+}

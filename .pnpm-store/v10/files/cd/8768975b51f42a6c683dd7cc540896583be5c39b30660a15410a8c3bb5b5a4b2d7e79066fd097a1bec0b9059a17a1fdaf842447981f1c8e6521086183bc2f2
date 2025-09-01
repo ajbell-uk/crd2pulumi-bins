@@ -1,0 +1,242 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const util_1 = require("./util");
+// ----------------------------------------------------------------------
+test('cannot add required fields to an input struct', () => (0, util_1.expectError)(/required property 'super' added/, `
+    export interface Henk {
+      readonly henk: string;
+    }
+    export class Foo {
+      public bar(arg1: Henk): void {
+        Array.isArray(arg1);
+      }
+    }
+  `, `
+    export interface Henk {
+      readonly henk: string;
+      readonly super: string;
+    }
+    export class Foo {
+      public bar(arg1: Henk): void {
+        Array.isArray(arg1);
+      }
+    }
+  `));
+// ----------------------------------------------------------------------
+test('can add required fields to an output struct', () => (0, util_1.expectNoError)(`
+    export interface Henk {
+      readonly henk: string;
+    }
+    export class Foo {
+      public bar(): Henk {
+        return { henk: 'henk' };
+      }
+    }
+  `, `
+    export interface Henk {
+      readonly henk: string;
+      readonly super: string;
+    }
+    export class Foo {
+      public bar(): Henk {
+        return { henk: 'henk', super: 'super' };
+      }
+    }
+  `));
+// ----------------------------------------------------------------------
+test('can change argument type to a supertype if it adds only optional fields', () => (0, util_1.expectNoError)(`
+    export interface Henk {
+      readonly henk: string;
+    }
+    export class Foo {
+      public bar(arg1: Henk): void {
+        Array.isArray(arg1);
+      }
+    }
+  `, `
+    export interface Super {
+      readonly super?: string;
+    }
+    export interface Henk extends Super {
+      readonly henk: string;
+    }
+    export class Foo {
+      public bar(arg1: Super): void {
+        Array.isArray(arg1);
+      }
+    }
+  `));
+// ----------------------------------------------------------------------
+test('cannot take fields away from input struct', () => 
+// Legal in TypeScript, but illegal in Java/C#
+(0, util_1.expectError)(/has been removed/, `
+    export interface Henk {
+      readonly henk: string;
+      readonly piet: string;
+    }
+    export class Foo {
+      public bar(arg1: Henk): void {
+        Array.isArray(arg1);
+      }
+    }
+  `, `
+    export interface Henk {
+      readonly henk: string;
+    }
+    export class Foo {
+      public bar(arg1: Henk): void {
+        Array.isArray(arg1);
+      }
+    }
+  `));
+// ----------------------------------------------------------------------
+test('cannot take fields away from output struct', () => (0, util_1.expectError)(/formerly required property 'piet' removed/, `
+    export interface Henk {
+      readonly henk: string;
+      readonly piet: string;
+    }
+    export class Foo {
+      public bar(): Henk {
+        return { henk: 'henk', piet: 'piet' };
+      }
+    }
+  `, `
+    export interface Henk {
+      readonly henk: string;
+    }
+    export class Foo {
+      public bar(): Henk {
+        return { henk: 'henk' };
+      }
+    }
+  `));
+// ----------------------------------------------------------------------
+test('cannot change argument type to a supertype it adds required fields', () => (0, util_1.expectError)(/required property 'super' added/, `
+    export interface Henk {
+      readonly henk: string;
+    }
+    export class Foo {
+      public bar(arg1: Henk): void {
+        Array.isArray(arg1);
+      }
+    }
+  `, `
+    export interface Super {
+      readonly super: string;
+    }
+    export interface Henk extends Super {
+      readonly henk: string;
+    }
+    export class Foo {
+      public bar(arg1: Super): void {
+        Array.isArray(arg1);
+      }
+    }
+  `));
+// ----------------------------------------------------------------------
+test('can make an input struct property optional', () => (0, util_1.expectNoError)(`
+    export interface Henk {
+      readonly henk: string;
+    }
+    export class Actions {
+      useHenk(henk: Henk) { Array.isArray(henk); }
+    }
+  `, `
+    export interface Henk {
+      readonly henk?: string;
+    }
+    export class Actions {
+      useHenk(henk: Henk) { Array.isArray(henk); }
+    }
+  `));
+// ----------------------------------------------------------------------
+test('cannot make an input struct property required', () => (0, util_1.expectError)(/newly required property 'henk' used to be optional/, `
+    export interface Henk {
+      readonly henk?: string;
+    }
+    export class Actions {
+      useHenk(henk: Henk) { Array.isArray(henk); }
+    }
+  `, `
+    export interface Henk {
+      readonly henk: string;
+    }
+    export class Actions {
+      useHenk(henk: Henk) { Array.isArray(henk); }
+    }
+  `));
+// ----------------------------------------------------------------------
+test('cannot make an output struct property optional', () => (0, util_1.expectError)(/formerly required property 'henk' is optional/, `
+    export interface Henk {
+      readonly henk: string;
+    }
+    export class Actions {
+      returnHenk(): Henk { return { henk: 'henk' }; }
+    }
+  `, `
+    export interface Henk {
+      readonly henk?: string;
+    }
+    export class Actions {
+      returnHenk(): Henk { return {}; }
+    }
+  `));
+// ----------------------------------------------------------------------
+test('can handle recursive type references', () => (0, util_1.expectNoError)(`
+    export interface LinkedList {
+      readonly name: string;
+      readonly next?: LinkedList;
+    }
+
+    export class UseIt {
+      public main(list: LinkedList) {
+        Array.isArray(list);
+      }
+    }
+  `, `
+    export interface LinkedList {
+      readonly name: string;
+      readonly next?: LinkedList;
+    }
+
+    export class UseIt {
+      public main(list: LinkedList) {
+        Array.isArray(list);
+      }
+    }
+  `));
+// ----------------------------------------------------------------------
+test('can handle mutually recursive type references', () => (0, util_1.expectNoError)(`
+    export interface A {
+      readonly name: string;
+      readonly next?: B;
+    }
+
+    export interface B {
+      readonly name: string;
+      readonly next?: A;
+    }
+
+    export class UseIt {
+      public main(list: A) {
+        Array.isArray(list);
+      }
+    }
+  `, `
+    export interface A {
+      readonly name: string;
+      readonly next?: B;
+    }
+
+    export interface B {
+      readonly name: string;
+      readonly next?: A;
+    }
+
+    export class UseIt {
+      public main(list: A) {
+        Array.isArray(list);
+      }
+    }
+  `));
+//# sourceMappingURL=structs.test.js.map

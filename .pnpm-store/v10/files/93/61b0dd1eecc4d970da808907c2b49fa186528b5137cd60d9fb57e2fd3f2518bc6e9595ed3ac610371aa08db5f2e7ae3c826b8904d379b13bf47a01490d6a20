@@ -1,0 +1,10 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { GeneratedTypescriptHandlersBaseProject, GeneratedTypescriptHandlersBaseProjectOptions } from "./generated-typescript-handlers-base-project";
+import { CodegenOptions } from "../components/utils";
+export interface GeneratedTypescriptAsyncHandlersProjectOptions extends GeneratedTypescriptHandlersBaseProjectOptions {
+}
+export declare class GeneratedTypescriptAsyncHandlersProject extends GeneratedTypescriptHandlersBaseProject {
+    constructor(options: GeneratedTypescriptAsyncHandlersProjectOptions);
+    buildCodegenOptions(): CodegenOptions;
+}

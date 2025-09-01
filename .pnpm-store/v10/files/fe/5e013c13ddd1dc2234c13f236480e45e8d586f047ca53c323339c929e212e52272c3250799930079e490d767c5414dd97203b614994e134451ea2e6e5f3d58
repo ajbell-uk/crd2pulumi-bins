@@ -1,0 +1,28 @@
+###TSAPI_WRITE_FILE###
+{
+  "id": "api",
+  "dir": "<%= metadata.srcDir || 'src' %>",
+  "name": "api",
+  "ext": ".py",
+  "overwrite": true
+}
+###/TSAPI_WRITE_FILE###from dataclasses import fields
+from aws_pdk.type_safe_api import TypeSafeRestApi, TypeSafeApiIntegration
+from <%- metadata.runtimeModuleName %>.api.operation_config import OperationLookup, OperationConfig
+from os import path
+from pathlib import Path
+
+SPEC_PATH = path.join(str(Path(__file__).absolute().parent), "<%- metadata.relativeSpecPath %>")
+
+class Api(TypeSafeRestApi):
+    """
+    Type-safe construct for the API Gateway resources defined by your model.
+    This construct is generated and should not be modified.
+    """
+    def __init__(self, scope, id, integrations: OperationConfig[TypeSafeApiIntegration], **kwargs):
+        super().__init__(scope, id,
+            **kwargs,
+            integrations={ field.name: getattr(integrations, field.name) for field in fields(integrations) },
+            spec_path=SPEC_PATH,
+            operation_lookup=OperationLookup,
+        )

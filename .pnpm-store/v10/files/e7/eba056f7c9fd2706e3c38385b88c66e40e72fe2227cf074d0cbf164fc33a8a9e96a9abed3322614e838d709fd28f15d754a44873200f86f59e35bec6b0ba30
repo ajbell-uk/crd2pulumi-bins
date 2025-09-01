@@ -1,0 +1,14 @@
+import { GeneratedJavaRuntimeBaseProject, GeneratedJavaRuntimeBaseProjectOptions } from "./generated-java-runtime-base-project";
+import { CodegenOptions } from "../components/utils";
+/**
+ * Configuration for the generated java runtime project
+ */
+export interface GeneratedJavaAsyncRuntimeProjectOptions extends GeneratedJavaRuntimeBaseProjectOptions {
+}
+/**
+ * Java project containing types generated using OpenAPI Generator CLI
+ */
+export declare class GeneratedJavaAsyncRuntimeProject extends GeneratedJavaRuntimeBaseProject {
+    constructor(options: GeneratedJavaAsyncRuntimeProjectOptions);
+    protected buildCodegenOptions(): CodegenOptions;
+}

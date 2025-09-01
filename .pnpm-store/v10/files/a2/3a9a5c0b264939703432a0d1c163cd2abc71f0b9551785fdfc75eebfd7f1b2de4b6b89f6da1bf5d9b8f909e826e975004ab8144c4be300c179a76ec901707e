@@ -1,0 +1,47 @@
+import { Stability } from '@jsii/spec';
+import * as reflect from 'jsii-reflect';
+export interface ComparisonOptions {
+    /**
+     * Whether to treat API elements as experimental if unmarked.
+     *
+     * @default Treat as stable
+     */
+    defaultExperimental?: boolean;
+}
+export interface ComparisonContext extends ComparisonOptions {
+    /**
+     * Where to report errors
+     */
+    mismatches: Mismatches;
+}
+export interface ApiMismatch {
+    message: string;
+    violationKey: string;
+    stability: Stability;
+}
+export type ApiElement = reflect.Type | reflect.TypeMember | reflect.EnumMember;
+export interface ReportOptions {
+    ruleKey: string;
+    violator: ApiElement;
+    message: string;
+}
+export interface IReport {
+    report(options: ReportOptions): void;
+    withMotivation(reason: string): IReport;
+}
+export declare class Mismatches implements IReport {
+    readonly mismatches: ApiMismatch[];
+    private readonly defaultStability;
+    constructor(opts: {
+        defaultStability: Stability;
+    });
+    report(options: ReportOptions): void;
+    messages(): Generator<string, void, unknown>;
+    get count(): number;
+    filter(pred: (x: ApiMismatch) => boolean): Mismatches;
+    withMotivation(motivation: string): IReport;
+}
+export declare function apiElementIdentifier(apiElement: ApiElement): string;
+export declare function describeType(type: reflect.Type): "ENUM" | "CLASS" | "IFACE" | "TYPE";
+export declare function describeInterfaceType(dataType: boolean): "struct" | "regular interface";
+//# sourceMappingURL=types.d.ts.map

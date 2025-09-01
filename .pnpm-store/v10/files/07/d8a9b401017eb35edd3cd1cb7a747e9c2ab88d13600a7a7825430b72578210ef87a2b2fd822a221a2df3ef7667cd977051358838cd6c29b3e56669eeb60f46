@@ -1,0 +1,18 @@
+import { FilterPreset, Graph } from "../../../cdk-graph";
+import * as Diagram from "./entities";
+import { GraphThemeConfigProp } from "./theme";
+import { INodePosition } from "../../config";
+/** Options for diagrams */
+export interface DiagramOptions {
+    readonly title: string;
+    readonly preset?: FilterPreset;
+    readonly theme?: GraphThemeConfigProp;
+    readonly nodePositions?: {
+        [cdkConstructId: string]: INodePosition;
+    };
+}
+/**
+ * Build a {@link Diagram.Diagram Diagram} for a given {@link Graph.Store} based on {@link DiagramOptions Options}
+ * @internal
+ */
+export declare function buildDiagram(store: Graph.Store, options: DiagramOptions): Diagram.Diagram;

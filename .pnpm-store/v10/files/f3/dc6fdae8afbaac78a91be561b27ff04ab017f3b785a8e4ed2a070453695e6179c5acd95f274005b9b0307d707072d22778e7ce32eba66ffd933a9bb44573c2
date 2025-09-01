@@ -1,0 +1,71 @@
+import { Component, Project } from "projen";
+import { SmithyBuildOptions } from "./types";
+/**
+ * Options for a smithy project definition
+ */
+export interface SmithyProjectDefinitionOptions {
+    /**
+     * Smithy build options
+     */
+    readonly smithyBuildOptions?: SmithyBuildOptions;
+    /**
+     * Set to false if you would like to check in your smithy build output or have more fine-grained control over what is
+     * checked in, eg if you add other projections to the smithy-build.json file.
+     * @default true
+     */
+    readonly ignoreSmithyBuildOutput?: boolean;
+    /**
+     * Set to false if you would like to check in your gradle wrapper. Do so if you would like to use a different version
+     * of gradle to the one provided by default
+     * @default true
+     */
+    readonly ignoreGradleWrapper?: boolean;
+}
+/**
+ * Definition for a Smithy project
+ */
+export declare class SmithyProjectDefinition extends Component {
+    /**
+     * Name of the gradle project
+     */
+    readonly gradleProjectName: string;
+    /**
+     * Reference to the build.gradle file component
+     * @private
+     */
+    private readonly smithyBuildGradleFile;
+    /**
+     * Reference to the smithy-build.json file component
+     */
+    private readonly smithyBuild;
+    /**
+     * Directory of model source code
+     */
+    readonly modelDir: string;
+    /**
+     * Set of dependencies used to avoid adding duplicates
+     */
+    private readonly dependencySet;
+    constructor(project: Project, options: SmithyProjectDefinitionOptions);
+    /**
+     * Add maven-style or local file dependencies to the smithy model project
+     * @param deps dependencies to add, eg "software.amazon.smithy:smithy-validation-model:1.27.2" or "file://../some/path/build/lib/my-shapes.jar
+     */
+    addDeps(...deps: string[]): void;
+    /**
+     * Add dependencies on other smithy models, such that their shapes can be imported in this project
+     * @param deps smithy definitions to depend on
+     */
+    addSmithyDeps(...deps: SmithyProjectDefinition[]): void;
+    /**
+     * Add additional paths to model source files or directories.
+     * Paths should be relative to the project outdir. Any absolute paths will be
+     * resolved as relative paths.
+     */
+    addSources(...sources: string[]): void;
+    /**
+     * Convert any given absolute paths to relative paths to the project outdir
+     * @private
+     */
+    private asRelativePathsToProject;
+}

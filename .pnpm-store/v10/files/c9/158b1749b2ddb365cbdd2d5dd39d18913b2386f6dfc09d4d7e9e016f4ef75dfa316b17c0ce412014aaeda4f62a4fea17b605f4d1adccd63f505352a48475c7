@@ -1,0 +1,44 @@
+import { UserIdentity } from "@aws/pdk/identity";
+import { Stack, StackProps } from "aws-cdk-lib";
+import { Construct } from "constructs";
+{{#typeSafeApis}}
+import { {{{apiName}}} } from "../constructs/apis/{{{apiNameLowercase}}}";
+{{/typeSafeApis}}
+{{#typeSafeWebSocketApis}}
+import { {{{apiName}}} } from "../constructs/apis/{{{apiNameLowercase}}}";
+{{/typeSafeWebSocketApis}}
+{{#cloudscapeReactTsWebsites}}
+import { {{{websiteName}}} } from "../constructs/websites/{{{websiteNameLowercase}}}";
+{{/cloudscapeReactTsWebsites}}
+
+export class ApplicationStack extends Stack {
+  constructor(scope: Construct, id: string, props?: StackProps) {
+    super(scope, id, props);
+
+    // @ts-ignore
+    const userIdentity = new UserIdentity(this, `${id}UserIdentity`{{#allowSignup}}, {
+      allowSignup: true,
+    }{{/allowSignup}});
+    {{#typeSafeApis}}
+    {{#cloudscapeReactTsWebsites.0}}const {{{apiNameLowercase}}} = {{/cloudscapeReactTsWebsites.0}}new {{{apiName}}}(this, "{{{apiName}}}", {
+      userIdentity,
+    });
+    {{/typeSafeApis}}
+    {{#typeSafeWebSocketApis}}
+    {{#cloudscapeReactTsWebsites.0}}const {{{apiNameLowercase}}} = {{/cloudscapeReactTsWebsites.0}}new {{{apiName}}}(this, "{{{apiName}}}", {
+      userIdentity,
+    });
+    {{/typeSafeWebSocketApis}}
+    {{#cloudscapeReactTsWebsites}}
+    new {{{websiteName}}}(this, "{{{websiteName}}}", {
+      userIdentity,
+      {{#typeSafeApis}}
+      {{{apiNameLowercase}}},
+      {{/typeSafeApis}}
+      {{#typeSafeWebSocketApis}}
+      {{{apiNameLowercase}}},
+      {{/typeSafeWebSocketApis}}
+    });
+    {{/cloudscapeReactTsWebsites}}
+  }
+}

@@ -1,0 +1,39 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TypeSpecAsyncAwsPdkPrelude = void 0;
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+const path = require("path");
+const projen_1 = require("projen");
+/**
+ * Synthesize the aws-pdk/async.tsp file
+ */
+class TypeSpecAsyncAwsPdkPrelude extends projen_1.FileBase {
+    constructor(project, options) {
+        super(project, path.join(options.generatedModelDir, "aws-pdk", "async.tsp"), {
+            marker: true,
+            readonly: true,
+        });
+    }
+    synthesizeContent(_) {
+        // Define the @async, @connectHandler and @disconnectHandler decorators
+        // The implementation of these is imported from the async.js file.
+        return `// ${this.marker}
+import "./prelude.tsp";
+import "./async.js";
+
+using TypeSpec.Reflection;
+
+model AsyncOptions {
+  direction: "client_to_server" | "server_to_client" | "bidirectional";
+}
+
+extern dec async(target: Operation, options: AsyncOptions);
+
+extern dec connectHandler(target: Namespace, options: HandlerOptions);
+extern dec disconnectHandler(target: Namespace, options: HandlerOptions);
+`;
+    }
+}
+exports.TypeSpecAsyncAwsPdkPrelude = TypeSpecAsyncAwsPdkPrelude;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidHlwZS1zcGVjLWFzeW5jLWF3cy1wZGstcHJlbHVkZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbInR5cGUtc3BlYy1hc3luYy1hd3MtcGRrLXByZWx1ZGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUE7c0NBQ3NDO0FBQ3RDLDZCQUE2QjtBQUM3QixtQ0FBc0Q7QUFZdEQ7O0dBRUc7QUFDSCxNQUFhLDBCQUEyQixTQUFRLGlCQUFRO0lBQ3RELFlBQVksT0FBZ0IsRUFBRSxPQUEwQztRQUN0RSxLQUFLLENBQ0gsT0FBTyxFQUNQLElBQUksQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLGlCQUFpQixFQUFFLFNBQVMsRUFBRSxXQUFXLENBQUMsRUFDNUQ7WUFDRSxNQUFNLEVBQUUsSUFBSTtZQUNaLFFBQVEsRUFBRSxJQUFJO1NBQ2YsQ0FDRixDQUFDO0lBQ0osQ0FBQztJQUVNLGlCQUFpQixDQUFDLENBQVk7UUFDbkMsdUVBQXVFO1FBQ3ZFLGtFQUFrRTtRQUNsRSxPQUFPLE1BQU0sSUFBSSxDQUFDLE1BQU07Ozs7Ozs7Ozs7Ozs7O0NBYzNCLENBQUM7SUFDQSxDQUFDO0NBQ0Y7QUEvQkQsZ0VBK0JDIiwic291cmNlc0NvbnRlbnQiOlsiLyohIENvcHlyaWdodCBbQW1hem9uLmNvbV0oaHR0cDovL2FtYXpvbi5jb20vKSwgSW5jLiBvciBpdHMgYWZmaWxpYXRlcy4gQWxsIFJpZ2h0cyBSZXNlcnZlZC5cblNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBBcGFjaGUtMi4wICovXG5pbXBvcnQgKiBhcyBwYXRoIGZyb20gXCJwYXRoXCI7XG5pbXBvcnQgeyBQcm9qZWN0LCBGaWxlQmFzZSwgSVJlc29sdmVyIH0gZnJvbSBcInByb2plblwiO1xuXG4vKipcbiAqIE9wdGlvbnMgZm9yIHRoZSBhd3MtcGRrL2FzeW5jLnRzcCBmaWxlXG4gKi9cbmV4cG9ydCBpbnRlcmZhY2UgVHlwZVNwZWNBc3luY0F3c1Bka1ByZWx1ZGVPcHRpb25zIHtcbiAgLyoqXG4gICAqIFBhdGggdG8gdGhlIGdlbmVyYXRlZCBtb2RlbCBkaXJlY3RvcnkgaW4gd2hpY2ggdG8gYWRkIHRoZSBwcmVsdWRlXG4gICAqL1xuICByZWFkb25seSBnZW5lcmF0ZWRNb2RlbERpcjogc3RyaW5nO1xufVxuXG4vKipcbiAqIFN5bnRoZXNpemUgdGhlIGF3cy1wZGsvYXN5bmMudHNwIGZpbGVcbiAqL1xuZXhwb3J0IGNsYXNzIFR5cGVTcGVjQXN5bmNBd3NQZGtQcmVsdWRlIGV4dGVuZHMgRmlsZUJhc2Uge1xuICBjb25zdHJ1Y3Rvcihwcm9qZWN0OiBQcm9qZWN0LCBvcHRpb25zOiBUeXBlU3BlY0FzeW5jQXdzUGRrUHJlbHVkZU9wdGlvbnMpIHtcbiAgICBzdXBlcihcbiAgICAgIHByb2plY3QsXG4gICAgICBwYXRoLmpvaW4ob3B0aW9ucy5nZW5lcmF0ZWRNb2RlbERpciwgXCJhd3MtcGRrXCIsIFwiYXN5bmMudHNwXCIpLFxuICAgICAge1xuICAgICAgICBtYXJrZXI6IHRydWUsXG4gICAgICAgIHJlYWRvbmx5OiB0cnVlLFxuICAgICAgfVxuICAgICk7XG4gIH1cblxuICBwdWJsaWMgc3ludGhlc2l6ZUNvbnRlbnQoXzogSVJlc29sdmVyKTogc3RyaW5nIHwgdW5kZWZpbmVkIHtcbiAgICAvLyBEZWZpbmUgdGhlIEBhc3luYywgQGNvbm5lY3RIYW5kbGVyIGFuZCBAZGlzY29ubmVjdEhhbmRsZXIgZGVjb3JhdG9yc1xuICAgIC8vIFRoZSBpbXBsZW1lbnRhdGlvbiBvZiB0aGVzZSBpcyBpbXBvcnRlZCBmcm9tIHRoZSBhc3luYy5qcyBmaWxlLlxuICAgIHJldHVybiBgLy8gJHt0aGlzLm1hcmtlcn1cbmltcG9ydCBcIi4vcHJlbHVkZS50c3BcIjtcbmltcG9ydCBcIi4vYXN5bmMuanNcIjtcblxudXNpbmcgVHlwZVNwZWMuUmVmbGVjdGlvbjtcblxubW9kZWwgQXN5bmNPcHRpb25zIHtcbiAgZGlyZWN0aW9uOiBcImNsaWVudF90b19zZXJ2ZXJcIiB8IFwic2VydmVyX3RvX2NsaWVudFwiIHwgXCJiaWRpcmVjdGlvbmFsXCI7XG59XG5cbmV4dGVybiBkZWMgYXN5bmModGFyZ2V0OiBPcGVyYXRpb24sIG9wdGlvbnM6IEFzeW5jT3B0aW9ucyk7XG5cbmV4dGVybiBkZWMgY29ubmVjdEhhbmRsZXIodGFyZ2V0OiBOYW1lc3BhY2UsIG9wdGlvbnM6IEhhbmRsZXJPcHRpb25zKTtcbmV4dGVybiBkZWMgZGlzY29ubmVjdEhhbmRsZXIodGFyZ2V0OiBOYW1lc3BhY2UsIG9wdGlvbnM6IEhhbmRsZXJPcHRpb25zKTtcbmA7XG4gIH1cbn1cbiJdfQ==

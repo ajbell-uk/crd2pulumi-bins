@@ -1,0 +1,36 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.GenerateTask = void 0;
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+const monorepo_1 = require("../../../../monorepo");
+const projen_1 = require("projen");
+/**
+ * Component which manages a "generate" task for a project
+ */
+class GenerateTask extends projen_1.Component {
+    /**
+     * Retrieves an instance of GenerateTask if one is associated to the given project.
+     *
+     * @param project project instance.
+     */
+    static of(project) {
+        return project.components.find((c) => monorepo_1.ProjectUtils.isNamedInstanceOf(c, GenerateTask))?.task;
+    }
+    /**
+     * Retrieves an instance of GenerateTask if one is associated to the given project,
+     * otherwise creates a GenerateTask instance for the project.
+     *
+     * @param project project instance.
+     */
+    static ensure(project) {
+        return GenerateTask.of(project) || new GenerateTask(project).task;
+    }
+    constructor(project) {
+        super(project);
+        this.task =
+            project.tasks.tryFind("generate") ?? project.addTask("generate");
+    }
+}
+exports.GenerateTask = GenerateTask;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ2VuZXJhdGUtdGFzay5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImdlbmVyYXRlLXRhc2sudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUE7c0NBQ3NDO0FBQ3RDLDRDQUE2QztBQUM3QyxtQ0FBa0Q7QUFFbEQ7O0dBRUc7QUFDSCxNQUFhLFlBQWEsU0FBUSxrQkFBUztJQUN6Qzs7OztPQUlHO0lBQ0gsTUFBTSxDQUFDLEVBQUUsQ0FBQyxPQUFnQjtRQUN4QixPQUNFLE9BQU8sQ0FBQyxVQUFVLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxFQUFFLEVBQUUsQ0FDNUIsdUJBQVksQ0FBQyxpQkFBaUIsQ0FBQyxDQUFDLEVBQUUsWUFBWSxDQUFDLENBRWxELEVBQUUsSUFBSSxDQUFDO0lBQ1YsQ0FBQztJQUVEOzs7OztPQUtHO0lBQ0gsTUFBTSxDQUFDLE1BQU0sQ0FBQyxPQUFnQjtRQUM1QixPQUFPLFlBQVksQ0FBQyxFQUFFLENBQUMsT0FBTyxDQUFDLElBQUksSUFBSSxZQUFZLENBQUMsT0FBTyxDQUFDLENBQUMsSUFBSSxDQUFDO0lBQ3BFLENBQUM7SUFJRCxZQUFZLE9BQWdCO1FBQzFCLEtBQUssQ0FBQyxPQUFPLENBQUMsQ0FBQztRQUVmLElBQUksQ0FBQyxJQUFJO1lBQ1AsT0FBTyxDQUFDLEtBQUssQ0FBQyxPQUFPLENBQUMsVUFBVSxDQUFDLElBQUksT0FBTyxDQUFDLE9BQU8sQ0FBQyxVQUFVLENBQUMsQ0FBQztJQUNyRSxDQUFDO0NBQ0Y7QUFoQ0Qsb0NBZ0NDIiwic291cmNlc0NvbnRlbnQiOlsiLyohIENvcHlyaWdodCBbQW1hem9uLmNvbV0oaHR0cDovL2FtYXpvbi5jb20vKSwgSW5jLiBvciBpdHMgYWZmaWxpYXRlcy4gQWxsIFJpZ2h0cyBSZXNlcnZlZC5cblNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBBcGFjaGUtMi4wICovXG5pbXBvcnQgeyBQcm9qZWN0VXRpbHMgfSBmcm9tIFwiQGF3cy9tb25vcmVwb1wiO1xuaW1wb3J0IHsgQ29tcG9uZW50LCBQcm9qZWN0LCBUYXNrIH0gZnJvbSBcInByb2plblwiO1xuXG4vKipcbiAqIENvbXBvbmVudCB3aGljaCBtYW5hZ2VzIGEgXCJnZW5lcmF0ZVwiIHRhc2sgZm9yIGEgcHJvamVjdFxuICovXG5leHBvcnQgY2xhc3MgR2VuZXJhdGVUYXNrIGV4dGVuZHMgQ29tcG9uZW50IHtcbiAgLyoqXG4gICAqIFJldHJpZXZlcyBhbiBpbnN0YW5jZSBvZiBHZW5lcmF0ZVRhc2sgaWYgb25lIGlzIGFzc29jaWF0ZWQgdG8gdGhlIGdpdmVuIHByb2plY3QuXG4gICAqXG4gICAqIEBwYXJhbSBwcm9qZWN0IHByb2plY3QgaW5zdGFuY2UuXG4gICAqL1xuICBzdGF0aWMgb2YocHJvamVjdDogUHJvamVjdCk6IFRhc2sgfCB1bmRlZmluZWQge1xuICAgIHJldHVybiAoXG4gICAgICBwcm9qZWN0LmNvbXBvbmVudHMuZmluZCgoYykgPT5cbiAgICAgICAgUHJvamVjdFV0aWxzLmlzTmFtZWRJbnN0YW5jZU9mKGMsIEdlbmVyYXRlVGFzaylcbiAgICAgICkgYXMgR2VuZXJhdGVUYXNrIHwgdW5kZWZpbmVkXG4gICAgKT8udGFzaztcbiAgfVxuXG4gIC8qKlxuICAgKiBSZXRyaWV2ZXMgYW4gaW5zdGFuY2Ugb2YgR2VuZXJhdGVUYXNrIGlmIG9uZSBpcyBhc3NvY2lhdGVkIHRvIHRoZSBnaXZlbiBwcm9qZWN0LFxuICAgKiBvdGhlcndpc2UgY3JlYXRlcyBhIEdlbmVyYXRlVGFzayBpbnN0YW5jZSBmb3IgdGhlIHByb2plY3QuXG4gICAqXG4gICAqIEBwYXJhbSBwcm9qZWN0IHByb2plY3QgaW5zdGFuY2UuXG4gICAqL1xuICBzdGF0aWMgZW5zdXJlKHByb2plY3Q6IFByb2plY3QpOiBUYXNrIHtcbiAgICByZXR1cm4gR2VuZXJhdGVUYXNrLm9mKHByb2plY3QpIHx8IG5ldyBHZW5lcmF0ZVRhc2socHJvamVjdCkudGFzaztcbiAgfVxuXG4gIHB1YmxpYyByZWFkb25seSB0YXNrOiBUYXNrO1xuXG4gIGNvbnN0cnVjdG9yKHByb2plY3Q6IFByb2plY3QpIHtcbiAgICBzdXBlcihwcm9qZWN0KTtcblxuICAgIHRoaXMudGFzayA9XG4gICAgICBwcm9qZWN0LnRhc2tzLnRyeUZpbmQoXCJnZW5lcmF0ZVwiKSA/PyBwcm9qZWN0LmFkZFRhc2soXCJnZW5lcmF0ZVwiKTtcbiAgfVxufVxuIl19

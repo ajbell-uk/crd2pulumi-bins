@@ -1,0 +1,41 @@
+###TSAPI_WRITE_FILE###
+{
+  "id": "api",
+  "dir": "<%= metadata.srcDir || 'src' %>",
+  "name": "api",
+  "ext": ".ts",
+  "overwrite": true
+}
+###/TSAPI_WRITE_FILE###import { TypeSafeRestApi, TypeSafeRestApiProps, TypeSafeApiIntegration } from "@aws/pdk/type-safe-api";
+import { Construct } from "constructs";
+import { OperationLookup, OperationConfig } from "<%- metadata.runtimePackageName %>";
+<%_ if (metadata.esm) { _%>
+import * as url from 'url';
+<%_ } else { _%>
+import * as path from "path";
+<%_ } _%>
+
+export type ApiIntegrations = OperationConfig<TypeSafeApiIntegration>;
+
+export interface ApiProps extends Omit<TypeSafeRestApiProps, "specPath" | "operationLookup" | "integrations"> {
+  readonly integrations: ApiIntegrations;
+}
+
+/**
+ * Type-safe construct for the API Gateway resources defined by your model.
+ * This construct is generated and should not be modified.
+ */
+export class Api extends TypeSafeRestApi {
+  constructor(scope: Construct, id: string, props: ApiProps) {
+    super(scope, id, {
+      ...props,
+      integrations: props.integrations as any,
+      <%_ if (metadata.esm) { _%>
+      specPath: url.fileURLToPath(new URL("<%- metadata.relativeSpecPath %>", import.meta.url)),
+      <%_ } else { _%>
+      specPath: path.resolve(__dirname, "<%- metadata.relativeSpecPath %>"),
+      <%_ } _%>
+      operationLookup: OperationLookup as any,
+    });
+  }
+}

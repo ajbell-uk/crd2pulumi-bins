@@ -1,0 +1,19 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.compareAssemblies = compareAssemblies;
+const type_comparison_1 = require("./type-comparison");
+/**
+ * Compare two assemblies
+ *
+ * We currently only check for compatibility (a full diff is
+ * harder :). The only thing we have to do is check for every API
+ * item whether it's still available and has the same shape (or
+ * bigger) in the new API.
+ */
+function compareAssemblies(original, updated, options = {}) {
+    const comparison = new type_comparison_1.AssemblyComparison(options);
+    comparison.load(original, updated);
+    comparison.compare();
+    return comparison.mismatches;
+}
+//# sourceMappingURL=index.js.map

@@ -1,0 +1,27 @@
+import { Project, FileBase, IResolver } from "projen";
+import { Language } from "../../../languages";
+/**
+ * Options for the aws-pdk/async.smithy file
+ */
+export interface SmithyAwsPdkAsyncPreludeOptions {
+    /**
+     * Path to the generated model directory in which to add the prelude
+     */
+    readonly generatedModelDir: string;
+    /**
+     * Namespace for the smithy service
+     */
+    readonly serviceNamespace: string;
+    /**
+     * Languages selected for handlers
+     */
+    readonly handlerLanguages?: Language[];
+}
+/**
+ * Synthesize the aws-pdk/async.smithy file
+ */
+export declare class SmithyAwsPdkAsyncPrelude extends FileBase {
+    private readonly options;
+    constructor(project: Project, options: SmithyAwsPdkAsyncPreludeOptions);
+    synthesizeContent(_: IResolver): string | undefined;
+}

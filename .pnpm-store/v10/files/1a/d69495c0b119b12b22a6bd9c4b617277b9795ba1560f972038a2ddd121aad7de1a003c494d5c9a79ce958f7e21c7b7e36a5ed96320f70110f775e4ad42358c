@@ -1,0 +1,10 @@
+/*! Copyright [Amazon.com](http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0 */
+import { GeneratedPythonHandlersBaseProject, GeneratedPythonHandlersBaseProjectOptions } from "./generated-python-handlers-base-project";
+import { CodegenOptions } from "../components/utils";
+export interface GeneratedPythonAsyncHandlersProjectOptions extends GeneratedPythonHandlersBaseProjectOptions {
+}
+export declare class GeneratedPythonAsyncHandlersProject extends GeneratedPythonHandlersBaseProject {
+    constructor(options: GeneratedPythonAsyncHandlersProjectOptions);
+    buildCodegenOptions(): CodegenOptions;
+}

@@ -1,0 +1,34 @@
+import * as reflect from 'jsii-reflect';
+import * as transpile from './transpile';
+/**
+ * A python transpiler.
+ */
+export declare class PythonTranspile extends transpile.TranspileBase {
+    constructor();
+    readme(readme: string): string;
+    unionOf(types: string[]): string;
+    listOf(type: string): string;
+    variadicOf(type: string): string;
+    mapOf(type: string): string;
+    any(): string;
+    void(): string;
+    boolean(): string;
+    str(): string;
+    number(): string;
+    date(): string;
+    enum(enu: reflect.EnumType): transpile.TranspiledEnum;
+    enumMember(em: reflect.EnumMember): transpile.TranspiledEnumMember;
+    json(): string;
+    property(property: reflect.Property): transpile.TranspiledProperty;
+    class(klass: reflect.ClassType): transpile.TranspiledClass;
+    parameter(parameter: reflect.Parameter | reflect.Property): transpile.TranspiledParameter;
+    struct(struct: reflect.InterfaceType): transpile.TranspiledStruct;
+    callable(callable: reflect.Callable): transpile.TranspiledCallable;
+    type(type: reflect.Type): transpile.TranspiledType;
+    moduleLike(moduleLike: reflect.ModuleLike): transpile.TranspiledModuleLike;
+    interface(iface: reflect.InterfaceType): transpile.TranspiledInterface;
+    private isStruct;
+    private typing;
+    private formatParameters;
+    private formatProperty;
+}
