@@ -63,7 +63,7 @@ export class RootMonorepoTsProject extends MonorepoTsProject {
           return {
             ...(step as github.workflows.Step),
             ...{
-              run: `cd .repo && cp -rf packages/${workflow?.name.replace('release_', '')}/* . && npx projen package:js`
+              run: `cd .repo && cp -rf packages/${workflow?.name.replace('release_', '')}/* . && ls -Af && cat package.json && npx projen package:js`
             }
           }
         }

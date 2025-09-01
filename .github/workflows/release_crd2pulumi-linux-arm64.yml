@@ -126,7 +126,7 @@ jobs:
       - name: Move build artifact out of the way
         run: mv dist dist.old
       - name: Create js artifact
-        run: cd .repo && cp -rf packages/crd2pulumi-linux-arm64/* . && npx projen package:js
+        run: cd .repo && cp -rf packages/crd2pulumi-linux-arm64/* . && ls -Af && cat package.json && npx projen package:js
       - name: Collect js artifact
         run: mv .repo/dist dist
       - name: Release
