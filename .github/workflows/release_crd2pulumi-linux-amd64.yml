@@ -118,7 +118,7 @@ jobs:
         with:
           path: .repo
           lfs: true
-          sparse_checkout: packages/crd2pulumi-linux-amd64
+          sparse-checkout: packages/crd2pulumi-linux-amd64
       - name: Install Dependencies
         run: cd .repo && pnpm i --frozen-lockfile
       - name: Extract build artifact
