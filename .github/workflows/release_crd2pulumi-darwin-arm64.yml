@@ -19,6 +19,8 @@ jobs:
       tag_exists: ${{ steps.check_tag_exists.outputs.exists }}
     env:
       CI: "true"
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
     defaults:
       run:
         working-directory: ./packages/crd2pulumi-darwin-arm64
@@ -96,6 +98,9 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    env:
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
       - uses: actions/setup-node@v4
@@ -129,10 +134,14 @@ jobs:
         run: cd .repo/packages/crd2pulumi-darwin-arm64 && npx projen package:js && mv -f dist ../..
       - name: Collect js artifact
         run: mv .repo/dist dist
+      - name: Configure AWS Credentials via GitHub OIDC Provider
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::873505026467:role/Tooling-GitHubOidc-ActionsRole8CA2B68A-2UmaN8BWeDTz
+          aws-region: eu-west-2
       - name: Release
         env:
           NPM_DIST_TAG: latest
-          NPM_REGISTRY: registry.npmjs.org
+          NPM_REGISTRY: main-873505026467.d.codeartifact.eu-west-2.amazonaws.com/npm/ajb-iac/
           NPM_CONFIG_PROVENANCE: "true"
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx -p publib@latest publib-npm

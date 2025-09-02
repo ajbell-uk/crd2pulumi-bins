@@ -7,6 +7,11 @@ const repository = 'https://github.com/ajbell-uk/crd2pulumi-bins.git'
 
 const crd2pulumiVersion = '1.5.4'
 
+const awsEnv = {
+  AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}',
+  AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}',
+}
+
 const buildWorkflowOptions: javascript.BuildWorkflowOptions = {
   workflowTriggers: {
     pullRequest: {},
@@ -14,6 +19,9 @@ const buildWorkflowOptions: javascript.BuildWorkflowOptions = {
       branches: ['main'],
     },
   },
+  env: {
+    ...awsEnv,
+  }
 }
 
 const biomeOptions: javascript.BiomeOptions = {
@@ -159,6 +167,7 @@ for (const project of projects) {
     authorAddress: '',
     depsUpgrade: false,
     packageManager: root.package.packageManager,
+    npmRegistryUrl: 'https://main-873505026467.d.codeartifact.eu-west-2.amazonaws.com/npm/ajb-iac/',
     npmAccess: javascript.NpmAccess.PUBLIC,
     gitOptions: {
       lfsPatterns: ['bin/*'],
@@ -178,6 +187,10 @@ for (const project of projects) {
       yarnRcOptions: {
         nodeLinker: javascript.YarnNodeLinker.NODE_MODULES,
       },
+    },
+    codeArtifactOptions: {
+      authProvider: javascript.CodeArtifactAuthProvider.GITHUB_OIDC,
+      roleToAssume: 'arn:aws:iam::873505026467:role/Tooling-GitHubOidc-ActionsRole8CA2B68A-2UmaN8BWeDTz',
     },
   })
 

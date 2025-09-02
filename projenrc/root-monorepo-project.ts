@@ -1,15 +1,36 @@
 import { MonorepoTsProject, type MonorepoTsProjectOptions } from './monorepo'
-import type { github } from 'projen'
+import { JsonPatch, type github } from 'projen'
 
 export interface RootMonorepoTsProjectOptions extends MonorepoTsProjectOptions {
   readonly releaseWorkflows?: Record<string, string[]>
+  /**
+   * GitHub secrets for AWS credentials.
+   *
+   * @default - Uses default secrets for AWS credentials {
+   *   AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}',
+   *   AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}',
+   * }.
+   */
+  readonly githubSecrets?: GitHubAwsSecrets
+}
+
+export interface GitHubAwsSecrets {
+  readonly awsAccessKeyId: string
+  readonly awsSecretAccessKey: string
 }
 
 export class RootMonorepoTsProject extends MonorepoTsProject {
   protected releaseWorkflows: Record<string, string[]> | undefined
+  protected readonly githubAwsSecrets?: GitHubAwsSecrets
+
   constructor(options: RootMonorepoTsProjectOptions) {
     super(options)
     this.releaseWorkflows = options.releaseWorkflows
+
+    this.githubAwsSecrets = options.githubSecrets || {
+      awsAccessKeyId: '${{ secrets.AWS_ACCESS_KEY_ID }}',
+      awsSecretAccessKey: '${{ secrets.AWS_SECRET_ACCESS_KEY }}',
+    }
   }
 
   postSynthesize (): void {
@@ -33,6 +54,15 @@ export class RootMonorepoTsProject extends MonorepoTsProject {
       releaseFile?.synthesize()
     }
 
+    if (this.githubAwsSecrets) {
+      const buildWorkflow = this.tryFindObjectFile('.github/workflows/build.yml')
+      buildWorkflow?.patch(
+        JsonPatch.add('/jobs/build/env/AWS_SECRET_ACCESS_KEY', this.githubAwsSecrets.awsSecretAccessKey),
+      )
+      buildWorkflow?.patch(JsonPatch.add('/jobs/build/env/AWS_ACCESS_KEY_ID', this.githubAwsSecrets.awsAccessKeyId))
+      buildWorkflow?.synthesize()
+    }
+
   }
 
 
@@ -47,7 +77,7 @@ export class RootMonorepoTsProject extends MonorepoTsProject {
       switch (step.name) {
         case 'Checkout': {
           let sparseCheckout: string | undefined
-          if(name.endsWith('_npm')){
+          if (name.endsWith('_npm')) {
             sparseCheckout = `packages/${workflow?.name.replace('release_', '')}`
           }
 
@@ -84,6 +114,13 @@ export class RootMonorepoTsProject extends MonorepoTsProject {
     const newJob: github.workflows.Job = {
       ...releaseJob,
       steps: newSteps,
+      env: {
+        ...releaseJob.env,
+        ... this.githubAwsSecrets ? {
+          AWS_SECRET_ACCESS_KEY: this.githubAwsSecrets?.awsSecretAccessKey || '',
+          AWS_ACCESS_KEY_ID: this.githubAwsSecrets?.awsAccessKeyId || '',
+        } : {}
+      },
     }
 
     if (releaseJob) {

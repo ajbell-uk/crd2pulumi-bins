@@ -47,6 +47,7 @@
   "main": "lib/index.js",
   "license": "UNLICENSED",
   "publishConfig": {
+    "registry": "https://main-873505026467.d.codeartifact.eu-west-2.amazonaws.com/npm/ajb-iac/",
     "access": "public"
   },
   "version": "0.0.0",
