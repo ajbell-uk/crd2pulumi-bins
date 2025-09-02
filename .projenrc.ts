@@ -155,7 +155,7 @@ for (const project of projects) {
   const childProject = new cdk.JsiiProject({
     parent: root,
     name: project.name,
-    packageName: `@ajbell/${project.name}`,
+    packageName: `@ajb-iac/${project.name}`,
     outdir: project.outdir,
     defaultReleaseBranch,
     licensed: false,

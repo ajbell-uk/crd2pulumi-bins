@@ -1,5 +1,5 @@
 {
-  "name": "@ajbell/crd2pulumi-linux-amd64",
+  "name": "@ajb-iac/crd2pulumi-linux-amd64",
   "repository": {
     "type": "git",
     "url": "https://github.com/ajbell-uk/crd2pulumi-bins.git"
