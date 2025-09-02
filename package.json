@@ -30,14 +30,14 @@
   "devDependencies": {
     "@aws/pdk": "^0.26.14",
     "@biomejs/biome": "^2",
-    "@types/node": "ts5.8",
+    "@types/node": "ts5.9",
     "constructs": "^10.0.0",
     "npm-check-updates": "^18.0.3",
     "nx": "19.0.0",
     "projen": "~0.95.0",
     "syncpack": "^13",
     "ts-node": "^10.9.2",
-    "typescript": "~5.8.0"
+    "typescript": "~5.9.0"
   },
   "peerDependencies": {
     "nx": "^19"
