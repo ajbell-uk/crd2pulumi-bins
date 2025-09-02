@@ -43,6 +43,7 @@ export class RootMonorepoTsProject extends MonorepoTsProject {
       return
     }
     const newSteps = releaseJob.steps.map((step) => {
+      const subProjectDirectory = `packages/${workflow?.name.replace('release_', '')}`
       switch (step.name) {
         case 'Checkout': {
           let sparseCheckout: string | undefined
@@ -63,7 +64,15 @@ export class RootMonorepoTsProject extends MonorepoTsProject {
           return {
             ...(step as github.workflows.Step),
             ...{
-              run: `cd .repo/packages/${workflow?.name.replace('release_', '')} && npx projen package:js && mv -f dist ../..`
+              run: `cd .repo/${subProjectDirectory} && npx projen package:js && mv -f dist ../..`
+            }
+          }
+        }
+        case 'Extract build artifact': {
+          return {
+            ...(step as github.workflows.Step),
+            ...{
+              run: `tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo/${subProjectDirectory}`
             }
           }
         }

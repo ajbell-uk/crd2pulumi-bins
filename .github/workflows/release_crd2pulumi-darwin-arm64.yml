@@ -122,7 +122,7 @@ jobs:
       - name: Install Dependencies
         run: cd .repo && pnpm i --frozen-lockfile
       - name: Extract build artifact
-        run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
+        run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo/packages/crd2pulumi-darwin-arm64
       - name: Move build artifact out of the way
         run: mv dist dist.old
       - name: Create js artifact
