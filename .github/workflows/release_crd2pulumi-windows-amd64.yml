@@ -126,7 +126,7 @@ jobs:
       - name: Move build artifact out of the way
         run: mv dist dist.old
       - name: Create js artifact
-        run: cd .repo/packages/crd2pulumi-windows-amd64/ npx projen package:js && mv -f dist ../..
+        run: cd .repo/packages/crd2pulumi-windows-amd64 && npx projen package:js && mv -f dist ../..
       - name: Collect js artifact
         run: mv .repo/dist dist
       - name: Release
